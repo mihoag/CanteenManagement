@@ -1,0 +1,51 @@
+<section class="content my-5 d-flex justify-content-center">
+    <div class="col-7 my-5 d-flex flex-column align-items-center justify-content-center">
+        <h2 class="mb-5">ĐĂNG NHẬP</h2>
+        <form method="post" action="/">
+            {{{showSuccess success}}}
+            {{{showError errors}}}
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example1">Tên đăng nhập</label>
+                <input type="text" id="form2Example1" name="username" value="{{formatValue username}}" class="
+                    form-control" />
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example2">Mật khẩu</label>
+                <input type="password" id="form2Example2" name="password" value="{{formatValue password}}"
+                    class="form-control" />
+
+            </div>
+
+            <!-- 2 column grid layout for inline styling -->
+            <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                        <input class="form-check-input" name="remember" type="checkbox" />
+                        <label class="form-check-label" for="form2Example31"> Duy trì đăng nhập </label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <!-- Simple link -->
+                    <a href="#!">Forgot password?</a>
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <button type="submit" class="btn btn-primary mb-4">Đăng nhập</button>
+            </div>
+
+
+            <!-- Register buttons -->
+            <div class="text-center">
+                <p>Chưa có tài khoản? <a href="/signup">Đăng kí</a></p>
+            </div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,42 @@
+<section class="content my-5 d-flex justify-content-center">
+    <div class="col-9  d-flex flex-column align-items-center justify-content-center">
+        <form action="/signup" method="post" class="col-5">
+            <!-- Email input -->
+            {{{showError errors}}}
+            <div class="form-outline mb-2">
+                <label class="form-label" for="form2Example1">Email</label>
+                <input type="email" name="email" id="form2Example1" class="form-control" value="{{formatValue email}}"
+                    required />
+            </div>
+            <div class="form-outline mb-2">
+                <label class="form-label" for="form2Example1">Tên đăng nhập</label>
+                <input type="text" name="username" id="form2Example1" class="form-control"
+                    value="{{formatValue username}}" required />
+            </div>
+            <div class="form-outline mb-2">
+                <label class="form-label" for="form2Example1">Họ tên</label>
+                <input type="text" name="fullname" id="form2Example1" class="form-control"
+                    value="{{formatValue fullname}}" required />
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example2">Mật khẩu</label>
+                <input type="password" name="password" id="form2Example2" class="form-control"
+                    value="{{formatValue password}}" />
+
+            </div>
+
+            <!-- Submit button -->
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <button type="submit" class="btn btn-primary mb-4">Đăng kí</button>
+            </div>
+            <!-- Register buttons -->
+            <div class="text-center">
+                <p>Đã có tài khoản? <a href="/">Đăng nhập</a></p>
+            </div>
+        </form>
+    </div>
+
+</section>
