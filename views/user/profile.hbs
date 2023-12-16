@@ -1,0 +1,47 @@
+<section class="min-vh-100">
+  <h1 class="text-center my-5">Thông tin người dùng</h1>
+  <div class="row mx-auto">
+    <div class="col-1"></div>
+    <form action="/user/profile/edit" method="post" class="col-10">
+      <div class="mb-2">
+        <label for="name" class="form-label fs-3"><b>Họ tên</b></label>
+        <input
+          type="text"
+          class="form-control fs-5"
+          name="name"
+          id="name"
+          value="{{name}}"
+          placeholder="Your name"
+        />
+      </div>
+      <div class="mb-2">
+        <label for="email" class="form-label fs-3"><b>Email</b></label>
+        <input
+          type="email"
+          class="form-control fs-5"
+          value="{{email}}"
+          id="email"
+          placeholder="Your email address"
+          disabled
+        />
+      </div>
+      <div class="mt-5">
+        <button
+          type="button"
+          class="btn btn-outline-warning fs-4 px-5 fw-bold"
+          onclick="window.location.reload()"
+        >Hủy</button>
+        <button
+          type="submit"
+          class="btn btn-success fs-4 px-5 border-0 fw-bold ms-3"
+          style="background-color: orange;"
+        >Lưu</button>
+      </div>
+    </form>
+    <div class="col-1"></div>
+  </div>
+</section>
+
+<script>
+
+</script>
