@@ -1,26 +1,26 @@
 .order {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #d9d9d9;
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #d9d9d9;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 .detailOrder {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .listOrder {
-    display: flex;
-    flex-direction: column;
-    background-color: #e7e7e7;
-    padding: 10px;
-    border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #e7e7e7;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 /* design for menu page */
@@ -37,13 +37,13 @@ font-size: 20px;
 #amount
 {
     font-size: 20px;
-    width: 30px;
+    width: 45px;
 }
 #add
 {
 background-color: #2AFF18;
 font-size: 20px;
-margin-right: 37px;
+margin-right: 12px;
 }
 #foodLink
 {
@@ -65,3 +65,48 @@ margin-right: 37px;
     font-size: 6rem;
 }
 /* end detail food */
+
+/* FOR ORDER */
+
+@media (min-width: 1025px) {
+  .h-custom {
+    height: 100vh !important;
+  }
+}
+
+.heart-icon {
+  position: absolute;
+  top: -0.5rem;
+  right: 0;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background-color: #fff;
+  opacity: 0.9;
+}
+
+.heart-icon svg {
+  width: 1.3rem;
+  height: 1rem;
+}
+
+.sale-text-container {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: 700;
+  background-color: #ff5c28;
+  width: 50%;
+  height: 100%;
+  clip-path: polygon(0 0, 70% 0%, 100% 101%, 0 101%);
+  border-radius: 1rem 0 0 0;
+  padding: 0.5rem;
+}
+.sale-percentage-text {
+  color: #000;
+  margin-left: 2rem;
+}
+.sale-description-text {
+  color: #fff;
+  margin-left: 1rem;
+  font-size: 1.6rem;
+}
+/* __FOR ORDER */

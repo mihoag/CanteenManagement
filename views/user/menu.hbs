@@ -13,29 +13,35 @@
     <div class="container-fluid" style="margin-top: 20px;">
         <ul class=" d-flex flex-row justify-content-between">
             <li class="nav-item">
-                <a class="nav-link active" href="/user/menu"><i class="fa-solid fa-location-dot" style="color: #ff5c28;"></i>
-                   <span id="foodLink">Đặt gần đây</span></a>
+                <a class="nav-link active" href="/user/menu"><i class="fa-solid fa-location-dot"
+                        style="color: #ff5c28;"></i>
+                    <span id="foodLink">Đặt gần đây</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/menu/new"> <i class="fas fa-thumbs-up" style="color: #ff5c28;"></i><span id="foodLink"> Đề cử</span></a>
+                <a class="nav-link" href="/user/menu/new"> <i class="fas fa-thumbs-up" style="color: #ff5c28;"></i><span
+                        id="foodLink"> Đề cử</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/menu/promotion"><i class="fa-solid fa-medal" style="color: #ff5c28;"></i><span id="foodLink"> Món mới</span></a>
+                <a class="nav-link" href="/user/menu/promotion"><i class="fa-solid fa-medal"
+                        style="color: #ff5c28;"></i><span id="foodLink"> Món mới</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/menu/bestsell"> <i class="fas fa-fire" style="color: #ff5c28;"></i><span id="foodLink"> Bán chạy</span></a>
+                <a class="nav-link" href="/user/menu/bestsell"> <i class="fas fa-fire" style="color: #ff5c28;"></i><span
+                        id="foodLink"> Bán chạy</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/menu/favorite"><i class="fa-solid fa-star" style="color: #ff5c28;"></i><span id="foodLink"> Yêu thích nhất</span>
-                    </a>
+                <a class="nav-link" href="/user/menu/favorite"><i class="fa-solid fa-star"
+                        style="color: #ff5c28;"></i><span id="foodLink"> Yêu thích nhất</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/menu/all"><i class="fa-solid fa-square" style="color: #ff5c28;"></i><span id="foodLink"> Tất cả</span></a>
+                <a class="nav-link" href="/user/menu/all"><i class="fa-solid fa-square"
+                        style="color: #ff5c28;"></i><span id="foodLink"> Tất cả</span></a>
             </li>
 
         </ul>
         <div class="progress bg-secondary" style="height: 6px; margin-top: 8px; ">
-                {{{progressbar index}}}
+            {{{progressbar index}}}
             <div class="progress-bar" role="progressbar" style="width: 9%; background-color: #ff5c28;"
                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
@@ -51,9 +57,11 @@
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">Phở</h5>
                         <p class="card-text" style="text-align: center;">25.000 đ</p>
-                        <button id="minus" class="rounded-start-pill">-</button>
-                        <input id="amount" type="text" value="10">
-                        <button id="add" class="rounded-end-pill">+</button>
+                        <button id="minus" class="rounded-start-pill"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                        <input min="0" id="amount" type="number" value="10" name="amount">
+                        <button id="add" class="rounded-end-pill"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
 
                         <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
                             <br>Thêm vào giỏ</a>
@@ -67,9 +75,11 @@
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">Phở</h5>
                         <p class="card-text" style="text-align: center;">25.000 đ</p>
-                        <button id="minus" class="rounded-start-pill">-</button>
-                        <input id="amount" type="text" value="10">
-                        <button id="add" class="rounded-end-pill">+</button>
+                       <button id="minus" class="rounded-start-pill"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                        <input min="0" id="amount" type="number" value="10" name="amount">
+                        <button id="add" class="rounded-end-pill"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
 
                         <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
                             <br>Thêm vào giỏ</a>
@@ -83,9 +93,11 @@
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">Phở</h5>
                         <p class="card-text" style="text-align: center;">25.000 đ</p>
-                        <button id="minus" class="rounded-start-pill">-</button>
-                        <input id="amount" type="text" value="10">
-                        <button id="add" class="rounded-end-pill">+</button>
+                       <button id="minus" class="rounded-start-pill"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                        <input min="0" id="amount" type="number" value="10" name="amount">
+                        <button id="add" class="rounded-end-pill"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
 
                         <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
                             <br>Thêm vào giỏ</a>
@@ -99,10 +111,11 @@
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">Phở</h5>
                         <p class="card-text" style="text-align: center;">25.000 đ</p>
-                        <button id="minus" class="rounded-start-pill">-</button>
-                        <input id="amount" type="text" value="10">
-                        <button id="add" class="rounded-end-pill">+</button>
-
+                       <button id="minus" class="rounded-start-pill"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                        <input min="0" id="amount" type="number" value="10" name="amount">
+                        <button id="add" class="rounded-end-pill"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
                         <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
                             <br>Thêm vào giỏ</a>
 

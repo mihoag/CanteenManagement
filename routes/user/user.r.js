@@ -4,9 +4,11 @@ const homeController = require("./../../controllers/userController/homeControlle
 const orderController = require("./../../controllers/userController/orderController.c");
 const menuController = require('./../../controllers/userController/menuController.c');
 const detailFoodController = require('./../../controllers/userController/detailFoodController');
+const cartController = require("./../../controllers/userController/cartController");
 const profileRoute = require("./profile.r");
 
 route.get("/order", orderController.showOrder);
+route.get("/cart", cartController.showCart);
 route.get("/", homeController.showHome);
 route.use("/profile", profileRoute);
 

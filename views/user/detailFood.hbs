@@ -29,9 +29,11 @@
                                 choice." "High quality beef medium to well with cheese and bacon on a multigrain bun."
                                 "A huge single or triple burger with all the fixings, cheese, lettuce, tomato, onions
                                 and special sauce or mayonnaise!</p>
-                            <button id="minus" class="rounded-start-pill">-</button>
-                            <input id="amount" type="text" value="10">
-                            <button id="add" class="rounded-end-pill">+</button>
+                            <button id="minus" class="rounded-start-pill"
+                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                            <input min="0" id="amount" type="number" value="10" name="amount">
+                            <button id="add" class="rounded-end-pill"
+                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
                             <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
                                 <br>Thêm vào giỏ</a>
 
