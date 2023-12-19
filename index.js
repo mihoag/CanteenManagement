@@ -20,7 +20,6 @@ const handlebars = exphbs.create({
     // tạo handlebars với những config
     extname: ".hbs",
     defaultLayout: "main",
-
     helpers:
     {
         showError: (errors) => {
@@ -59,6 +58,16 @@ const handlebars = exphbs.create({
             else {
                 return id1 === id2 ? "selected" : "";
             }
+        },
+        progressbar: (index)=>
+        {
+            let data='';
+            for (let i =0 ;i<index;i++)
+            {
+                data += ` <div class="progress-bar bg-secondary" role="progressbar" style="width: 18.5%; " aria-valuenow="25"
+                aria-valuemin="0" aria-valuemax="100"></div>`;
+            }
+            return data;
         }
     }
 });
@@ -71,6 +80,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/user', express.static(path.join(__dirname, "public")))
+app.use('/user/menu', express.static(path.join(__dirname, "public")))
 app.use('/admin', express.static(path.join(__dirname, "public")))
 // routes
 route(app);

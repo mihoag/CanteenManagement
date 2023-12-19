@@ -22,3 +22,46 @@
     padding: 10px;
     border-radius: 10px;
 }
+
+/* design for menu page */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+#minus
+{
+background-color: #FF1818;
+font-size: 20px;
+}
+#amount
+{
+    font-size: 20px;
+    width: 30px;
+}
+#add
+{
+background-color: #2AFF18;
+font-size: 20px;
+margin-right: 37px;
+}
+#foodLink
+{
+    font-weight: bold;
+   
+}
+
+/* end design for menu page */
+
+/* design for detail foold */
+#nameFood
+{
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Creepster'
+}
+#review
+{
+    font-size: 6rem;
+}
+/* end detail food */
