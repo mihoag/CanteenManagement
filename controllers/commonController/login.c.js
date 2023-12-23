@@ -12,7 +12,7 @@ class signinController {
   async processLogin(req, res, next) {
     try {
       const { username, password } = req.body;
-      // console.log(req.body)
+      //console.log(req.body);
       let data = [];
       data = await user.selectByUsername(username);
       let errors = [];
