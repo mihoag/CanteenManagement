@@ -7,7 +7,8 @@ const logoutRoute = require("./common/logout.r");
 
 function route(app) {
   app.use("/user", auth.authentication, auth.authorization, userRoute);
-  app.use("/admin", auth.authentication, auth.authorization, adminRoute);
+  // app.use("/admin", auth.authentication, auth.authorization, adminRoute);
+  app.use("/admin", adminRoute);
   app.use("/logout", logoutRoute);
   app.use("/signup", signupRoute);
   app.use("/", auth.mustLogin, loginRoute);

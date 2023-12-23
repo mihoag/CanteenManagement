@@ -1,7 +1,10 @@
 class marketingController {
   async showPage(req, res, next) {
     try {
-      res.render("admin/marketing", { layout: "adminLayout" });
+      res.render("admin/marketing", { 
+        layout: "adminLayout",
+        isMarketing: true
+      });
     } catch (error) {
       next(error);
     }
