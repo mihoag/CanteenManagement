@@ -55,7 +55,7 @@ function viewChart(options) {
   for (let i = 0; i < options.lastDayOfMonth; i++) labels.push(i + 1);
   for (let i = 0; i < options.lastDayOfMonth; i++) data.push(0);
   for (let i = 0; i < options.data.length; i++)
-    data[parseInt(options.data[i].day)] = options.data[i].sum;
+    data[parseInt(options.data[i].day) - 1] = options.data[i].sum;
 
   const ctx = document.getElementById('myChart');
   new Chart(ctx, {
