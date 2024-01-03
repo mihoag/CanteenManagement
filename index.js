@@ -59,11 +59,9 @@ const handlebars = exphbs.create({
                 return id1 === id2 ? "selected" : "";
             }
         },
-        progressbar: (index)=>
-        {
-            let data='';
-            for (let i =0 ;i<index;i++)
-            {
+        progressbar: (index) => {
+            let data = '';
+            for (let i = 0; i < index; i++) {
                 data += ` <div class="progress-bar bg-secondary" role="progressbar" style="width: 18.5%; " aria-valuenow="25"
                 aria-valuemin="0" aria-valuemax="100"></div>`;
             }
