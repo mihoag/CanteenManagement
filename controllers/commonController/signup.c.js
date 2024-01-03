@@ -44,7 +44,7 @@ class signupController {
           );
         } else {
           u = new user(
-            id + 1,
+            parseInt(id) + 1,
             username,
             password,
             fullname,

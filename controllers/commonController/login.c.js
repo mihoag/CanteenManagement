@@ -19,6 +19,10 @@ class signinController {
       //console.log(data);
       // console.log(data);
       // Neu khong co email hop le, thi data la mot mang rong
+      if (username == '' || password == '') {
+        errors.push({ msg: "Username hoặc password không được trống" });
+        return res.render("common/login", { errors, username, password });
+      }
       if (!data) {
         errors.push({ msg: "Username not found" });
         res.render("common/login", { errors, username, password });

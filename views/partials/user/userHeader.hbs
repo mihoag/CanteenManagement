@@ -9,9 +9,7 @@
         </span>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/user">Trang chủ</a></li>
-            <li><a class="dropdown-item" href="#">Liên hệ</a></li>
             <li><a class="dropdown-item" href="#">Chọn món</a></li>
-            <li><a class="dropdown-item" href="#">Đặt chỗ</a></li>
             <li><a class="dropdown-item" href="/user/order">Đơn hàng</a></li>
             <li><a class="dropdown-item" href="/user/cart"><i class="fa-solid fa-cart-shopping mx-2"></i>Giỏ hàng</a>
             </li>
@@ -24,13 +22,7 @@
                 <a class="nav-link" href="/user">Trang chủ</a> <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Liên hệ</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/user/menu">Chọn món</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Đặt chỗ</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/user/order">Đơn hàng</a>
@@ -46,5 +38,68 @@
         <i class="fa-solid fa-circle-user  mx-1" style="font-size: 2em;"></i>
     </a>
     <p class="mx-2 mt-1">{{name}}</p>
-    <a class=" btn btn-primary mx-1" href="/logout">Đăng xuất</a>
+    {{#if ishomeUser}}
+    <a href="javascript:;" class="btn btn-primary mx-1" data-toggle="tooltip" data-bs-toggle="modal"
+        data-bs-target="#naptien">
+        Nạp tiền
+    </a>
+    {{/if}}
+    <a class="btn btn-primary mx-1" href="/logout">Đăng xuất</a>
 </nav>
+
+<div class="modal fade" id="naptien" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form name="myform">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nạp tiền</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-auto">
+                        <input type="text" hidden name="username" value="{{username}}">
+                        <label for="inputPassword2" class="visually-hidden">Số tiền nạp: </label>
+                        <input type="number" value="" name="sotien" placeholder="Số tiền cần nạp" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Nạp</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    let Form = document.forms['myform']
+    Form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const data = $(this)
+            .serializeArray()
+            .reduce((obj, field) => ({ ...obj, [field.name]: field.value }), {});
+
+
+        console.log(data);
+        if (data.sotien <= 0) {
+            alert("Số tiền nạp vào phải lớn hơn 0");
+            return;
+        }
+        const res = await fetch(`http://localhost:3000/user/naptien`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        const resData = await res.json();
+
+        if (res.ok) {
+            console.log(resData);
+            alert(resData.msg);
+            return;
+        }
+        else { alert(resData.msg); }
+    });
+</script>
