@@ -7,4 +7,11 @@ route.get("/2", statictisController.showStatisticsPage2);
 route.get("/3", statictisController.showStatisticsPage3);
 route.get("/4", statictisController.showStatisticsPage4);
 
+route.get('/revenue', statictisController.getDataRevenue);
+route.get('/revenueW/:from/:to', statictisController.getDataRevenueWeek);
+
+route.get("/stats2/:page", statictisController.getData2Table);
+route.get("/stats4/:page", statictisController.getData4Table);
+
+
 module.exports = route;
