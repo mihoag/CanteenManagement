@@ -19,6 +19,7 @@ route.get("/menu/promotion",menuController.promotionFoods );
 route.get("/menu/bestsell",menuController.saleFoods );
 route.get("/menu/favorite",menuController.favoriteFoods );
 route.get("/menu/all",menuController.allFoods );
+
 //detail food
-route.get("/menu/food",detailFoodController.detailFood);
+route.get("/menu/food/:FoodId",detailFoodController.detailFood);
 module.exports = route;

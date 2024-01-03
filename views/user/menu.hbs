@@ -2,8 +2,8 @@
     {{!-- Search bar --}}
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2 " style="width: 300px;" type="search"
+            <form class="d-flex" role="search" action="/user/menu/{{direct}}" method="get">
+                <input class="form-control me-2 " style="width: 300px;" type="search" name="nameFood"
                     placeholder="What do you want to order today ?" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
@@ -18,11 +18,11 @@
                     <span id="foodLink">Đặt gần đây</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/menu/new"> <i class="fas fa-thumbs-up" style="color: #ff5c28;"></i><span
+                <a class="nav-link" href="/user/menu/promotion"> <i class="fas fa-thumbs-up" style="color: #ff5c28;"></i><span
                         id="foodLink"> Đề cử</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/menu/promotion"><i class="fa-solid fa-medal"
+                <a class="nav-link" href="/user/menu/new"><i class="fa-solid fa-medal"
                         style="color: #ff5c28;"></i><span id="foodLink"> Món mới</span></a>
             </li>
             <li class="nav-item">
@@ -51,91 +51,86 @@
     {{!-- Data of food --}}
     <div class="container">
         <div class="row">
+            {{#each food}}
             <div class="col-3 mb-2">
-                <div class="card text-bg-secondary" style="width: 18rem;">
-                    <a href="food"><img src="img/user/pho.png" class="card-img-top" alt="food"></a>
+                <div class="card text-bg-secondary" style="width: 20rem; height: 31rem;">
+                    <a href="food/{{this.id_item}}"><img src="{{this.image}}" class="card-img-top" alt="food"></a>
                     <div class="card-body">
-                        <h5 class="card-title" style="text-align: center;">Phở</h5>
-                        <p class="card-text" style="text-align: center;">25.000 đ</p>
-                        <button id="minus" class="rounded-start-pill"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input min="0" id="amount" type="number" value="10" name="amount">
-                        <button id="add" class="rounded-end-pill"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
-
-                        <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
-                            <br>Thêm vào giỏ</a>
-
+                        <h5 class="card-title" style="text-align: center;">{{this.name}}</h5>
+                        <p class="card-text" style="text-align: center;">Giá bán: {{this.price}} đ</p>
+                        <a style="margin-left: 145px;" href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
+                            <br><b>Thêm vào giỏ</b></a>
                     </div>
                 </div>
             </div>
-            <div class="col-3 mb-2">
-                <div class="card text-bg-secondary" style="width: 18rem;">
-                    <a href="food"><img src="img/user/pho.png" class="card-img-top" alt="food"></a>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align: center;">Phở</h5>
-                        <p class="card-text" style="text-align: center;">25.000 đ</p>
-                       <button id="minus" class="rounded-start-pill"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input min="0" id="amount" type="number" value="10" name="amount">
-                        <button id="add" class="rounded-end-pill"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
-
-                        <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
-                            <br>Thêm vào giỏ</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-3 mb-2">
-                <div class="card text-bg-secondary" style="width: 18rem;">
-                    <a href="food"><img src="img/user/pho.png" class="card-img-top" alt="food"></a>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align: center;">Phở</h5>
-                        <p class="card-text" style="text-align: center;">25.000 đ</p>
-                       <button id="minus" class="rounded-start-pill"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input min="0" id="amount" type="number" value="10" name="amount">
-                        <button id="add" class="rounded-end-pill"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
-
-                        <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
-                            <br>Thêm vào giỏ</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-3 mb-2">
-                <div class="card text-bg-secondary" style="width: 18rem;">
-                    <a href="food"><img src="img/user/pho.png" class="card-img-top" alt="food"></a>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align: center;">Phở</h5>
-                        <p class="card-text" style="text-align: center;">25.000 đ</p>
-                       <button id="minus" class="rounded-start-pill"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input min="0" id="amount" type="number" value="10" name="amount">
-                        <button id="add" class="rounded-end-pill"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
-                        <a href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
-                            <br>Thêm vào giỏ</a>
-
-                    </div>
-                </div>
-            </div>
+            {{/each}}
         </div>
 
 
         {{!-- Page navigation --}}
-        <nav class="mt-3 mb-3" aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <nav class="d-flex justify-content-center p-3">
+             {{#if all}}
+                <ul class="pagination m-0">
+                <li class="page-item page-prev">
+                    <span class="page-link">&laquo;</span>
+                </li>
+                <li class="page-item active">
+                    <span class="page-link page-number">{{currentPage}}/{{totalPage}}</span>
+                </li>
+               
+                <li class="page-item page-next">
+                    <span class="page-link">&raquo;</span>
+                </li>
             </ul>
+                {{else}}
+                 <ul class="pagination m-0">
+                <li class="page-item page-prev">
+                    <span class="page-link">&laquo;</span>
+                </li>
+                {{#times totalPage}}
+                <li class="page-item {{#ifEquals this ../currentPage}}active{{/ifEquals}}">
+                    <span class="page-link page-number">{{this}}</span>
+                </li>
+                {{/times}}
+                <li class="page-item page-next">
+                    <span class="page-link">&raquo;</span>
+                </li>
+            </ul>
+                {{/if}}
         </nav>
     </div>
 
 
 </section>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentPage = Number.parseInt(urlParams.get('currentPage')) || 1;
+  document.querySelectorAll('.page-number').forEach(page => {
+    page.addEventListener('click', e => {
+      urlParams.set('currentPage', page.innerText);
+      window.location.search = urlParams;
+    });
+  });
+
+  document.querySelector('.page-prev .page-link').addEventListener('click', e => {
+    if (currentPage > 1) {
+      urlParams.set('currentPage', currentPage - 1);
+      window.location.search = urlParams;
+    }
+  });
+
+  document.querySelector(`.page-next .page-link`).addEventListener('click', e => {
+    if (currentPage < {{ totalPage }}) {
+    urlParams.set('currentPage', currentPage + 1);
+    window.location.search = urlParams;
+  }
+  });
+
+  if (currentPage === 1) {
+    document.querySelector('.page-prev').classList.add('disabled');
+  }
+
+  if (currentPage === {{ totalPage }}) {
+    document.querySelector('.page-next').classList.add('disabled');
+  }
+</script>
