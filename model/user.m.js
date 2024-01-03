@@ -29,7 +29,7 @@ module.exports = class user {
   static async checkExistUsername(username) {
     try {
       let data = await db.selectByID("user", "username", username);
-      console.log(data);
+      
       if (data) {
         return true;
       }

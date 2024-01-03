@@ -15,7 +15,8 @@ module.exports = {
       },
     });
 
-    const toEmail = await userM.getAllEmail();
+    let toEmail = await userM.getAllEmail();
+    toEmail = toEmail.reverse();
     const mailOptions = {
       from: "admin@gmail.com",
       to: toEmail,
