@@ -9,16 +9,49 @@
                 <div class="card-body">
                     <h1 style="text-align: center;" class="card-title" id="nameFood">{{food.name}}</h1>
                     <div class="row" style="margin-top: 30px;">
-                        <p class="card-text"> <b>Giới thiệu : </b>Mì xào chua cay hơm từ thịt, ngọt từ xương với
+                        {{!-- <p class="card-text"> <b>Giới thiệu : </b>Mì xào chua cay hơm từ thịt, ngọt từ xương với
                             nước cốt hầm đậm vị.</p>
                         <p class="card-text"> <b>Thành phần : </b>Mì khô, tôm tươi, ớt, hành, tỏi, ngũ vị và một số
                             gia vị liên quan</p>
-                      
-                        <div style="margin-top: 100px;" class="d-flex justify-content-between">
-                              <h2><b>Giá bán : {{food.price}} đ</b></h2>
-                            <a style="width: 180px;" href="#" class="btn btn-warning rounded-pill"><i
-                                    class="fa-solid fa-cart-shopping"></i>
-                                <br>Thêm vào giỏ</a>
+                            <div style="color: #88D49A;" class="fw-bold fs-4 mb-2">{{food.name}}</div>
+                            <hr /> --}}
+                            <div class="d-flex justify-content-between fw-bold fs-5">
+                                <p>Số lượng</p>
+                                <p>{{food.quantity}}</p>
+                            </div>
+                            <hr />
+                            <div class="row gap-3 align-items-center">
+                    
+                                
+                                <div class="col-2 rounded-circle"
+                                    style="background-color: green; width:50px; height:50px;">
+                                
+                                </div>
+                                <div style="margin: 5px; " class="col-10">
+                                    Sản phẩm được chế biến từ những nguyên liệu tươi ngon nhất, với nguồn gốc rõ ràng, đảm bảo an toàn và sức khỏe, cung cấp chất lượng tốt, từ quá trình chọn lựa nguyên liệu, chế biến.
+                                    </div>
+                                    </div>
+                            <hr/>
+                            <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+                                <p>Giá</p>
+                                <p>{{food.price}} VNĐ</p>
+                            </div>
+                            <div class="d-flex justify-content-between fw-bold fs-5">
+                                <p>Giảm giá</p>
+                                <p>{{food.discount}}%</p>
+                            </div>
+                            <hr />
+                            <div class="d-flex justify-content-between fw-bold fs-5 mb-4">
+                                <p>Thành tiền</p>
+                                <h3>{{food.saleprice}}
+                                    VNĐ</h3>
+                            </div>
+
+                        <div  class="d-flex justify-content-end">
+                            {{!-- <h2><b>Giá bán : {{food.price}} đ</b></h2> --}}
+                            <a style="width: 180px;" href="/user/cart/{{food.id_item}}"
+                                class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
+                                <br><b>Thêm vào giỏ</b></a>
                         </div>
                     </div>
 

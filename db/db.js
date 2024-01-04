@@ -1,7 +1,7 @@
 const { pgp, db } = require("../configs/DBconnection");
 
 module.exports = {
-  query: async(query) => {
+  query: async (query) => {
     let dbcn = null;
     try {
       dbcn = await db.connect();
@@ -31,7 +31,7 @@ module.exports = {
     let dbcn = null;
     try {
       dbcn = await db.connect();
-      data = await dbcn.oneOrNone(
+      const data = await dbcn.oneOrNone(
         `SELECT * FROM "${tbName}" where "${fieldname}" = $1`,
         [value]
       );
@@ -132,7 +132,9 @@ module.exports = {
     try {
       dbcn = await db.connect();
       //let data = [];
-      data = await dbcn.any(`SELECT * FROM "item" i WHERE i.name ILIKE '%${nameFood}%'   order by i.id_item LIMIT 20`);
+      data = await dbcn.any(
+        `SELECT * FROM "item" i WHERE i.name ILIKE '%${nameFood}%'   order by i.id_item LIMIT 20`
+      );
 
       return data;
     } catch (error) {
@@ -146,7 +148,8 @@ module.exports = {
     try {
       dbcn = await db.connect();
       //let data = [];
-      data = await dbcn.any(`SELECT * FROM "item" i WHERE  i.name ILIKE '%${nameFood}%'  order by i.id_item desc
+      data =
+        await dbcn.any(`SELECT * FROM "item" i WHERE  i.name ILIKE '%${nameFood}%'  order by i.id_item desc
       LIMIT 20`);
       return data;
     } catch (error) {
@@ -220,6 +223,13 @@ module.exports = {
       throw error;
     } finally {
       dbcn.done();
+    }
+  },
+  addFood: async (idFood, IdUser) => {
+    try {
+      await db.one(`INSERT INTO "cart"(id_user,id_item,quantity) VALUES(${IdUser},${idFood},1) returning *`);
+    } catch (error) {
+      throw error;
     }
   },
 };

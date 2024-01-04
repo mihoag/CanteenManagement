@@ -24,5 +24,7 @@ route.get("/menu/favorite",menuController.favoriteFoods );
 route.get("/menu/all",menuController.allFoods );
 //detail food
 route.get("/menu/:FoodId", detailFoodController.detailFood);
+//add item to cart
+route.get("/cart/:FoodId",cartController.AddItemToCart);
 route.get("/", homeController.showHome);
 module.exports = route;
