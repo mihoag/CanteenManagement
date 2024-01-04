@@ -1,7 +1,7 @@
 class productsController {
     async showProducts(req, res, next) {
         try {
-
+            
             res.render("admin/products", {
                 layout: "adminLayout",
                 title: "Products",

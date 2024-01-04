@@ -1,6 +1,6 @@
 const db = require("../db/db");
 const pageSize = 5;
-class Order {
+class Product {
   constructor(order) {
     this.id_order = order?.id_order;
     this.id_user = order?.id_user;
@@ -109,4 +109,4 @@ class Order {
   }
 }
 
-module.exports = Order;
+module.exports = Product;

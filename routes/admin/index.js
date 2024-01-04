@@ -5,6 +5,6 @@ route.use("/", require("./marketing.r"));
 route.use("/marketing", require("./marketing.r"));
 route.use("/statistics", require("./statistics.r"));
 route.use('/customers', require('./customers.r'))
-route.get('/products', require('./products.r'))
-route.get('/orders', require('./orders.r'))
+route.use('/products', require('./products.r'))
+route.use('/orders', require('./orders.r'))
 module.exports = route;

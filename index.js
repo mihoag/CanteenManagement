@@ -66,6 +66,16 @@ const handlebars = exphbs.create({
                 aria-valuemin="0" aria-valuemax="100"></div>`;
             }
             return data;
+        },
+        times: function(n, block) {
+            let accum = '';
+            for(let i = 1; i < n; ++i){  
+                accum += block.fn(i);
+            }
+            return accum;
+         },
+        ifEquals: function(arg1, arg2, options) {
+            return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
         }
     }
 });
