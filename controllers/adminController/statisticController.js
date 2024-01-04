@@ -82,8 +82,10 @@ class statictisController {
   }
   async getData2Table(req, res, next) {
     try {
-      const page = parseInt(req.params.page)
-      const rs = await statisticsM.getStas2Table();
+      let { page, month, year } = req.params
+      month = parseInt(month)
+      year = parseInt(year)
+      const rs = await statisticsM.getStas2Table(month, year);
       const data = [];
       for (let i = (page - 1) * 10; i < Math.min(page * 10, rs.length); i++) {
         data.push(rs[i]);

@@ -10,7 +10,7 @@ route.get("/4", statictisController.showStatisticsPage4);
 route.get('/revenue', statictisController.getDataRevenue);
 route.get('/revenueW/:from/:to', statictisController.getDataRevenueWeek);
 
-route.get("/stats2/:page", statictisController.getData2Table);
+route.get("/stats2/:page/:month/:year", statictisController.getData2Table);
 route.get("/stats4/:page", statictisController.getData4Table);
 
 
