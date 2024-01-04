@@ -39,27 +39,27 @@
     <canvas id="myPieChart" class="mb-5"></canvas>
   </div>
   {{! select }}
-  {{!-- <div class="d-flex align-items-center justify-content-between mb-3 fs-5 px-5 fw-bold">
+  <div class="d-flex align-items-center justify-content-between mb-3 fs-5 px-5 fw-bold">
     <div class="d-flex align-items-center">
-      <button type="button" class="btn btn-outline-secondary">
+      <button type="button" class="btn btn-outline-secondary" onclick="prevMonthClick()">
         ❮
       </button>
-      <div class="px-3">August</div>
-      <button type="button" class="btn btn-outline-secondary">
+      <div class="px-3" id="Month">All</div>
+      <button type="button" class="btn btn-outline-secondary" onclick="nextMonthClick()">
         ❯
       </button>
     </div>
 
     <div class="d-flex align-items-center">
-      <button type="button" class="btn btn-outline-secondary">
+      <button type="button" class="btn btn-outline-secondary" onclick="prevYearClick()">
         ❮
       </button>
-      <div class="px-3">2023</div>
-      <button type="button" class="btn btn-outline-secondary">
+      <div class="px-3" id="Year">All</div>
+      <button type="button" class="btn btn-outline-secondary" onclick="nextYearClick()">
         ❯
       </button>
     </div>
-  </div> --}}
+  </div>
 
   <table class="table align-middle mb-0 bg-white fs-5 text-center table-bordered">
     <thead class="table-light">

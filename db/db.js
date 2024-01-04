@@ -1,6 +1,19 @@
 const { pgp, db } = require("../configs/DBconnection");
 
 module.exports = {
+  query: async(query) => {
+    let dbcn = null;
+    try {
+      dbcn = await db.connect();
+      //let data = [];
+      data = await dbcn.any(query);
+      return data;
+    } catch (error) {
+      throw error;
+    } finally {
+      dbcn.done();
+    }
+  },
   selectAll: async (tbName) => {
     let dbcn = null;
     try {
@@ -194,6 +207,20 @@ module.exports = {
       data = await dbcn.any(`SELECT * FROM "${tbName}" i WHERE
       i.name ILIKE '%${nameFood}%'`);
 
+      return data;
+    } catch (error) {
+      throw error;
+    } finally {
+      dbcn.done();
+    }
+  },
+
+  selectAllByPage: async (tbName, pageSize, pageNumber) => {
+    let dbcn = null;
+    try {
+      dbcn = await db.connect();
+      const offset = (pageNumber - 1) * pageSize;
+      data = await dbcn.any(`SELECT * FROM "${tbName}" LIMIT ${pageSize} OFFSET ${offset}`);
       return data;
     } catch (error) {
       throw error;

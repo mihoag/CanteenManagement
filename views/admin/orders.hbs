@@ -6,13 +6,8 @@
                 <div class="position-relative">
                     <span class="position-absolute search"><i
                             class="fa fa-search"></i></span>
-                    <input class="form-control w-100 order-table"
-                        placeholder="Search by name">
-                </div>
-
-                <div class="px-2">
-                    <span>Filters <i class="fa fa-angle-down"></i></span>
-                    <i class="fa fa-ellipsis-h ms-3"></i>
+                    <input id="searchTxt" class="form-control w-100 order-table"
+                        placeholder="Search by name" >
                 </div>
                 <!-- Button trigger modal -->
                 <div>
@@ -44,6 +39,118 @@
                                             <div id="droptxt"
                                                 class="item-list"></div>
                                             <div id="content" class="content">
+                                                <div class="list">
+                                                    <input type="checkbox"
+                                                        id="apple" class="list"
+                                                        value="Apple" />
+                                                    <label for="apple"
+                                                        class="list name">Apple</label>
+                                                    <input type="text"
+                                                        class="price list"
+                                                        readonly
+                                                        value="25000&#8363">
+                                                    <input type="hidden"
+                                                        class="list quantity"
+                                                        min="1" value="1" />
+                                                </div>
+                                                <div class="list">
+                                                    <input type="checkbox"
+                                                        id="apple" class="list"
+                                                        value="Apple" />
+                                                    <label for="apple"
+                                                        class="list name">Apple</label>
+                                                    <input type="text"
+                                                        class="price list"
+                                                        readonly
+                                                        value="25000&#8363">
+                                                    <input type="hidden"
+                                                        class="list quantity"
+                                                        min="1" value="1" />
+                                                </div>
+                                                <div class="list">
+                                                    <input type="checkbox"
+                                                        id="apple" class="list"
+                                                        value="Apple" />
+                                                    <label for="apple"
+                                                        class="list name">Apple</label>
+                                                    <input type="text"
+                                                        class="price list"
+                                                        readonly
+                                                        value="25000&#8363">
+                                                    <input type="hidden"
+                                                        class="list quantity"
+                                                        min="1" value="1" />
+                                                </div>
+                                                <div class="list">
+                                                    <input type="checkbox"
+                                                        id="apple" class="list"
+                                                        value="Apple" />
+                                                    <label for="apple"
+                                                        class="list name">Apple</label>
+                                                    <input type="text"
+                                                        class="price list"
+                                                        readonly
+                                                        value="25000&#8363">
+                                                    <input type="hidden"
+                                                        class="list quantity"
+                                                        min="1" value="1" />
+                                                </div>
+                                                <div class="list">
+                                                    <input type="checkbox"
+                                                        id="apple" class="list"
+                                                        value="Apple" />
+                                                    <label for="apple"
+                                                        class="list name">Apple</label>
+                                                    <input type="text"
+                                                        class="price list"
+                                                        readonly
+                                                        value="25000&#8363">
+                                                    <input type="hidden"
+                                                        class="list quantity"
+                                                        min="1" value="1" />
+                                                </div>
+                                                <div class="list">
+                                                    <input type="checkbox"
+                                                        id="apple" class="list"
+                                                        value="Apple" />
+                                                    <label for="apple"
+                                                        class="list name">Apple</label>
+                                                    <input type="text"
+                                                        class="price list"
+                                                        readonly
+                                                        value="25000&#8363">
+                                                    <input type="hidden"
+                                                        class="list quantity"
+                                                        min="1" value="1" />
+                                                </div>
+                                                <div class="list">
+                                                    <input type="checkbox"
+                                                        id="apple" class="list"
+                                                        value="Apple" />
+                                                    <label for="apple"
+                                                        class="list name">Apple</label>
+                                                    <input type="text"
+                                                        class="price list"
+                                                        readonly
+                                                        value="25000&#8363">
+                                                    <input type="hidden"
+                                                        class="list quantity"
+                                                        min="1" value="1" />
+                                                </div>
+                                                <div class="list">
+                                                    <input type="checkbox"
+                                                        id="apple" class="list"
+                                                        value="Apple" />
+                                                    <label for="apple"
+                                                        class="list name">Apple</label>
+                                                    <input type="text"
+                                                        class="price list"
+                                                        readonly
+                                                        value="25000&#8363">
+                                                    <input type="hidden"
+                                                        class="list quantity"
+                                                        min="1" value="1" />
+                                                </div>
                                                 <div class="list">
                                                     <input type="checkbox"
                                                         id="apple" class="list"
@@ -163,9 +270,9 @@
                                         class="form-check-input"
                                         type="checkbox"></th>
                                 <th scope="col" width="5%">#</th>
-                                <th scope="col" width="30%">Khách hàng</th>
+                                <th scope="col" width="10%">Khách hàng</th>
                                 <th scope="col" class="text-center"
-                                    width="15%">Ngày mua</th>
+                                    width="20%">Ngày mua</th>
                                 <th scope="col" class="text-center"
                                     width="10%">Tổng tiền</th>
                                 <th scope="col" class="text-center"
@@ -174,17 +281,18 @@
                                     width="10%">Chi tiết</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="orders-list">
+                            {{#each data.orders}}
                             <tr>
                                 <th scope="row"><input class="form-check-input"
                                         type="checkbox"></th>
-                                <td>12</td>
-                                <td>Trương Văn Hoài</td>
-                                <td class="text-center">13 Dec, 2023</td>
+                                <td>#{{this.id_order}}</td>
+                                <td>{{this.user.name}}</td>
+                                <td class="text-center">{{this.order_date}}</td>
                                 <td class="text-center"><span
-                                        class="fw-bolder">70,000&#8363</span></td>
+                                        class="fw-bolder">{{this.total_price}}&#8363</span></td>
                                 <td class="text-center"><span
-                                        class="fw-bolder">Paid</span></td>
+                                        class="fw-bolder">{{#if this.payment}}Paid {{else}}Pending{{/if}}</span></td>
                                 <td class="text-center">
                                     <button
                                         class="btn btn-xs btn-light detail-btn">
@@ -196,7 +304,7 @@
                                 </td>
                             </tr>
                             <tr class="detail-row">
-                                <td colspan="8" class="detail-col">
+                                <td colspan="7" class="detail-col">
                                     <div class="container-fluid detail-table">
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -206,9 +314,8 @@
                                                             class="invoice-title">
                                                             <h4
                                                                 class="float-end font-size-15">Hóa
-                                                                đơn
-                                                                #12 <span
-                                                                    class="badge bg-success font-size-12 ms-2">Paid</span></h4>
+                                                                đơn #{{this.id_order}}<span
+                                                                    class="badge bg-success font-size-12 ms-2">{{#if this.payment}}Paid {{else}}Pending{{/if}}</span></h4>
                                                             <div class="mb-4">
                                                                 <h2
                                                                     class="mb-1 text-muted">HCMUS
@@ -227,15 +334,14 @@
                                                                 <p
                                                                     class="mb-1"><i
                                                                         class="uil uil-envelope-alt me-1"></i>
-                                                                    xyz@987.com</p>
+                                                                    canteen@hcmus.edu.vn</p>
                                                                 <p><i
                                                                         class="uil uil-phone me-1"></i>
-                                                                    012-345-6789</p>
+                                                                    0123-456-789</p>
                                                             </div>
                                                         </div>
 
                                                         <hr class="my-4">
-
                                                         <div class="row">
                                                             <div
                                                                 class="col-sm-6">
@@ -245,12 +351,9 @@
                                                                         class="font-size-16 mb-3">Khách
                                                                         hàng</h5>
                                                                     <h5
-                                                                        class="font-size-15 mb-2">Trương
-                                                                        Văn
-                                                                        Hoài</h5>
+                                                                        class="font-size-15 mb-2">{{this.user.name}}</h5>
                                                                     <p
-                                                                        class="mb-1">abc@armyspy.com</p>
-                                                                    <p>001-234-5678</p>
+                                                                        class="mb-1">{{this.user.username}}</p>
                                                                 </div>
                                                             </div>
                                                             <!-- end col -->
@@ -263,9 +366,7 @@
                                                                         <h5
                                                                             class="font-size-15 mb-1">Ngày
                                                                             mua</h5>
-                                                                        <p>13
-                                                                            Dec,
-                                                                            2023</p>
+                                                                        <p>{{this.order_date}}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -288,8 +389,8 @@
                                                                                 style="width: 70px;">No.</th>
                                                                             <th>Mặt
                                                                                 hàng</th>
-                                                                            <th>Giá</th>
-                                                                            <th>Số
+                                                                            <th class="text-center">Giá</th>
+                                                                            <th class="text-center">Số
                                                                                 lượng</th>
                                                                             <th
                                                                                 class="text-end"
@@ -298,41 +399,22 @@
                                                                         </tr>
                                                                     </thead><!-- end thead -->
                                                                     <tbody>
+                                                                        {{#each this.items}}
                                                                         <tr>
                                                                             <th
-                                                                                scope="row">01</th>
+                                                                                scope="row">{{this.index}}</th>
                                                                             <td>
                                                                                 <div>
                                                                                     <h5
-                                                                                        class="text-truncate font-size-14 mb-1">Phở
-                                                                                        bò
-                                                                                        tái</h5>
+                                                                                        class="text-truncate font-size-14 mb-1">{{this.name}}</h5>
                                                                                 </div>
                                                                             </td>
-                                                                            <td>25,000&#8363</td>
-                                                                            <td>1</td>
+                                                                            <td class="text-center">{{this.price}}&#8363</td>
+                                                                            <td class="text-center">{{this.quantity}}</td>
                                                                             <td
-                                                                                class="text-end">25,000&#8363</td>
+                                                                                class="text-end">{{this.money}}&#8363</td>
                                                                         </tr>
-                                                                        <!-- end tr -->
-                                                                        <tr>
-                                                                            <th
-                                                                                scope="row">02</th>
-                                                                            <td>
-                                                                                <div>
-                                                                                    <h5
-                                                                                        class="text-truncate font-size-14 mb-1">Cơm
-                                                                                        chiên
-                                                                                        dương
-                                                                                        châu</h5>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>25,000&#8363</td>
-                                                                            <td>2</td>
-                                                                            <td
-                                                                                class="text-end">50,000&#8363</td>
-                                                                        </tr>
-                                                                        <!-- end tr -->
+                                                                        {{/each}}                                                                        
                                                                         <tr>
                                                                             <th
                                                                                 scope="row"
@@ -340,7 +422,7 @@
                                                                                 class="text-end">Tổng
                                                                                 mua</th>
                                                                             <td
-                                                                                class="text-end">75,000&#8363</td>
+                                                                                class="text-end">{{this.originPrice}}&#8363</td>
                                                                         </tr>
                                                                         <!-- end tr -->
                                                                         <tr>
@@ -351,8 +433,7 @@
                                                                                 Giảm
                                                                                 giá:</th>
                                                                             <td
-                                                                                class="border-0 text-end">-
-                                                                                5,000&#8363</td>
+                                                                                class="border-0 text-end">-{{this.discount}}&#8363</td>
                                                                         </tr>
                                                                         <!-- end tr -->
                                                                         <tr>
@@ -363,7 +444,7 @@
                                                                                 tiền</th>
                                                                             <td
                                                                                 class="border-0 text-end"><h4
-                                                                                    class="m-0 fw-semibold">70,000&#8363</h4></td>
+                                                                                    class="m-0 fw-semibold">{{this.total_price}}&#8363</h4></td>
                                                                         </tr>
                                                                         <!-- end tr -->
                                                                     </tbody><!-- end tbody -->
@@ -387,232 +468,17 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row"><input class="form-check-input"
-                                        type="checkbox"></th>
-                                <td>12</td>
-                                <td>admin</td>
-                                <td class="text-center">13 Dec, 2023</td>
-                                <td class="text-center"><span
-                                        class="fw-bolder">70,000&#8363</span></td>
-                                <td class="text-center"><span
-                                        class="fw-bolder">Paid</span></td>
-                                <td class="text-center">
-                                    <button
-                                        class="btn btn-xs btn-light detail-btn">
-                                        <i
-                                            class="fa-solid fa-angles-down"
-                                            style="color: #a5d737;"></i>
-
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="detail-row">
-                                <td colspan="8" class="detail-col">
-                                    <div class="container-fluid detail-table">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="card border-0">
-                                                    <div class="card-body">
-                                                        <div
-                                                            class="invoice-title">
-                                                            <h4
-                                                                class="float-end font-size-15">Hóa
-                                                                đơn
-                                                                #12 <span
-                                                                    class="badge bg-success font-size-12 ms-2">Paid</span></h4>
-                                                            <div class="mb-4">
-                                                                <h2
-                                                                    class="mb-1 text-muted">HCMUS
-                                                                    CANTEEN</h2>
-                                                            </div>
-                                                            <div
-                                                                class="text-muted">
-                                                                <p
-                                                                    class="mb-1">227
-                                                                    Đ. Nguyễn
-                                                                    Văn Cừ,
-                                                                    Phường 4,
-                                                                    Quận 5,
-                                                                    Thành phố Hồ
-                                                                    Chí Minh</p>
-                                                                <p
-                                                                    class="mb-1"><i
-                                                                        class="uil uil-envelope-alt me-1"></i>
-                                                                    xyz@987.com</p>
-                                                                <p><i
-                                                                        class="uil uil-phone me-1"></i>
-                                                                    012-345-6789</p>
-                                                            </div>
-                                                        </div>
-
-                                                        <hr class="my-4">
-
-                                                        <div class="row">
-                                                            <div
-                                                                class="col-sm-6">
-                                                                <div
-                                                                    class="text-muted">
-                                                                    <h5
-                                                                        class="font-size-16 mb-3">Khách
-                                                                        hàng</h5>
-                                                                    <h5
-                                                                        class="font-size-15 mb-2">admin</h5>
-                                                                    <p
-                                                                        class="mb-1">abc@armyspy.com</p>
-                                                                    <p>001-234-5678</p>
-                                                                </div>
-                                                            </div>
-                                                            <!-- end col -->
-                                                            <div
-                                                                class="col-sm-6">
-                                                                <div
-                                                                    class="text-muted text-sm-end">
-                                                                    <div
-                                                                        class="mt-4">
-                                                                        <h5
-                                                                            class="font-size-15 mb-1">Ngày
-                                                                            mua</h5>
-                                                                        <p>13
-                                                                            Dec,
-                                                                            2023</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- end col -->
-                                                        </div>
-                                                        <!-- end row -->
-
-                                                        <div class="py-2">
-                                                            <h5
-                                                                class="font-size-15">Đơn
-                                                                mua</h5>
-
-                                                            <div
-                                                                class="table-responsive">
-                                                                <table
-                                                                    class="table align-middle table-nowrap table-centered mb-0">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th
-                                                                                style="width: 70px;">No.</th>
-                                                                            <th>Mặt
-                                                                                hàng</th>
-                                                                            <th>Giá</th>
-                                                                            <th>Số
-                                                                                lượng</th>
-                                                                            <th
-                                                                                class="text-end"
-                                                                                style="width: 120px;">Giá
-                                                                                tiền</th>
-                                                                        </tr>
-                                                                    </thead><!-- end thead -->
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th
-                                                                                scope="row">01</th>
-                                                                            <td>
-                                                                                <div>
-                                                                                    <h5
-                                                                                        class="text-truncate font-size-14 mb-1">Phở
-                                                                                        bò
-                                                                                        tái</h5>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>25,000&#8363</td>
-                                                                            <td>1</td>
-                                                                            <td
-                                                                                class="text-end">25,000&#8363</td>
-                                                                        </tr>
-                                                                        <!-- end tr -->
-                                                                        <tr>
-                                                                            <th
-                                                                                scope="row">02</th>
-                                                                            <td>
-                                                                                <div>
-                                                                                    <h5
-                                                                                        class="text-truncate font-size-14 mb-1">Cơm
-                                                                                        chiên
-                                                                                        dương
-                                                                                        châu</h5>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>25,000&#8363</td>
-                                                                            <td>2</td>
-                                                                            <td
-                                                                                class="text-end">50,000&#8363</td>
-                                                                        </tr>
-                                                                        <!-- end tr -->
-                                                                        <tr>
-                                                                            <th
-                                                                                scope="row"
-                                                                                colspan="4"
-                                                                                class="text-end">Tổng
-                                                                                mua</th>
-                                                                            <td
-                                                                                class="text-end">75,000&#8363</td>
-                                                                        </tr>
-                                                                        <!-- end tr -->
-                                                                        <tr>
-                                                                            <th
-                                                                                scope="row"
-                                                                                colspan="4"
-                                                                                class="border-0 text-end">
-                                                                                Giảm
-                                                                                giá:</th>
-                                                                            <td
-                                                                                class="border-0 text-end">-
-                                                                                5,000&#8363</td>
-                                                                        </tr>
-                                                                        <!-- end tr -->
-                                                                        <tr>
-                                                                            <th
-                                                                                scope="row"
-                                                                                colspan="4"
-                                                                                class="border-0 text-end">Thành
-                                                                                tiền</th>
-                                                                            <td
-                                                                                class="border-0 text-end"><h4
-                                                                                    class="m-0 fw-semibold">70,000&#8363</h4></td>
-                                                                        </tr>
-                                                                        <!-- end tr -->
-                                                                    </tbody><!-- end tbody -->
-                                                                </table><!-- end table -->
-                                                            </div><!-- end table responsive -->
-                                                            <div
-                                                                class="d-print-none mt-4">
-                                                                <div
-                                                                    class="float-end">
-                                                                    <a
-                                                                        href="javascript:window.print()"
-                                                                        class="btn btn-success me-1"><i
-                                                                            class="fa fa-print"></i></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>
                 <div class="row mx-2 justify-content-end d-flex">
                     <nav style="width:auto">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link"
-                                    href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link"
-                                    href="#">1</a></li>
-                            <li class="page-item"><a class="page-link"
-                                    href="#">2</a></li>
-                            <li class="page-item"><a class="page-link"
-                                    href="#">3</a></li>
-                            <li class="page-item"><a class="page-link"
-                                    href="#">Next</a></li>
+                        <ul class="pagination" id="pages-list">
+                            {{#times data.pages}}
+                            <li class="page-item"><a class="page-link paging-btn{{#ifEquals this @root.data.page}} active{{/ifEquals}}"
+                                    href="#">{{this}}</a></li>
+                            {{/times}}
                         </ul>
                     </nav>
                 </div>
