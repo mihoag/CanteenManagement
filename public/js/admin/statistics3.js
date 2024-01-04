@@ -18,7 +18,7 @@ function LineChart(options) {
       'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
     ],
     datasets: [{
-      label: 'Renvenue',
+      label: 'Doanh thu',
       data: dataSet,
       fill: false,
       borderColor: 'rgb(75, 192, 192)',
