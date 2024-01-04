@@ -3,7 +3,6 @@ class customersController {
     async showCustomers(req, res, next) {
         try {
             let listCus = await customermodel.getAll();
-            console.log(listCus)
             res.render("admin/customers", {
                 layout: "adminLayout",
                 title: "Customers",
@@ -21,7 +20,6 @@ class customersController {
         try {
             let keyword = req.body.keyword;
             let data = await customermodel.searchByName(keyword);
-            console.log(data);
             res.status(200).json({ data: data });
         } catch (error) {
             next(error)

@@ -5,12 +5,7 @@
 			<div class="my-2 d-flex justify-content-between align-items-center">
 				<div class="position-relative">
 					<span class="position-absolute search"><i class="fa fa-search"></i></span>
-					<input class="form-control w-100 order-table" placeholder="Search by name">
-				</div>
-
-				<div class="px-2">
-					<span>Filters <i class="fa fa-angle-down"></i></span>
-					<i class="fa fa-ellipsis-h ms-3"></i>
+					<input class="form-control w-100 order-table" id="searchTxt" placeholder="Search by name">
 				</div>
 
 				<!-- Button trigger modal -->
@@ -85,26 +80,26 @@
 								<th scope="col" width="5%"><input class="form-check-input" type="checkbox"></th>
 								<th scope="col" width="5%">#</th>
 								<th scope="col" width="30%">Tên mặt hàng</th>
-								<th scope="col" class="text-center" width="20%"><span>Giá</span></th>
-								<th scope="col" class="text-center" width="10%"><span>Giảm giá</span></th>
-								<th scope="col" width="10%" class="text-center">Đã bán</th>
-								<th scope="col" width="10%" class="text-center">Mở bán</th>
+								<th scope="col" class="text-center" width="20%"><span>Giá gốc</span></th>
+								<th scope="col" class="text-center" width="10%"><span>Giá bán</span></th>
+								<th scope="col" width="10%" class="text-center">Giảm giá</th>
+								<th scope="col" width="10%" class="text-center">Số lượng</th>
 								<th scope="col" class="text-center" width="10%">Chi tiết</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="products-list">
+							{{#each data.items}}
 							<tr>
 								<th scope="row"><input class="form-check-input" type="checkbox"></th>
-								<td>12</td>
-								<td>Bún bò Huế</td>
-								<td class="text-center"><span class="fw-bolder">25,000&#8363</span></td>
-								<td class="text-center">8%</td>
-								<td class="text-center">1234</td>
-								<td class="text-center">Còn</td>
+								<td>{{this.id_item}}</td>
+								<td>{{this.name}}</td>
+								<td class="text-center">{{this.cost}}&#8363</td>
+								<td class="text-center fw-bold">{{this.price}}&#8363</td>
+								<td class="text-center">{{this.discount}}%</td>
+								<td class="text-center">{{this.quantity}}</td>
 								<td class="text-center">
 									<button class="btn btn-xs btn-light detail-btn">
 										<i class="fa-solid fa-angles-down" style="color: #a5d737;"></i>
-
 									</button>
 								</td>
 							</tr>
@@ -117,26 +112,26 @@
 													<img src="img/user/logo.png" alt="HCMUS Canteen" width="300" />
 												</div>
 												<div>
-													<img src="img/user/pho.png" alt style="object-fit: cover;" width="400" />
+													<img src="{{this.image}}" alt style="object-fit: cover;" width="400" />
 												</div>
 											</div>
 											<div class="col-6">
-												<div style="color: #88D49A;" class="fw-bold fs-4 mb-2">Cơm
-													gà xối mỡ</div>
-												<div class="d-flex justify-content-between" style="color: #828282;">
-													<p>Món mới</p>
-													<p>Mở bán: 20.11.2023</p>
+												<div style="color: #88D49A;" class="fw-bold fs-4 mb-2">{{this.name}}</div>
+												<hr />
+												<div class="d-flex justify-content-between fw-bold fs-5">
+													<p>Số lượng</p>
+													<p>{{this.quantity}}</p>
 												</div>
 												<hr />
 												<div class="row gap-3 align-items-center">
 													{{! }}
-													<div class="col-2 rounded-circle" style="background-color:#A7E8B7; width:50px; height:50px;">
-													</div>
-													<div class="col-10">Cơm gà
+													{{!-- <div class="col-2 rounded-circle" style="background-color:#A7E8B7; width:50px; height:50px;">
+													</div> --}}
+													{{!-- <div class="col-10">Cơm gà
 														là món ăn ngon, phù hợp
 														với mọi người, tiện
 														lợi cho các bữa ăn trong
-														ngày.</div>
+														ngày.</div> --}}
 
 													{{! }}
 													<div class="col-2 rounded-circle" style="background-color:#A7E8B7; width:50px; height:50px;">
@@ -149,18 +144,19 @@
 													{{! }}
 												</div>
 												<hr />
+												
 												<div class="d-flex justify-content-between fw-bold fs-5 mb-3">
 													<p>Giá</p>
-													<p>25.000 VNĐ</p>
+													<p>{{this.price}} VNĐ</p>
 												</div>
 												<div class="d-flex justify-content-between fw-bold fs-5">
 													<p>Giảm giá</p>
-													<p>8%</p>
+													<p>{{this.discount}}%</p>
 												</div>
 												<hr />
 												<div class="d-flex justify-content-between fw-bold fs-5 mb-4">
 													<p>Thành tiền</p>
-													<p style="color: #5B9A6A;">23.000
+													<p style="color: #5B9A6A;">{{this.saleprice}}
 														VNĐ</p>
 												</div>
 											</div>
@@ -177,11 +173,7 @@
 													</button>
 
 													<button class="btn btn-xs btn-danger">
-														<i class="ace-icon fa fa-trash-o bigger-120"></i>
-													</button>
-
-													<button class="btn btn-xs btn-warning">
-														<i class="ace-icon fa fa-flag bigger-120"></i>
+														<i class="ace-icon fa fa-trash bigger-120"></i>
 													</button>
 												</div>
 											</div>
@@ -189,18 +181,18 @@
 									</div>
 								</td>
 							</tr>
+							{{/each}}
 						</tbody>
 					</table>
 				</div>
 				<div class="row mx-2 justify-content-end d-flex">
 					<nav style="width:auto">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">Next</a></li>
-						</ul>
+						<ul class="pagination" id="pages-list">
+                            {{#times data.pages}}
+                            <li class="page-item"><a class="page-link paging-btn{{#ifEquals this @root.data.page}} active{{/ifEquals}}"
+                                    href="#">{{this}}</a></li>
+                            {{/times}}
+                        </ul>
 					</nav>
 				</div>
 			</div>

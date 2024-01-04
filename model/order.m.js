@@ -1,5 +1,5 @@
 const db = require("../db/db");
-const pageSize = 5;
+const pageSize = 10;
 class Order {
   constructor(order) {
     this.id_order = order?.id_order;
@@ -19,7 +19,7 @@ class Order {
       let orders;
       if (!search) {
         totalItems = await db.query(
-          `SELECT * FROM "order" ORDER BY "order_date" LIMIT 50`
+          `SELECT * FROM "order" ORDER BY "order_date" LIMIT 100`
         );
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
@@ -28,12 +28,12 @@ class Order {
         );
       } else {
         totalItems = await db.query(
-          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND "user"."name" LIKE '${search}%' ORDER BY "order_date" LIMIT 50`
+          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "order_date" LIMIT 50`
         );
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         orders = await db.query(
-          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND "user"."name" LIKE '${search}%' ORDER BY "order_date" LIMIT ${pageSize} OFFSET ${offset}`
+          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "order_date" LIMIT ${pageSize} OFFSET ${offset}`
         );
       }
       const listOrders = await Promise.all(
