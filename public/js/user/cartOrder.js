@@ -45,8 +45,12 @@ document.querySelectorAll(".btn--up").forEach((el) =>
     e.target.parentNode.parentNode.querySelector("input[type=number]").stepUp();
   })
 );
+
 document
   .querySelectorAll(".btn--modify-amount")
   .forEach((el) => el.addEventListener("click", updateOrderDetail));
 
+document
+  .querySelectorAll("input[type=number]")
+  .forEach((el) => el.addEventListener("change", updateOrderDetail));
 //onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
