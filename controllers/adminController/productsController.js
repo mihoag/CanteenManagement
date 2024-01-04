@@ -29,5 +29,18 @@ class productsController {
             next(error);
         }
     }
+
+    async addProduct(req, res, next) {
+        try {
+            const result = await Product.addProduct(req.body);
+            if(result[0]) {
+                res.status(200).json(result[1]);
+            } else {
+                res.status(406).json(result[1]);
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 module.exports = new productsController();

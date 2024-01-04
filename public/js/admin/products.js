@@ -78,11 +78,15 @@ function renderProducts(data) {
               <img src="img/user/logo.png" alt="HCMUS Canteen" width="300" />
             </div>
             <div>
-              <img src="${item.image}" alt style="object-fit: cover;" width="400" />
+              <img src="${
+                item.image
+              }" alt style="object-fit: cover;" width="400" />
             </div>
           </div>
           <div class="col-6">
-            <div style="color: #88D49A;" class="fw-bold fs-4 mb-2">${item.name}</div>
+            <div style="color: #88D49A;" class="fw-bold fs-4 mb-2">${
+              item.name
+            }</div>
             <hr />
             <div class="d-flex justify-content-between fw-bold fs-5">
               <p>Số lượng</p>
@@ -100,10 +104,11 @@ function renderProducts(data) {
 
               <div class="col-2 rounded-circle" style="background-color:#A7E8B7; width:50px; height:50px;">
               </div>
-              <div class="col-10">Sản phẩm
-                được chế biến từ nguyên
-                liệu tươi ngon,
-                nguồn gốc rõ ràng.</div>
+              <div class="col-10">${
+                item.describe
+                  ? item.describe
+                  : "Sản phẩm được chế biến từ nguyên liệu tươi ngon, nguồn gốc rõ ràng."
+              }</div>
 
             </div>
             <hr />
@@ -145,7 +150,7 @@ function renderProducts(data) {
     </td>
   </tr>
     `;
-    body.innerHTML += tr + '\n';
+    body.innerHTML += tr + "\n";
   });
 
   const pageList = document.getElementById("pages-list");
@@ -187,4 +192,35 @@ function preview() {
 function clearImage() {
   document.getElementById("formFile").value = null;
   frame.src = "";
+}
+
+async function addProduct() {
+  try {
+    var form = document.getElementById("addProductForm");
+    var formData = new FormData(form);
+    const values = {
+      image: '',
+      name: formData.get('name'),
+      cost: formData.get('cost'),
+      price: formData.get('price'),
+      discount: formData.get('discount'),
+      quantity: formData.get('quantity'),
+      type: formData.get('type'),
+      describe: formData.get('describe'),
+    }
+    console.log(values);
+    const response = await fetch(form.action, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(values)
+    });
+      const data = await response.json();
+      alert(data);
+    
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }

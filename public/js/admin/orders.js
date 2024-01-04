@@ -296,7 +296,11 @@ var txt = document.getElementById("droptxt"),
   search = document.getElementById("searchtxt"),
   content = document.getElementById("content"),
   list = document.querySelectorAll('.content input[type="checkbox"]'),
-  quantity = document.querySelectorAll(".quantity");
+  quantity = document.querySelectorAll(".quantity"),
+  price = document.querySelectorAll(".price"),
+  discount = document.querySelectorAll(".discount"),
+  moneyBuy = document.getElementById("moneybuy"),
+  discountMoney = document.getElementById("discountmoney");
 
 search.addEventListener("click", function () {
   content.classList.toggle("show");
@@ -321,11 +325,50 @@ quantity.forEach(function (item) {
 });
 
 function calc() {
+  let moneybuy = 0;
+  let discountmoney = 0;
   for (var i = 0, arr = []; i < list.length; i++) {
     if (list[i].checked) {
-      arr.push(`<div>${quantity[i].value}x ${list[i].value}</div>`);
+      arr.push(`<div class="list mb-3 border-bottom py-1">
+      <input type="checkbox" checked
+          class="list picked"
+          value="${list[i].id}" />
+      <label for="apple"
+          class="list name">${list[i].value}</label>
+      <input type="number"
+          class="list quantity"
+          readonly value="${quantity[i].value}"/>
+  </div>`);
+      moneybuy += parseFloat(price[i].value) * quantity[i].value;
+      discountmoney +=
+        ((parseFloat(price[i].value) * parseFloat(discount[i].value)) / 100) *
+        parseFloat(quantity[i].value);
     }
   }
-
   txt.innerHTML = arr.join("\n");
+  moneyBuy.innerText = moneybuy;
+  discountMoney.innerText = discountmoney;
+  document.getElementById("totalpay").innerText = moneybuy - discountmoney;
+  addEventPick();
+}
+
+function addEventPick() {
+  const pickedElements = document.querySelectorAll(".picked");
+  pickedElements.forEach((element) => {
+    element.removeEventListener("input", unPick);
+    element.addEventListener("input", unPick);
+  });
+}
+
+function unPick(e) {
+  const targetValue = e.target.value;
+
+  const checkboxToToggle = Array.from(list).find(
+    (item) => item.id === targetValue
+  );
+
+  if (checkboxToToggle) {
+    checkboxToToggle.checked = false;
+  }
+  calc();
 }

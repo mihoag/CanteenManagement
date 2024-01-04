@@ -31,7 +31,6 @@ module.exports = {
     let dbcn = null;
     try {
       dbcn = await db.connect();
-      console.log(data)
       data = await dbcn.oneOrNone(
         `SELECT * FROM "${tbName}" where "${fieldname}" = $1`,
         [value]
@@ -52,7 +51,6 @@ module.exports = {
         `SELECT * FROM "${tbName}" where "${fieldname}" = $1`,
         [value]
       );
-      //  console.log(data)
       return data;
     } catch (error) {
       throw error;
@@ -63,7 +61,6 @@ module.exports = {
   insert: async (tbName, entity) => {
     try {
       const query = pgp.helpers.insert(entity, null, tbName);
-      console.log(query);
       const data = await db.one(query + ` returning *`);
       return data;
     } catch (error) {
@@ -99,7 +96,6 @@ module.exports = {
       data = await dbcn.oneOrNone(
         `SELECT max("${fieldName}") FROM "${tbName}" `
       );
-      console.log(data);
       return data;
     } catch (error) {
       throw error;
