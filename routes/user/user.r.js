@@ -23,6 +23,6 @@ route.get("/menu/bestsell",menuController.saleFoods );
 route.get("/menu/favorite",menuController.favoriteFoods );
 route.get("/menu/all",menuController.allFoods );
 //detail food
-route.get("/menu/food/:FoodId", detailFoodController.detailFood);
+route.get("/menu/:FoodId", detailFoodController.detailFood);
 route.get("/", homeController.showHome);
 module.exports = route;

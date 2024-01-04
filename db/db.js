@@ -172,7 +172,7 @@ module.exports = {
       //let data = [];
       data = await dbcn.any(`SELECT i.id_item,i.name,i.price,i.image
       FROM "item" i, "order" o, orderdetail dt
-      WHERE o.id_order = dt.id_order AND dt.id_item = i.id_item AND i.name ILIKE '%${nameFood}%'
+      WHERE o.id_order = dt.id_order AND dt.id_item = i.id_item AND i.name ILIKE N'%${nameFood}%'
       GROUP BY i.id_item,i.name,i.price,i.image
       order BY COUNT(dt.id_item) DESC
       LIMIT 20`);
