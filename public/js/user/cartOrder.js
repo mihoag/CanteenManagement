@@ -1,6 +1,83 @@
+const generateFoodItemMarkup = (food) => {
+  return `
+        <div
+            class="row mb-4 d-flex justify-content-between align-items-center food-item"
+          >
+            <div class="col-md-2" style="position: relative">
+              <div class="heart-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="22"
+                  viewBox="0 0 25 22"
+                  fill="none"
+                >
+                  <path
+                    d="M22.5738 1.49576C19.8981 -0.784512 15.9186 -0.374356 13.4625 2.15982L12.5006 3.15104L11.5387 2.15982C9.08751 -0.374356 5.10314 -0.784512 2.42736 1.49576C-0.639049 4.11295 -0.800182 8.81021 1.94396 11.6471L11.3922 21.403C12.0026 22.0329 12.9938 22.0329 13.6041 21.403L23.0524 11.6471C25.8014 8.81021 25.6402 4.11295 22.5738 1.49576Z"
+                    fill="#D82015"
+                  />
+                </svg>
+              </div>
+              <img
+                src="${food.image}"
+                class="img-fluid rounded-3"
+                alt="Image"
+              />
+            </div>
+            <div class="col-md-3">
+              <h6 class="text-muted">${food.type}</h6>
+              <h6 class="text-black mb-0">${food.name}</h6>
+            </div>
+            <div class="col-md-3 gx-0 d-flex">
+              <button
+                class="btn btn-link px-2 btn--modify-amount btn--down"
+              >
+                <i class="fas fa-minus"></i>
+              </button>
+
+              <input
+                id="form1"
+                min="0"
+                name="quantity"
+                value="1"
+                type="number"
+                class="form-control form-control-sm"
+              />
+
+              <button
+                class="btn btn-link px-2 btn--modify-amount btn--up"
+              >
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="col-md-3">
+              <h6 class="mb-0 item-price">${food.saleprice} VNĐ</h6>
+            </div>
+            <div class="col-md-1 text-end">
+              <a href="#!" class="text-muted"><i
+                  class="fas fa-times"
+                ></i></a>
+            </div>
+          </div>
+        <hr class="my-4" />
+  `;
+};
+
 const loadAllCartItem = async () => {
-  const data = await fetch("http://127.0.0.1:3000/user/my-cart-items");
-  console.log(data);
+  try {
+    const res = await fetch("http://127.0.0.1:3000/api/user/my-cart-items");
+    // console.log(res);
+    const data = await res.json();
+    const foodCartContainer = document.querySelector(".food-cart-container");
+    data.forEach((food) =>
+      foodCartContainer.insertAdjacentHTML(
+        "afterbegin",
+        generateFoodItemMarkup(food)
+      )
+    );
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const updateOrderDetail = function () {

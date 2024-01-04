@@ -1,7 +1,7 @@
 const { pgp, db } = require("../configs/DBconnection");
 
 module.exports = {
-  query: async(query) => {
+  query: async (query) => {
     let dbcn = null;
     try {
       dbcn = await db.connect();
@@ -226,6 +226,13 @@ module.exports = {
       throw error;
     } finally {
       dbcn.done();
+    }
+  },
+  addFood: async (idFood, IdUser) => {
+    try {
+      await db.one(`INSERT INTO "cart"(id_user,id_item,quantity) VALUES(${IdUser},${idFood},1) returning *`);
+    } catch (error) {
+      throw error;
     }
   },
 };

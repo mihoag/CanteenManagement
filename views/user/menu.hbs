@@ -58,7 +58,7 @@
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">{{this.name}}</h5>
                         <p class="card-text" style="text-align: center;">Giá bán: {{this.price}} đ</p>
-                        <a style="margin-left: 145px;" href="#" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
+                        <a style="margin-left: 145px;" href="/user/cart/{{this.id_item}}" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
                             <br><b>Thêm vào giỏ</b></a>
                     </div>
                 </div>
@@ -85,15 +85,17 @@
                 {{else}}
                  <ul class="pagination m-0">
                 <li class="page-item page-prev">
-                    <span class="page-link">&laquo;</span>
+                    <a href="#" class="page-link">&laquo;</a>
                 </li>
                 {{#times totalPage}}
-                <li class="page-item {{#ifEquals this ../currentPage}}active{{/ifEquals}}">
+                {{!-- <li class="page-item {{#ifEquals this ../currentPage}}active{{/ifEquals}}">
                     <span class="page-link page-number">{{this}}</span>
-                </li>
+                </li> --}}
+                <li class="page-item"><a href="#" class="page-link page-number{{#ifEquals this ../currentPage}} active{{/ifEquals}}"
+                                    >{{this}}</a></li>
                 {{/times}}
                 <li class="page-item page-next">
-                    <span class="page-link">&raquo;</span>
+                    <a href="#" class="page-link">&raquo;</a>
                 </li>
             </ul>
                 {{/if}}

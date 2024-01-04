@@ -11,8 +11,21 @@ exports.showCart = async (req, res, next) => {
 exports.getAllCartItems = async (req, res, next) => {
   try {
     const username = req.session.username;
+    // console.log(username);
     const data = await cartModel.getAllItemInCart(username);
-    return data;
+    // console.log(data);
+    res.status(200).json(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.AddItemToCart = async (req, res, next) => {
+  try {
+    const { FoodId } = req.params;
+    const username = req.session.username;
+    await cartModel.addFood(FoodId, username);
+    res.redirect("/user/cart");
   } catch (err) {
     next(err);
   }
