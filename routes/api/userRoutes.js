@@ -3,5 +3,5 @@ const cartController = require("./../../controllers/userController/cartControlle
 const route = express.Router();
 
 route.get("/my-cart-items", cartController.getAllCartItems);
-
+route.delete("/item", cartController.deleteCartItem);
 module.exports = route;

@@ -30,3 +30,19 @@ exports.AddItemToCart = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteCartItem = async (req, res, next) => {
+  try {
+    const username = req.session.username;
+    // console.log(req.body);
+    const { cartId, itemId } = req.body;
+    await cartModel.deleteCartItem(username, cartId, itemId);
+
+    res.status(204).json({
+      status: "success",
+      data: null,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

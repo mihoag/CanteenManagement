@@ -1,7 +1,8 @@
 const generateFoodItemMarkup = (food) => {
   return `
+    <div class="food-item">
         <div
-            class="row mb-4 d-flex justify-content-between align-items-center food-item"
+            class="row mb-4 d-flex justify-content-between align-items-center"
           >
             <div class="col-md-2" style="position: relative">
               <div class="heart-icon">
@@ -54,12 +55,13 @@ const generateFoodItemMarkup = (food) => {
               <h6 class="mb-0 item-price">${food.saleprice} VNĐ</h6>
             </div>
             <div class="col-md-1 text-end">
-              <a href="#!" class="text-muted"><i
+              <a href="#!" class="text-muted btn--delete-item" data-item-id="${food.id_item}" data-cart-id="${food.id_cart}"><i
                   class="fas fa-times"
                 ></i></a>
             </div>
           </div>
         <hr class="my-4" />
+      </div>
   `;
 };
 
@@ -79,37 +81,6 @@ const loadAllCartItem = async () => {
     console.error(err);
   }
 };
-
-const modifyItemAmount = function () {
-  document.querySelectorAll(".btn--down").forEach((el) =>
-    el.addEventListener("click", function (e) {
-      e.target.parentNode.parentNode
-        .querySelector("input[type=number]")
-        .stepDown();
-    })
-  );
-
-  document.querySelectorAll(".btn--up").forEach((el) =>
-    el.addEventListener("click", function (e) {
-      e.target.parentNode.parentNode
-        .querySelector("input[type=number]")
-        .stepUp();
-    })
-  );
-
-  document
-    .querySelectorAll(".btn--modify-amount")
-    .forEach((el) => el.addEventListener("click", updateOrderDetail));
-
-  document
-    .querySelectorAll("input[type=number]")
-    .forEach((el) => el.addEventListener("change", updateOrderDetail));
-};
-window.addEventListener("load", async function () {
-  await loadAllCartItem();
-  updateOrderDetail();
-  modifyItemAmount();
-});
 
 const updateOrderDetail = function () {
   const foodItemEls = document.querySelectorAll(".food-item");
@@ -136,6 +107,56 @@ const updateOrderDetail = function () {
   document.querySelector(".selected-table").textContent =
     document.querySelector(".form-select-table").value;
 };
+
+const modifyItemAmount = function () {
+  document.querySelectorAll(".btn--down").forEach((el) =>
+    el.addEventListener("click", function (e) {
+      e.target.parentNode.parentNode
+        .querySelector("input[type=number]")
+        .stepDown();
+    })
+  );
+
+  document.querySelectorAll(".btn--up").forEach((el) =>
+    el.addEventListener("click", function (e) {
+      e.target.parentNode.parentNode
+        .querySelector("input[type=number]")
+        .stepUp();
+    })
+  );
+
+  document
+    .querySelectorAll(".btn--modify-amount")
+    .forEach((el) => el.addEventListener("click", updateOrderDetail));
+
+  document
+    .querySelectorAll("input[type=number]")
+    .forEach((el) => el.addEventListener("change", updateOrderDetail));
+
+  document.querySelectorAll(".btn--delete-item").forEach((el) =>
+    el.addEventListener("click", async function (e) {
+      const data = {
+        cartId: el.dataset.cartId,
+        itemId: el.dataset.itemId,
+      };
+      await fetch("http://127.0.0.1:3000/api/user/item", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      e.target.closest(".food-item").remove();
+      updateOrderDetail();
+    })
+  );
+};
+window.addEventListener("load", async function () {
+  await loadAllCartItem();
+  updateOrderDetail();
+  modifyItemAmount();
+});
 
 document
   .querySelector(".form-select-table")
