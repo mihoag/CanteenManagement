@@ -25,15 +25,14 @@
 								</div>
 								<div class="modal-body">
 									<div class="container-fluid" style="height: 100%;">
-										<form action style="height: 100%;">
+										<form id="addProductForm" action="/admin/products/add" method="POST" style="height: 100%;">
 											<div class="row" style="height: 100%;">
 												<div class="col-md-5">
 													<div class="row" style="height: 70%;">
 														<img id="frame" src class="img-fluid" style="max-width: 400px;" />
-
 													</div>
 													<div class="row mt-5">
-														<input class="form-control border" accept="image/*" type="file" id="formFile"
+														<input name="image" class="form-control-file border" accept="image/*" type="file" id="formFile"
 															onchange="preview()">
 													</div>
 												</div>
@@ -41,20 +40,35 @@
 													<div class="form-group mt-2">
 														<label for="name">Tên mặt
 															hàng</label>
-														<input type="text" class="form-control" id="name" placeholder="Nhập tên mặt hàng">
+														<input type="text" class="form-control" name="name" placeholder="Nhập tên mặt hàng">
 													</div>
 													<div class="form-group mt-2">
-														<label for="price">Giá</label>
-														<input type="number" class="form-control" id="price" placeholder="Nhập giá mặt hàng">
+														<label for="cost">Giá gốc</label>
+														<input type="number" class="form-control" name="cost" placeholder="Nhập giá gốc mặt hàng" required>
+													</div>
+													<div class="form-group mt-2">
+														<label for="price">Giá bán</label>
+														<input type="number" class="form-control" name="price" placeholder="Nhập giá bán mặt hàng" required>
 													</div>
 													<div class="form-group mt-2">
 														<label for="discount">Giảm
 															giá</label>
-														<input type="number" class="form-control" id="discount" placeholder="Nhập % giảm giá">
+														<input type="number" class="form-control" name="discount" placeholder="Nhập % giảm giá" required>
+													</div>
+													<div class="form-group mt-2">
+														<label for="quantity">Số lượng</label>
+														<input type="number" class="form-control" name="quantity" placeholder="Nhập số lượng" required>
+													</div>
+													<div class="form-group mt-2">
+														<label for="type">Loại</label>
+														<select name="type" id="type" required>
+															<option value="Món ăn" selected>Món ăn</option>
+															<option value="Đồ uống">Đồ uống</option>
+														</select>
 													</div>
 													<div class="form-group mt-2">
 														<label for="detail">Mô tả</label>
-														<textarea class="form-control" id="detail" rows="6" placeholder="Nhập mô tả"></textarea>
+														<textarea class="form-control" name="describe" rows="2" placeholder="Nhập mô tả"></textarea>
 													</div>
 												</div>
 											</div>
@@ -65,7 +79,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-									<button type="button" class="btn btn-primary">Thêm</button>
+									<button type="button" class="btn btn-primary" onclick="addProduct()">Thêm</button>
 								</div>
 							</div>
 						</div>
@@ -136,10 +150,10 @@
 													{{! }}
 													<div class="col-2 rounded-circle" style="background-color:#A7E8B7; width:50px; height:50px;">
 													</div>
-													<div class="col-10">Sản phẩm
+													<div class="col-10">{{#if this.describe}} {{this.describe}} {{else}}Sản phẩm
 														được chế biến từ nguyên
 														liệu tươi ngon,
-														nguồn gốc rõ ràng.</div>
+														nguồn gốc rõ ràng. {{/if}}</div>
 
 													{{! }}
 												</div>

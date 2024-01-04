@@ -39,210 +39,57 @@
                                             <div id="droptxt"
                                                 class="item-list"></div>
                                             <div id="content" class="content">
+                                                {{#each data.items}}
                                                 <div class="list">
                                                     <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
+                                                        id="{{this.id_item}}" class="list"
+                                                        value="{{this.name}}" />
                                                     <label for="apple"
-                                                        class="list name">Apple</label>
+                                                        class="list name">{{this.name}}</label>
                                                     <input type="text"
                                                         class="price list"
                                                         readonly
-                                                        value="25000&#8363">
+                                                        value="{{this.price}}">
                                                     <input type="hidden"
                                                         class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
+                                                        min="1" value="1" max="{{this.quantity}}"/>
                                                     <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
+                                                        class="list discount"
+                                                        value="{{this.discount}}"/>
                                                 </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
-                                                <div class="list">
-                                                    <input type="checkbox"
-                                                        id="apple" class="list"
-                                                        value="Apple" />
-                                                    <label for="apple"
-                                                        class="list name">Apple</label>
-                                                    <input type="text"
-                                                        class="price list"
-                                                        readonly
-                                                        value="25000&#8363">
-                                                    <input type="hidden"
-                                                        class="list quantity"
-                                                        min="1" value="1" />
-                                                </div>
+                                                {{/each}}
                                             </div>
                                         </div>
                                     </div>
                                     <table>
                                         <tr>
                                             <th
-                                                width="30%"
+                                                width="100%"
                                                 scope="row"
-                                                colspan="6"
-                                                class="text-start">Tổng
+                                                class="text-end">Tổng
                                                 mua:</th>
                                             <td
-                                                class="text-end" id="moneybuy">75,000&#8363</td>
+                                                class="text-end" id="moneybuy">0</td>
                                         </tr>
                                         <!-- end tr -->
                                         <tr>
                                             <th
                                                 scope="row"
-                                                colspan="6"
-                                                class="border-0 text-start">
+                                                class="border-0 text-end">
                                                 Giảm
                                                 giá:</th>
                                             <td
-                                                class="border-0 text-end" id="discount">-
-                                                5,000&#8363</td>
+                                                class="border-0 text-end" id="discountmoney">0</td>
                                         </tr>
                                         <!-- end tr -->
                                         <tr>
                                             <th
                                                 scope="row"
-                                                colspan="6"
-                                                class="border-0 text-start">Thành
+                                                class="border-0 text-end">Thành
                                                 tiền:</th>
                                             <td
                                                 class="border-0 text-end"><h5
-                                                    class="m-0 fw-semibold" id="totalpay">70,000&#8363</h5></td>
+                                                    class="m-0 fw-semibold" id="totalpay">0</h5></td>
                                         </tr>
                                     </table>
                                     <p></p>

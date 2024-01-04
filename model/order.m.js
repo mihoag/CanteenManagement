@@ -14,6 +14,9 @@ class Order {
 
   static async getOrdersList(pageNum, search) {
     try {
+      let Items = await db.query(
+        `SELECT * FROM "item" WHERE "item".quantity > 0`
+      );
       let totalItems;
       let numberOfPages;
       let orders;
@@ -101,6 +104,7 @@ class Order {
         pages: numberOfPages,
         page: pageNum,
         orders: listOrders,
+        items: Items
       };
       return data;
     } catch (error) {
