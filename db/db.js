@@ -18,11 +18,11 @@ module.exports = {
     let dbcn = null;
     try {
       dbcn = await db.connect();
+      console.log(data)
       data = await dbcn.oneOrNone(
         `SELECT * FROM "${tbName}" where "${fieldname}" = $1`,
         [value]
       );
-      //  console.log(data)
       return data;
     } catch (error) {
       throw error;
@@ -94,7 +94,7 @@ module.exports = {
       dbcn.done();
     }
   },
-  getFoodRecent: async (userName,nameFood) => {
+  getFoodRecent: async (userName, nameFood) => {
     let dbcn = null;
     try {
       dbcn = await db.connect();
@@ -184,7 +184,7 @@ module.exports = {
       dbcn.done();
     }
   },
-  getFoodAll: async (tbName,nameFood) => {
+  getFoodAll: async (tbName, nameFood) => {
     let dbcn = null;
     try {
       dbcn = await db.connect();

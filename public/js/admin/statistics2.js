@@ -2,6 +2,7 @@
 async function DoughnutChart(options) {
   let labels = [];
   let dataSet = [];
+  options = options.filter(option => option.type != 'Đồ uống')
   options.sort(function (a, b) { return b.quantity - a.quantity });
   for (let i = 0; i < Math.min(options.length, 10); i++) {
     labels.push(options[i].name);
@@ -30,7 +31,7 @@ async function DoughnutChart(options) {
     options: {
       plugins: {
         title: {
-          display: true, text: 'Top 10 sản phẩm bán chạy nhất', font: { size: 40 }
+          display: true, text: 'Top 10 món ăn bán chạy nhất', font: { size: 40 }
         }
       }
     }

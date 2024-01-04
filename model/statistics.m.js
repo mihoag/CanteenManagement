@@ -94,7 +94,7 @@ module.exports = {
       dbcn = await db.connect();
       data = await dbcn.any(
         `
-        select i.name, i.id_item, i.image, i.saleprice, sum(d.quantity) as quantity from "item" i, "orderdetail" d where i."id_item" = d."id_item"  group by i.name, i.id_item, i.image, i.saleprice order by id_item 
+        select i.name, i.id_item, i.image, i.saleprice, sum(d.quantity) as quantity, i.type from "item" i, "orderdetail" d where i."id_item" = d."id_item"  group by i.name, i.id_item, i.image, i.saleprice, i.type order by id_item 
         `
       );
       return data;
