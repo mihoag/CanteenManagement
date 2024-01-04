@@ -31,11 +31,11 @@ module.exports = {
     let dbcn = null;
     try {
       dbcn = await db.connect();
+      console.log(data)
       data = await dbcn.oneOrNone(
         `SELECT * FROM "${tbName}" where "${fieldname}" = $1`,
         [value]
       );
-      //  console.log(data)
       return data;
     } catch (error) {
       throw error;
@@ -107,7 +107,7 @@ module.exports = {
       dbcn.done();
     }
   },
-  getFoodRecent: async (userName,nameFood) => {
+  getFoodRecent: async (userName, nameFood) => {
     let dbcn = null;
     try {
       dbcn = await db.connect();
@@ -185,7 +185,7 @@ module.exports = {
       //let data = [];
       data = await dbcn.any(`SELECT i.id_item,i.name,i.price,i.image
       FROM "item" i, "order" o, orderdetail dt
-      WHERE o.id_order = dt.id_order AND dt.id_item = i.id_item AND i.name ILIKE '%${nameFood}%'
+      WHERE o.id_order = dt.id_order AND dt.id_item = i.id_item AND i.name ILIKE N'%${nameFood}%'
       GROUP BY i.id_item,i.name,i.price,i.image
       order BY COUNT(dt.id_item) DESC
       LIMIT 20`);
@@ -197,7 +197,7 @@ module.exports = {
       dbcn.done();
     }
   },
-  getFoodAll: async (tbName,nameFood) => {
+  getFoodAll: async (tbName, nameFood) => {
     let dbcn = null;
     try {
       dbcn = await db.connect();
