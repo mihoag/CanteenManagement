@@ -118,7 +118,7 @@ module.exports = {
       AND i.name ILIKE '%${nameFood}%'
       ORDER BY o.order_date
       )
-      LIMIT 20`);
+      LIMIT 40`);
 
       return data;
     } catch (error) {
@@ -133,7 +133,7 @@ module.exports = {
       dbcn = await db.connect();
       //let data = [];
       data = await dbcn.any(
-        `SELECT * FROM "item" i WHERE i.name ILIKE '%${nameFood}%'   order by i.id_item LIMIT 20`
+        `SELECT * FROM "item" i WHERE i.name ILIKE '%${nameFood}%'   order by i.id_item LIMIT 40`
       );
 
       return data;
@@ -150,7 +150,7 @@ module.exports = {
       //let data = [];
       data =
         await dbcn.any(`SELECT * FROM "item" i WHERE  i.name ILIKE '%${nameFood}%'  order by i.id_item desc
-      LIMIT 20`);
+      LIMIT 40`);
       return data;
     } catch (error) {
       throw error;
@@ -168,7 +168,7 @@ module.exports = {
       WHERE o.id_order = dt.id_order AND dt.id_item = i.id_item AND  i.name ILIKE '%${nameFood}%'
       GROUP BY i.id_item,i.name,i.price,i.image
       order BY SUM(dt.quantity) DESC 
-      LIMIT 20`);
+      LIMIT 40`);
 
       return data;
     } catch (error) {
@@ -187,7 +187,7 @@ module.exports = {
       WHERE o.id_order = dt.id_order AND dt.id_item = i.id_item AND i.name ILIKE N'%${nameFood}%'
       GROUP BY i.id_item,i.name,i.price,i.image
       order BY COUNT(dt.id_item) DESC
-      LIMIT 20`);
+      LIMIT 40`);
 
       return data;
     } catch (error) {

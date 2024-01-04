@@ -10,13 +10,13 @@ class menuController {
             {
                 foodSearch = req.query.nameFood
             }
-            const index = 0;
+            const index = 5;
             const data = await menuModel.getFoodRecent(username,foodSearch);
-            const { perPage = 4, currentPage = 1 } = req.query;
+            const { perPage = 8, currentPage = 1 } = req.query;
             const totalPage = Math.ceil(data.length / perPage);
             const foods = data.splice((currentPage-1)*perPage,perPage);
             res.render("user/menu", { layout: "userLayout", index, food: foods, totalPage, currentPage,
-            helpers: hbsHelper,
+            helpers: hbsHelper, direct: "recent"
          });
         } catch (error) {
             next(error);
@@ -31,7 +31,7 @@ class menuController {
             }
             const index = 2;
             const data = await menuModel.getFoodNew(foodSearch);
-            const { perPage = 4, currentPage = 1 } = req.query;
+            const { perPage = 8, currentPage = 1 } = req.query;
             const totalPage = Math.ceil(data.length / perPage);
             const foods = data.splice((currentPage-1)*perPage,perPage);
             res.render("user/menu", { layout: "userLayout", index,  food: foods, totalPage, currentPage,
@@ -49,7 +49,7 @@ class menuController {
             }
             const index = 1;
             const data = await menuModel.getFoodPromotion(foodSearch);
-            const { perPage = 4, currentPage = 1 } = req.query;
+            const { perPage = 8, currentPage = 1 } = req.query;
             const totalPage = Math.ceil(data.length / perPage);
             const foods = data.splice((currentPage-1)*perPage,perPage);
             res.render("user/menu", { layout: "userLayout", index,food: foods, totalPage, currentPage,
@@ -67,7 +67,7 @@ class menuController {
             }
             const index = 3;
             const data = await menuModel.getFoodSoldOut(foodSearch);
-            const { perPage = 4, currentPage = 1 } = req.query;
+            const { perPage = 8, currentPage = 1 } = req.query;
             const totalPage = Math.ceil(data.length / perPage);
             const foods = data.splice((currentPage-1)*perPage,perPage);
             res.render("user/menu", { layout: "userLayout", index,food: foods, totalPage, currentPage,
@@ -85,7 +85,7 @@ class menuController {
             }
             const index = 4;
             const data = await menuModel.getFoodFavorite(foodSearch);
-            const { perPage = 4, currentPage = 1 } = req.query;
+            const { perPage = 8, currentPage = 1 } = req.query;
             const totalPage = Math.ceil(data.length / perPage);
             const foods = data.splice((currentPage-1)*perPage,perPage);
             res.render("user/menu", { layout: "userLayout", index,food: foods, totalPage, currentPage,
@@ -101,13 +101,13 @@ class menuController {
             {
                 foodSearch = req.query.nameFood
             }
-            const index = 5;
+            const index = 0;
             const data = await menuModel.getFoodAll(foodSearch);
-            const { perPage = 4, currentPage = 1 } = req.query;
+            const { perPage = 8, currentPage = 1 } = req.query;
             const totalPage = Math.ceil(data.length / perPage);
             const foods = data.splice((currentPage-1)*perPage,perPage);
             res.render("user/menu", { layout: "userLayout", index,food: foods, totalPage, currentPage,
-            helpers: hbsHelper, all: true, direct: "all"});
+            helpers: hbsHelper, all: false});
         } catch (error) {
             next(error);
         }

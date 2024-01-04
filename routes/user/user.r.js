@@ -15,12 +15,12 @@ route.use("/profile", profileRoute);
 route.post("/detailOrder", orderController.Orderdetail);
 
 // router for menu
-route.get("/menu", menuController.menuFoods);
-route.get("/menu/new", menuController.newFoods);
-route.get("/menu/promotion", menuController.promotionFoods);
-route.get("/menu/bestsell", menuController.saleFoods);
-route.get("/menu/favorite", menuController.favoriteFoods);
-route.get("/menu/all", menuController.allFoods);
+route.get("/menu",menuController.allFoods );
+route.get("/menu/new",menuController.newFoods );
+route.get("/menu/promotion",menuController.promotionFoods );
+route.get("/menu/bestsell",menuController.saleFoods );
+route.get("/menu/favorite",menuController.favoriteFoods );
+route.get("/menu/recent",menuController.menuFoods );
 //detail food
 route.get("/menu/:FoodId", detailFoodController.detailFood);
 //add item to cart
