@@ -11,32 +11,32 @@
     </nav>
     {{!-- Navigation --}}
     <div class="container-fluid" style="margin-top: 20px;">
-        <ul class=" d-flex flex-row justify-content-between">
+        <ul class=" d-flex flex-row">
             <li class="nav-item">
-                <a class="nav-link active" href="/user/menu"><i class="fa-solid fa-location-dot"
-                        style="color: #ff5c28;"></i>
-                    <span id="foodLink">Đặt gần đây</span></a>
+                <a class="nav-link" href="/user/menu/"><i class="fa-solid fa-square"
+                        style="color: #ff5c28;"></i><span id="foodLink"> Tất cả</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/user/menu/promotion"> <i class="fas fa-thumbs-up" style="color: #ff5c28;"></i><span
-                        id="foodLink"> Đề cử</span></a>
+            <li class="nav-item" style="margin-left: 190px;">
+                <a class="nav-link" href="/user/menu/promotion"> <i class="fas fa-thumbs-up"
+                        style="color: #ff5c28;"></i><span id="foodLink"> Đề cử</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/user/menu/new"><i class="fa-solid fa-medal"
-                        style="color: #ff5c28;"></i><span id="foodLink"> Món mới</span></a>
+            <li class="nav-item" style="margin-left: 160px;">
+                <a class="nav-link" href="/user/menu/new"><i class="fa-solid fa-medal" style="color: #ff5c28;"></i><span
+                        id="foodLink"> Món mới</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="margin-left: 150px;">
                 <a class="nav-link" href="/user/menu/bestsell"> <i class="fas fa-fire" style="color: #ff5c28;"></i><span
                         id="foodLink"> Bán chạy</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item"  style="margin-left: 128px;">
                 <a class="nav-link" href="/user/menu/favorite"><i class="fa-solid fa-star"
                         style="color: #ff5c28;"></i><span id="foodLink"> Yêu thích nhất</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/user/menu/all"><i class="fa-solid fa-square"
-                        style="color: #ff5c28;"></i><span id="foodLink"> Tất cả</span></a>
+            <li class="nav-item" style="margin-left: 100px;">
+                <a class="nav-link active" href="/user/menu/recent"><i class="fa-solid fa-location-dot"
+                        style="color: #ff5c28;"></i>
+                    <span id="foodLink">Đặt gần đây</span></a>
             </li>
 
         </ul>
@@ -58,7 +58,8 @@
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">{{this.name}}</h5>
                         <p class="card-text" style="text-align: center;">Giá bán: {{this.saleprice}} VNĐ</p>
-                        <a style="margin-left: 145px;" href="/user/cart/{{this.id_item}}" class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
+                        <a style="margin-left: 145px;" href="/user/cart/{{this.id_item}}"
+                            class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
                             <br><b>Thêm vào giỏ</b></a>
                     </div>
                 </div>
@@ -69,21 +70,21 @@
 
         {{!-- Page navigation --}}
         <nav class="d-flex justify-content-center p-3">
-             {{#if all}}
-                <ul class="pagination m-0">
+            {{#if all}}
+            <ul class="pagination m-0">
                 <li class="page-item page-prev">
                     <span class="page-link">&laquo;</span>
                 </li>
                 <li class="page-item active">
                     <span class="page-link page-number">{{currentPage}}/{{totalPage}}</span>
                 </li>
-               
+
                 <li class="page-item page-next">
                     <span class="page-link">&raquo;</span>
                 </li>
             </ul>
-                {{else}}
-                 <ul class="pagination m-0">
+            {{else}}
+            <ul class="pagination m-0">
                 <li class="page-item page-prev">
                     <a href="#" class="page-link">&laquo;</a>
                 </li>
@@ -91,48 +92,49 @@
                 {{!-- <li class="page-item {{#ifEquals this ../currentPage}}active{{/ifEquals}}">
                     <span class="page-link page-number">{{this}}</span>
                 </li> --}}
-                <li class="page-item"><a href="#" class="page-link page-number{{#ifEquals this ../currentPage}} active{{/ifEquals}}"
-                                    >{{this}}</a></li>
+                <li class="page-item"><a href="#"
+                        class="page-link page-number{{#ifEquals this ../currentPage}} active{{/ifEquals}}">{{this}}</a>
+                </li>
                 {{/times}}
                 <li class="page-item page-next">
                     <a href="#" class="page-link">&raquo;</a>
                 </li>
             </ul>
-                {{/if}}
+            {{/if}}
         </nav>
     </div>
 
 
 </section>
 <script>
-  const urlParams = new URLSearchParams(window.location.search);
-  const currentPage = Number.parseInt(urlParams.get('currentPage')) || 1;
-  document.querySelectorAll('.page-number').forEach(page => {
-    page.addEventListener('click', e => {
-      urlParams.set('currentPage', page.innerText);
-      window.location.search = urlParams;
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentPage = Number.parseInt(urlParams.get('currentPage')) || 1;
+    document.querySelectorAll('.page-number').forEach(page => {
+        page.addEventListener('click', e => {
+            urlParams.set('currentPage', page.innerText);
+            window.location.search = urlParams;
+        });
     });
-  });
 
-  document.querySelector('.page-prev .page-link').addEventListener('click', e => {
-    if (currentPage > 1) {
-      urlParams.set('currentPage', currentPage - 1);
-      window.location.search = urlParams;
+    document.querySelector('.page-prev .page-link').addEventListener('click', e => {
+        if (currentPage > 1) {
+            urlParams.set('currentPage', currentPage - 1);
+            window.location.search = urlParams;
+        }
+    });
+
+    document.querySelector(`.page-next .page-link`).addEventListener('click', e => {
+        if (currentPage < {{ totalPage }}) {
+        urlParams.set('currentPage', currentPage + 1);
+        window.location.search = urlParams;
     }
   });
 
-  document.querySelector(`.page-next .page-link`).addEventListener('click', e => {
-    if (currentPage < {{ totalPage }}) {
-    urlParams.set('currentPage', currentPage + 1);
-    window.location.search = urlParams;
-  }
-  });
+    if (currentPage === 1) {
+        document.querySelector('.page-prev').classList.add('disabled');
+    }
 
-  if (currentPage === 1) {
-    document.querySelector('.page-prev').classList.add('disabled');
-  }
-
-  if (currentPage === {{ totalPage }}) {
-    document.querySelector('.page-next').classList.add('disabled');
-  }
+    if (currentPage === {{ totalPage }}) {
+        document.querySelector('.page-next').classList.add('disabled');
+    }
 </script>
