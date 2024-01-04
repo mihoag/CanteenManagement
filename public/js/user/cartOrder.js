@@ -80,8 +80,40 @@ const loadAllCartItem = async () => {
   }
 };
 
+const modifyItemAmount = function () {
+  document.querySelectorAll(".btn--down").forEach((el) =>
+    el.addEventListener("click", function (e) {
+      e.target.parentNode.parentNode
+        .querySelector("input[type=number]")
+        .stepDown();
+    })
+  );
+
+  document.querySelectorAll(".btn--up").forEach((el) =>
+    el.addEventListener("click", function (e) {
+      e.target.parentNode.parentNode
+        .querySelector("input[type=number]")
+        .stepUp();
+    })
+  );
+
+  document
+    .querySelectorAll(".btn--modify-amount")
+    .forEach((el) => el.addEventListener("click", updateOrderDetail));
+
+  document
+    .querySelectorAll("input[type=number]")
+    .forEach((el) => el.addEventListener("change", updateOrderDetail));
+};
+window.addEventListener("load", async function () {
+  await loadAllCartItem();
+  updateOrderDetail();
+  modifyItemAmount();
+});
+
 const updateOrderDetail = function () {
   const foodItemEls = document.querySelectorAll(".food-item");
+  // console.log(foodItemEls);
   const totalPrice = Array.from(foodItemEls)
     .map((el) => {
       return (
@@ -111,31 +143,3 @@ document
     console.log("hello");
     document.querySelector(".selected-table").textContent = e.target.value;
   });
-
-window.addEventListener("load", async function () {
-  await loadAllCartItem();
-  updateOrderDetail();
-});
-
-document.querySelectorAll(".btn--down").forEach((el) =>
-  el.addEventListener("click", function (e) {
-    e.target.parentNode.parentNode
-      .querySelector("input[type=number]")
-      .stepDown();
-  })
-);
-
-document.querySelectorAll(".btn--up").forEach((el) =>
-  el.addEventListener("click", function (e) {
-    e.target.parentNode.parentNode.querySelector("input[type=number]").stepUp();
-  })
-);
-
-document
-  .querySelectorAll(".btn--modify-amount")
-  .forEach((el) => el.addEventListener("click", updateOrderDetail));
-
-document
-  .querySelectorAll("input[type=number]")
-  .forEach((el) => el.addEventListener("change", updateOrderDetail));
-//onclick="this.parentNode.querySelector('input[type=number]').stepUp()"

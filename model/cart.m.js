@@ -20,7 +20,7 @@ module.exports = {
       const data = await db.query(
         `SELECT * FROM "cart","item" where "cart"."id_user" = '${id_user}' and "cart"."id_item" = "item"."id_item"`
       );
-      console.log(data);
+      // console.log(data);
       return data;
     } catch (err) {
       throw err;
