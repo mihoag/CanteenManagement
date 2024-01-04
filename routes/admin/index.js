@@ -7,4 +7,5 @@ route.use("/statistics", require("./statistics.r"));
 route.use('/customers', require('./customers.r'))
 route.use('/products', require('./products.r'))
 route.use('/orders', require('./orders.r'))
+route.use('/dashboard', require('./dashboard.r'))
 module.exports = route;
