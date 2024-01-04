@@ -80,4 +80,16 @@ module.exports = class user {
       throw error;
     }
   }
+  static async getAllEmail() {
+    try {
+      const data = await db.selectByOneField('user', 'role', 'user');
+      let res = [];
+      for (const email of data) {
+        res.push(email['email']);
+      }
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
