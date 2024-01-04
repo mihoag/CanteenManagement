@@ -4,4 +4,5 @@ const productsController = require('../../controllers/adminController/productsCo
 
 router.get('/', productsController.showProducts)
 router.get('/paging', productsController.page);
+router.post('/add', productsController.addProduct);
 module.exports = router;
