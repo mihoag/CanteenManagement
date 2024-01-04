@@ -18,8 +18,7 @@ module.exports = {
     let dbcn = null;
     try {
       dbcn = await db.connect();
-      console.log(data)
-      data = await dbcn.oneOrNone(
+      const data = await dbcn.oneOrNone(
         `SELECT * FROM "${tbName}" where "${fieldname}" = $1`,
         [value]
       );
@@ -123,7 +122,9 @@ module.exports = {
     try {
       dbcn = await db.connect();
       //let data = [];
-      data = await dbcn.any(`SELECT * FROM "item" i WHERE i.name ILIKE '%${nameFood}%'   order by i.id_item LIMIT 20`);
+      data = await dbcn.any(
+        `SELECT * FROM "item" i WHERE i.name ILIKE '%${nameFood}%'   order by i.id_item LIMIT 20`
+      );
 
       return data;
     } catch (error) {
@@ -137,7 +138,8 @@ module.exports = {
     try {
       dbcn = await db.connect();
       //let data = [];
-      data = await dbcn.any(`SELECT * FROM "item" i WHERE  i.name ILIKE '%${nameFood}%'  order by i.id_item desc
+      data =
+        await dbcn.any(`SELECT * FROM "item" i WHERE  i.name ILIKE '%${nameFood}%'  order by i.id_item desc
       LIMIT 20`);
       return data;
     } catch (error) {

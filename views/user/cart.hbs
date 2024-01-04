@@ -26,7 +26,7 @@
 
                   <div class="overflow-auto mt-5">
                     <div
-                      class="row mb-4 d-flex justify-content-between align-items-center"
+                      class="row mb-4 d-flex justify-content-between align-items-center food-item"
                     >
                       <div class="col-md-2" style="position: relative">
                         <div class="heart-icon">
@@ -55,8 +55,7 @@
                       </div>
                       <div class="col-md-3 gx-0 d-flex">
                         <button
-                          class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                          class="btn btn-link px-2 btn--modify-amount btn--down"
                         >
                           <i class="fas fa-minus"></i>
                         </button>
@@ -71,14 +70,13 @@
                         />
 
                         <button
-                          class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                          class="btn btn-link px-2 btn--modify-amount btn--up"
                         >
                           <i class="fas fa-plus"></i>
                         </button>
                       </div>
                       <div class="col-md-3">
-                        <h6 class="mb-0">25.000 VNĐ</h6>
+                        <h6 class="mb-0 item-price">25.000 VNĐ</h6>
                       </div>
                       <div class="col-md-1 text-end">
                         <a href="#!" class="text-muted"><i
@@ -89,7 +87,7 @@
                     <hr class="my-4" />
 
                     <div
-                      class="row mb-4 d-flex justify-content-between align-items-center"
+                      class="row mb-4 d-flex justify-content-between align-items-center food-item"
                     >
                       <div class="col-md-2" style="position: relative">
                         <div class="heart-icon">
@@ -118,8 +116,7 @@
                       </div>
                       <div class="col-md-3 gx-0 d-flex">
                         <button
-                          class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                          class="btn btn-link px-2 btn--modify-amount btn--down"
                         >
                           <i class="fas fa-minus"></i>
                         </button>
@@ -134,14 +131,13 @@
                         />
 
                         <button
-                          class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                          class="btn btn-link px-2 btn--modify-amount btn--up"
                         >
                           <i class="fas fa-plus"></i>
                         </button>
                       </div>
                       <div class="col-md-3">
-                        <h6 class="mb-0">25.000 VNĐ</h6>
+                        <h6 class="mb-0 item-price">25.000 VNĐ</h6>
                       </div>
                       <div class="col-md-1 text-end">
                         <a href="#!" class="text-muted"><i
@@ -152,7 +148,7 @@
                     <hr class="my-4" />
 
                     <div
-                      class="row mb-4 d-flex justify-content-between align-items-center"
+                      class="row mb-4 d-flex justify-content-between align-items-center food-item"
                     >
                       <div class="col-md-2" style="position: relative">
                         <div class="heart-icon">
@@ -181,8 +177,7 @@
                       </div>
                       <div class="col-md-3 gx-0 d-flex">
                         <button
-                          class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                          class="btn btn-link px-2 btn--modify-amount btn--down"
                         >
                           <i class="fas fa-minus"></i>
                         </button>
@@ -197,14 +192,13 @@
                         />
 
                         <button
-                          class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                          class="btn btn-link px-2 btn--modify-amount btn--up"
                         >
                           <i class="fas fa-plus"></i>
                         </button>
                       </div>
                       <div class="col-md-3">
-                        <h6 class="mb-0">25.000 VNĐ</h6>
+                        <h6 class="mb-0 item-price">25.000 VNĐ</h6>
                       </div>
                       <div class="col-md-1 text-end">
                         <a href="#!" class="text-muted"><i
@@ -231,16 +225,16 @@
                   <hr class="my-4" />
 
                   <select
-                    class="form-select form-select-lg"
+                    class="form-select form-select-lg form-select-table"
                     aria-label="Default select example"
                   >
                     <option selected>Chọn bàn</option>
-                    <option value="1">A1</option>
-                    <option value="2">A2</option>
-                    <option value="3">A3</option>
-                    <option value="3">A3</option>
-                    <option value="3">A3</option>
-                    <option value="3">A3</option>
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="A3">A3</option>
+                    <option value="A3">A3</option>
+                    <option value="A3">A3</option>
+                    <option value="A3">A3</option>
                   </select>
                 </div>
               </div>
@@ -252,28 +246,28 @@
 
                   <div class="d-flex justify-content-between mb-3">
                     <h5 class="text-uppercase">Bàn</h5>
-                    <h5>A2</h5>
+                    <h5 class="selected-table">A2</h5>
                   </div>
 
                   <hr class="my-4" />
 
                   <div class="d-flex justify-content-between mb-3">
                     <h5 class="text-uppercase">Tổng tiền</h5>
-                    <h5>100.000 VNĐ</h5>
+                    <h5 class="total-price">100.000 VNĐ</h5>
                   </div>
 
                   <hr class="my-4" />
 
                   <div class="d-flex justify-content-between mb-3">
                     <h5 class="text-uppercase">Giảm giá</h5>
-                    <h5>8%</h5>
+                    <h5 class="discount">8%</h5>
                   </div>
 
                   <hr class="my-4" />
 
                   <div class="d-flex justify-content-between mb-5">
                     <h5 class="text-uppercase">Thành tiền</h5>
-                    <h5>92.000 VNĐ</h5>
+                    <h5 class="final-price">92.000 VNĐ</h5>
                   </div>
 
                   <button
