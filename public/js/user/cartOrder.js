@@ -1,3 +1,8 @@
+const loadAllCartItem = async () => {
+  const data = await fetch("http://127.0.0.1:3000/user/my-cart-items");
+  console.log(data);
+};
+
 const updateOrderDetail = function () {
   const foodItemEls = document.querySelectorAll(".food-item");
   const totalPrice = Array.from(foodItemEls)
@@ -30,7 +35,10 @@ document
     document.querySelector(".selected-table").textContent = e.target.value;
   });
 
-window.addEventListener("load", updateOrderDetail);
+window.addEventListener("load", async function () {
+  await loadAllCartItem();
+  updateOrderDetail();
+});
 
 document.querySelectorAll(".btn--down").forEach((el) =>
   el.addEventListener("click", function (e) {
