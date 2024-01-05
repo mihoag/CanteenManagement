@@ -152,11 +152,6 @@ const modifyItemAmount = function () {
     })
   );
 };
-window.addEventListener("load", async function () {
-  await loadAllCartItem();
-  updateOrderDetail();
-  modifyItemAmount();
-});
 
 document
   .querySelector(".form-select-table")
@@ -164,3 +159,57 @@ document
     console.log("hello");
     document.querySelector(".selected-table").textContent = e.target.value;
   });
+
+const tableSelected = () => {
+  const result =
+    document.querySelector(".form-select-table").value !== "Chọn bàn";
+  return result;
+};
+
+const hasItemToPay = () => {
+  const result =
+    Number.parseInt(document.querySelector(".final-price").textContent) !== 0;
+  return result;
+};
+
+window.addEventListener("load", async function () {
+  await loadAllCartItem();
+  updateOrderDetail();
+  modifyItemAmount();
+
+  document
+    .querySelector(".btn--payment")
+    .addEventListener("click", async function () {
+      if (!hasItemToPay()) {
+        alert("Quý khách xin vui lòng chọn món trước khi thanh toán");
+        window.location.href = "http://127.0.0.1:3000/user/menu/";
+        return;
+      }
+      if (!tableSelected()) {
+        alert("Quý khách xin vui lòng chọn bàn");
+        return;
+      }
+
+      const total_price = Number.parseInt(
+        document.querySelector(".final-price").textContent
+      );
+      const item_ids = Array.from(
+        document.querySelectorAll(".btn--delete-item")
+      ).map((el) => el.dataset.itemId);
+      const quantities = Array.from(
+        document.querySelectorAll("input[type=number]")
+      ).map((el) => Number.parseInt(el.value));
+
+      quantities.shift();
+
+      await fetch("http://127.0.0.1:3000/api/user/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ total_price, item_ids, quantities }),
+      });
+      alert("Thanh toán thành công");
+      // window.location.href = "http://127.0.0.1:3000/user/menu/";
+    });
+});
