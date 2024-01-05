@@ -29,8 +29,9 @@ class Item {
         );
       } else {
         totalItems = await db.query(
-          `SELECT * FROM "item" WHERE LOWER("item"."name") LIKE LOWER('%${search}% ORDER BY "id_item" ASC')`
+          `SELECT * FROM "item" WHERE LOWER("item"."name") LIKE LOWER('%${search}%') ORDER BY "id_item" ASC`
         );
+        console.log(totalItems);
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         items = await db.query(
@@ -61,6 +62,29 @@ class Item {
     const data = await db.insert('item', new Item(item));
     if(data) {
       return [true, 'Thêm mặt hàng thành công'];
+    }
+  }
+
+  static async getProduct(id) {
+    try {
+      const data = await db.selectByID('item', 'id_item', id);
+      if(data){
+        return [true, data]
+      } else {
+        return [false, 'ID không tồn tại'];
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateProduct(data) {
+    data.saleprice = data.price - data.price*data.discount/100;
+    const rs = await db.update('item', new Item(data), 'id_item', data.id_item);
+    if(rs) {
+      return [true, 'Cập nhập thành công'];
+    } else {
+      return [false, 'Cập nhập thất bại, mời thử lại sau'];
     }
   }
 }

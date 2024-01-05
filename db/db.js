@@ -82,8 +82,8 @@ module.exports = {
     try {
       const query =
         pgp.helpers.update(entity, null, tbName) +
-        ` where "${fieldName}" = ${value}`;
-      const rs = await db.none(query);
+        ` where "${fieldName}" = ${value} RETURNING *`;
+      const rs = await db.any(query);
       return rs;
     } catch (error) {
       throw error;
