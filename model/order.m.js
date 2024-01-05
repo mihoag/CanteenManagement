@@ -1,42 +1,44 @@
 const db = require("../db/db");
 const pageSize = 10;
+const OrderDetail = require("./orderdetail.m");
+const Product = require("./product.m");
 class Order {
   constructor(order) {
-    this.id_order = order?.id_order;
-    this.id_user = order?.id_user;
+    this.id_user = 1;
     this.order_date = order?.order_date;
-    this.status = order?.status;
-    this.payment = order?.payment;
-    this.id_cashier = order?.id_cashier;
+    this.status = "Completed";
+    this.payment = true;
+    this.id_cashier = 1;
     this.total_price = order?.total_price;
-    this.items = order?.items;
   }
+
+  
 
   static async getOrdersList(pageNum, search) {
     try {
       let Items = await db.query(
-        `SELECT * FROM "item" WHERE "item".quantity > 0`
+        `SELECT * FROM "item" WHERE "item".quantity > 0 ORDER BY "id_item" ASC`
       );
       let totalItems;
       let numberOfPages;
       let orders;
       if (!search) {
         totalItems = await db.query(
-          `SELECT * FROM "order" ORDER BY "order_date" LIMIT 100`
+          `SELECT * FROM "order" ORDER BY "id_order" DESC LIMIT 200`
         );
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         orders = await db.query(
-          `SELECT * FROM "order" ORDER BY "order_date" LIMIT ${pageSize} OFFSET ${offset}`
+          `SELECT * FROM "order" ORDER BY "id_order" DESC LIMIT ${pageSize} OFFSET ${offset}`
         );
       } else {
         totalItems = await db.query(
-          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "order_date" LIMIT 50`
+          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "id_order" DESC LIMIT 100`
         );
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         orders = await db.query(
-          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "order_date" LIMIT ${pageSize} OFFSET ${offset}`
+          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "id_order" DESC LIMIT ${pageSize} OFFSET ${offset}`
         );
       }
       const listOrders = await Promise.all(
@@ -104,9 +106,48 @@ class Order {
         pages: numberOfPages,
         page: pageNum,
         orders: listOrders,
-        items: Items
+        items: Items,
       };
       return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async addOrder(data) {
+    try {
+      if (data.items.length == 0) {
+        return [false, "Chọn ít nhất 1 mặt hàng"];
+      }
+      for (const item of data.items) {
+        const data = await db.selectByID('item', 'id_item', item.id_item);
+        if(data && data.quantity >= item.quantity) {
+          data.quantity -= item.quantity;
+          await db.update('item', new Product(data), 'id_item', data.id_item);
+        } else {
+          return [false, "Số lượng sản phẩm không đủ"];
+        }
+      }
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, "0");
+      var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = yyyy + "-" + mm + "-" + dd;
+      data.order_date = today;
+      const order = await db.insert("order", new Order(data));
+      if (order) {
+        await Promise.all(
+          Array.from(data.items).map(async (item) => {
+            await OrderDetail.addOrderDetail({
+              id_order: order.id_order,
+              id_item: item.id_item,
+              quantity: item.quantity,
+            });
+          })
+        );
+        return [true, "Thêm đơn hàng thành công"];
+      }
     } catch (error) {
       throw error;
     }

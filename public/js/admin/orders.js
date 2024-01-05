@@ -313,16 +313,26 @@ window.onclick = function (e) {
   }
 };
 
-list.forEach(function (item, index) {
-  item.addEventListener("click", function () {
-    quantity[index].type = item.checked ? "number" : "hidden";
-    calc();
-  });
-});
+function addEventItemsList() {
 
-quantity.forEach(function (item) {
-  item.addEventListener("input", calc);
-});
+  
+
+  list.forEach(function (item, index) {
+    item.removeEventListener("click", function clickList() {
+      quantity[index].type = item.checked ? "number" : "hidden";
+      calc();
+    }) 
+    item.addEventListener("click", function clickList() {
+      quantity[index].type = item.checked ? "number" : "hidden";
+      calc();
+    });
+  });
+  
+  quantity.forEach(function (item) {
+    item.addEventListener("input", calc);
+  });
+}
+addEventItemsList();
 
 function calc() {
   let moneybuy = 0;
@@ -372,3 +382,54 @@ function unPick(e) {
   }
   calc();
 }
+
+async function addOrder() {
+  calc();
+  const listItems = document.querySelectorAll("#droptxt div");
+  if(listItems.length == 0) {
+    alert('Hãy chọn ít nhất một mặt hàng');
+    return;
+  }
+  let data = {
+    items: []
+  };
+  listItems.forEach((element) => {
+    data.items.push({
+      id_item: element.querySelector(".picked").value,
+      quantity: element.querySelector(".quantity").value,
+    })
+  })
+  data.total_price = document.getElementById("totalpay").innerText;
+
+  try {
+    const response = await fetch('/admin/orders/add', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+      const rs = await response.json();
+      alert(rs);
+      console.log(response.status);
+      if(response.status === 200) {
+        window.location.reload();
+      }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const searchList = document.getElementById('searchtxt');
+searchList.addEventListener('input', async function(e) {
+  content.classList.add('show');
+  const div = document.querySelectorAll('div.list-items');
+  
+  for (var i = 0, arr = []; i < list.length; i++) {
+    div[i].classList.remove('hidden');
+    if (!list[i].value.toLowerCase().includes(searchList.value.toLowerCase())) {
+      div[i].classList.add('hidden');
+    }
+  }
+})
