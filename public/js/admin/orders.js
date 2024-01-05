@@ -323,21 +323,11 @@ window.onclick = function (e) {
 };
 
 function addEventItemsList() {
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> d2f6db64ffb34b19ec037b89d034836414b23386
   list.forEach(function (item, index) {
     item.removeEventListener("click", function clickList() {
       quantity[index].type = item.checked ? "number" : "hidden";
       calc();
-<<<<<<< HEAD
     });
-=======
-    })
->>>>>>> d2f6db64ffb34b19ec037b89d034836414b23386
     item.addEventListener("click", function clickList() {
       quantity[index].type = item.checked ? "number" : "hidden";
       calc();
@@ -403,11 +393,7 @@ async function addOrder() {
   calc();
   const listItems = document.querySelectorAll("#droptxt div");
   if (listItems.length == 0) {
-<<<<<<< HEAD
     alert("Hãy chọn ít nhất một mặt hàng");
-=======
-    alert('Hãy chọn ít nhất một mặt hàng');
->>>>>>> d2f6db64ffb34b19ec037b89d034836414b23386
     return;
   }
   let data = {
@@ -440,17 +426,10 @@ async function addOrder() {
   }
 }
 
-<<<<<<< HEAD
 const searchList = document.getElementById("searchtxt");
 searchList.addEventListener("input", async function (e) {
   content.classList.add("show");
   const div = document.querySelectorAll("div.list-items");
-=======
-const searchList = document.getElementById('searchtxt');
-searchList.addEventListener('input', async function (e) {
-  content.classList.add('show');
-  const div = document.querySelectorAll('div.list-items');
->>>>>>> d2f6db64ffb34b19ec037b89d034836414b23386
 
   for (var i = 0, arr = []; i < list.length; i++) {
     div[i].classList.remove("hidden");
