@@ -29,7 +29,7 @@ module.exports = class user {
   static async checkExistUsername(username) {
     try {
       let data = await db.selectByID("user", "username", username);
-      
+
       if (data) {
         return true;
       }
@@ -82,10 +82,10 @@ module.exports = class user {
   }
   static async getAllEmail() {
     try {
-      const data = await db.selectByOneField('user', 'role', 'user');
+      const data = await db.selectByOneField("user", "role", "user");
       let res = [];
       for (const email of data) {
-        res.push(email['email']);
+        res.push(email["email"]);
       }
       return res;
     } catch (error) {
