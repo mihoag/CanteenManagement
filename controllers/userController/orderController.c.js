@@ -44,25 +44,32 @@ class orderController {
         err = new Error("Số dư trong tài khoản không đủ ! Thanh toán thất bại");
         err.isOperational = true;
         throw err;
-      } else {
-        user.money = money - total_price;
-        user = await userModel.updateProfile(user);
       }
 
       // Check if quantity satifies item stock
+      const remainingQuantity = [];
       for (let i = 0; i < item_ids.length; i++) {
-        const { quantity } = await itemModel.getItemQuantity(item_ids[i]);
+        const { quantity, name } = await itemModel.getItem(item_ids[i]);
         if (quantity < quantities[i]) {
-          err = new Error("Không đủ hàng");
+          err = new Error(`Không đủ hàng cho ${name}`);
           err.isOperational = true;
           throw err;
         } else {
-          await itemModel.updateItemQuantity(
-            item_ids[i],
-            quantity - quantities[i]
-          );
+          remainingQuantity.push(quantity);
         }
       }
+
+      // update quantity in item table
+      for (let i = 0; i < item_ids.length; i++) {
+        await itemModel.updateItemQuantity(
+          item_ids[i],
+          remainingQuantity[i] - quantities[i]
+        );
+      }
+
+      // update user's balance
+      user.money = money - total_price;
+      user = await userModel.updateProfile(user);
 
       const order = await orderUser.addOrder({ ...req.body, id_user });
       //   console.log(order);

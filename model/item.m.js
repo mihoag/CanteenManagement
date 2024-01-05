@@ -1,12 +1,12 @@
 const db = require("../db/db");
 
 module.exports = {
-  getItemQuantity: async (itemId) => {
+  getItem: async (itemId) => {
     try {
       const data = await db.query(
-        `SELECT "quantity" FROM "item" where "item"."id_item" = ${itemId}`
+        `SELECT * FROM "item" where "item"."id_item" = ${itemId}`
       );
-      // console.log(data);
+      console.log(data);
       return data[0];
     } catch (error) {
       throw error;
