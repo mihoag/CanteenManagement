@@ -4,6 +4,7 @@ class homeController {
     try {
       //let name = req.session.name;
       let user = await userModel.selectByUsername(req.session.username);
+      //console.log(req.session)
       res.render("user/home", { layout: "userLayout", name: user.name, username: user.username, ishomeUser: true });
     } catch (error) {
       next(error);

@@ -8,6 +8,7 @@ const cartController = require("./../../controllers/userController/cartControlle
 const profileRoute = require("./profile.r");
 const userController = require("./../../controllers/userController/userController.c");
 
+route.get("/cart/:FoodId", cartController.AddItemToCart);
 route.get("/order", orderController.showOrder);
 route.get("/cart", cartController.showCart);
 route.post("/naptien", userController.updateSodu);
@@ -15,15 +16,15 @@ route.use("/profile", profileRoute);
 route.post("/detailOrder", orderController.Orderdetail);
 
 // router for menu
-route.get("/menu",menuController.allFoods );
-route.get("/menu/new",menuController.newFoods );
-route.get("/menu/promotion",menuController.promotionFoods );
-route.get("/menu/bestsell",menuController.saleFoods );
-route.get("/menu/favorite",menuController.favoriteFoods );
-route.get("/menu/recent",menuController.menuFoods );
+route.get("/menu", menuController.allFoods);
+route.get("/menu/new", menuController.newFoods);
+route.get("/menu/promotion", menuController.promotionFoods);
+route.get("/menu/bestsell", menuController.saleFoods);
+route.get("/menu/favorite", menuController.favoriteFoods);
+route.get("/menu/recent", menuController.menuFoods);
 //detail food
 route.get("/menu/:FoodId", detailFoodController.detailFood);
 //add item to cart
-route.get("/cart/:FoodId", cartController.AddItemToCart);
+
 route.get("/", homeController.showHome);
 module.exports = route;

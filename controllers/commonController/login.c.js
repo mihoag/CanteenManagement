@@ -42,7 +42,6 @@ class signinController {
             let sess = req.session;
             sess.isAuthenticated = true;
             sess.username = username;
-
             sess.name = data.name;
             sess.role = data.role;
             if (data.role === "admin") return res.redirect("/admin");

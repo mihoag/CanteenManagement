@@ -36,6 +36,16 @@ module.exports = class Orderuser {
     }
   }
 
+  static async getOrderByUsername(username) {
+    try {
+      //let data = await 
+      let data = await db.query(`select * from "order" o, "user" u WHERE o.id_user= u.id_user and u.username = '${username}'`);
+      return data;
+    } catch (error) {
+
+    }
+  }
+
   static async addOrder(orderData) {
     try {
       //   console.log(orderData);
