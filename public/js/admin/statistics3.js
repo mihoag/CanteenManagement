@@ -22,7 +22,7 @@ function exportExcel() {
   for (let i = 0; i < dataSetExport.labels.length; i++)
     if (dataSetExport.revenueSet[i] > 0)
       data.push({
-        "Ngày": `${dataSetExport.labels[i]}/${year}`,
+        "Ngày": `${dataSetExport.labels[i]}/${month}/${year}`,
         "Doanh thu": convertToVND(dataSetExport.revenueSet[i]),
         "Lợi nhuận": convertToVND(dataSetExport.profitSet[i]),
       })

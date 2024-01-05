@@ -1,4 +1,14 @@
 //export excel file
+function convertToVND(number) {
+  // Using toLocaleString to format the number as currency in VND
+  number = parseInt(number);
+  let vndFormatted = number.toLocaleString('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  });
+
+  return vndFormatted.replace("₫", "VNĐ");
+}
 function exportExcel() {
   if (response.rs.length <= 0) {
     alert("Không có dữ liệu");
@@ -7,15 +17,15 @@ function exportExcel() {
   const rows = response.rs.map(row => ({
     "Tên": row.name,
     "Ảnh": row.image,
-    "Giá bán": row.saleprice,
+    "Giá bán": convertToVND(row.saleprice),
     "Số lượng bán ra": row.quantity,
     "Loại": row.type
   }))
   const worksheet = XLSX.utils.json_to_sheet(rows);
   var wscols = [
     { wch: 30 },
-    { wch: 80 },
-    { wch: 10 },
+    { wch: 60 },
+    { wch: 15 },
     { wch: 20 },
     { wch: 10 }
   ];
