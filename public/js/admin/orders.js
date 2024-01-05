@@ -95,11 +95,7 @@ async function renderOrders(data) {
       `;
     });
     const detail = `
-<<<<<<< HEAD
     <tr class="detail-row" id="${order.id_order}">
-=======
-    <tr class="detail-row when-print">
->>>>>>> d2f6db64ffb34b19ec037b89d034836414b23386
     <td colspan="7" class="detail-col">
         <div class="container-fluid detail-table">
             <div class="row">
@@ -111,8 +107,7 @@ async function renderOrders(data) {
                                 <h4
                                     class="float-end font-size-15">Hóa
                                     đơn #${order.id_order}<span
-                                        class="badge bg-success font-size-12 ms-2">${order.payment ? "Paid" : "Pending"
-      }</span></h4>
+                                        class="badge bg-success font-size-12 ms-2">${order.payment ? "Paid" : "Pending"}</span></h4>
                                 <div class="mb-4">
                                     <h2
                                         class="mb-1 text-muted">HCMUS
@@ -148,11 +143,9 @@ async function renderOrders(data) {
                                             class="font-size-16 mb-3">Khách
                                             hàng</h5>
                                         <h5
-                                            class="font-size-15 mb-2">${order.user.name
-      }</h5>
+                                            class="font-size-15 mb-2">${order.user.name}</h5>
                                         <p
-                                            class="mb-1">${order.user.username
-      }</p>
+                                            class="mb-1">${order.user.username}</p>
                                     </div>
                                 </div>
                                 <!-- end col -->
@@ -206,8 +199,7 @@ async function renderOrders(data) {
                                                     class="text-end">Tổng
                                                     mua</th>
                                                 <td
-                                                    class="text-end">${order.originPrice
-      }&#8363</td>
+                                                    class="text-end">${order.originPrice}&#8363</td>
                                             </tr>
                                             <!-- end tr -->
                                             <tr>
@@ -218,8 +210,7 @@ async function renderOrders(data) {
                                                     Giảm
                                                     giá:</th>
                                                 <td
-                                                    class="border-0 text-end">-${order.discount
-      }&#8363</td>
+                                                    class="border-0 text-end">-${order.discount}&#8363</td>
                                             </tr>
                                             <!-- end tr -->
                                             <tr>
@@ -230,8 +221,7 @@ async function renderOrders(data) {
                                                     tiền</th>
                                                 <td
                                                     class="border-0 text-end"><h4
-                                                        class="m-0 fw-semibold">${order.total_price
-      }&#8363</h4></td>
+                                                        class="m-0 fw-semibold">${order.total_price}&#8363</h4></td>
                                             </tr>
                                             <!-- end tr -->
                                         </tbody><!-- end tbody -->
@@ -335,6 +325,7 @@ function addEventItemsList() {
   });
 
   quantity.forEach(function (item) {
+    item.removeEventListener("input", calc);
     item.addEventListener("input", calc);
   });
 }

@@ -1,5 +1,5 @@
 const db = require("../db/db");
-const pageSize = 10;
+const pageSize = 20;
 class Item {
   constructor(item) {
     this.name = item?.name;
@@ -78,8 +78,9 @@ class Item {
   }
 
   static async updateProduct(data) {
-    const check = await db.selectByID('item', 'name', item.name);
-    if(check && check.name !== data.name) {
+    const check = await db.selectByID('item', 'name', data.name);
+    const check2 = await db.selectByID('item', 'id_item', data.id_item);
+    if(check && check.name !== check2.name) {
       return [false, 'Tên mặt hàng đã tồn tại'];
     }
     if(data.cost < 0 || data.price < 0 || data.cost > data.price || data.discount < 0 || data.quantity < 0) {

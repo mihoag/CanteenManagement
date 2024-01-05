@@ -170,6 +170,7 @@
     visibility: visible;
   }
   .printable-content {
+    font-size: 12px;
     position: absolute;
     left: 0;
     top: 0;

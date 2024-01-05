@@ -1,5 +1,5 @@
 const db = require("../db/db");
-const pageSize = 10;
+const pageSize = 20;
 const OrderDetail = require("./orderdetail.m");
 const Product = require("./product.m");
 
@@ -35,7 +35,7 @@ class Order {
       }
       if (!search) {
         totalItems = await db.query(
-          `SELECT * FROM "order" ORDER BY "id_order" DESC LIMIT 200`
+          `SELECT * FROM "order" ORDER BY "id_order" DESC LIMIT 400`
         );
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
@@ -43,7 +43,7 @@ class Order {
           `SELECT * FROM "order" ORDER BY "id_order" DESC LIMIT ${pageSize} OFFSET ${offset}`
         );
       } else {
-        totalItems = await db.query(querySearch + 'LIMIT 200');
+        totalItems = await db.query(querySearch + 'LIMIT 400');
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         orders = await db.query(
