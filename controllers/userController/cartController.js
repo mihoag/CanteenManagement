@@ -24,8 +24,10 @@ exports.AddItemToCart = async (req, res, next) => {
   try {
     const { FoodId } = req.params;
     const username = req.session.username;
-    await cartModel.addFood(FoodId, username);
-    res.redirect("/user/cart");
+   const check =  await cartModel.addFood(FoodId, username);
+   if(check)
+    return res.json({ message: "Một mặt hàng mới đã được thêm vào giỏ !", success: true })
+    return res.json({ message: "Có lỗi xảy ra vui lòng thử lại !", success: false })
   } catch (err) {
     next(err);
   }

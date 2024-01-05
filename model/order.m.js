@@ -136,8 +136,13 @@ class Order {
       }
 
       for (const item of data.items) {
+        if (item.quantity <= 0) {
+          return [false, "Số lượng mặt hàng phải lớn hơn 0"];
+        }
+      }
+      for (const item of data.items) {
         const data = await db.selectByID('item', 'id_item', item.id_item);
-        if(data && data.quantity >= item.quantity) {
+        if (data && data.quantity >= item.quantity) {
           data.quantity -= item.quantity;
           await db.update('item', new Product(data), 'id_item', data.id_item);
         } else {

@@ -5,9 +5,25 @@ module.exports = {
     try {
       let user = await db.selectByOneField("user", "username", Username);
       let IdUser = user[0].id_user;
-      await db.addFood(FoodId, IdUser);
+      //check exist that food in cart just need update quantity
+      let food = await db.selectByOneField("cart", "id_user", IdUser);
+      for (const item of food) {
+        if (item.id_item == FoodId) {
+          //update quantity
+          const flag = db.updateCart(item.quantity + 1, IdUser, item.id_item);
+          if (flag) {
+            return true;
+          }
+          return false;
+        }
+      }
+
+      const data = await db.addFood(FoodId, IdUser);
       //insert success alert
-      return {};
+      if (data) {
+        return true;
+      }
+      return false;
     } catch (error) {
       throw error;
     }
@@ -18,7 +34,7 @@ module.exports = {
       const user = await db.selectByOneField("user", "username", username);
       const id_user = user[0].id_user;
       const data = await db.query(
-        `SELECT * FROM "cart","item" where "cart"."id_user" = '${id_user}' and "cart"."id_item" = "item"."id_item"`
+        `SELECT i."image", i."name", i."type", i."saleprice", i."id_item", c."id_cart", c."quantity" FROM "cart" c,"item" i where c."id_user" = '${id_user}' and c."id_item" = i."id_item"`
       );
       // console.log(data);
       return data;

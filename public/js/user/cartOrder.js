@@ -40,7 +40,7 @@ const generateFoodItemMarkup = (food) => {
                 id="form1"
                 min="0"
                 name="quantity"
-                value="1"
+                value="${food.quantity}"
                 type="number"
                 class="form-control form-control-sm"
               />
@@ -70,6 +70,7 @@ const loadAllCartItem = async () => {
     const res = await fetch("/api/user/my-cart-items");
     // console.log(res);
     const data = await res.json();
+    console.log(data);
     const foodCartContainer = document.querySelector(".food-cart-container");
     data.forEach((food) =>
       foodCartContainer.insertAdjacentHTML(
@@ -100,8 +101,9 @@ const updateOrderDetail = function () {
   const discount = Number.parseFloat(
     document.querySelector(".discount").textContent
   );
-  document.querySelector(".final-price").textContent = `${totalPrice * (1 - discount / 100)
-    } VNĐ`;
+  document.querySelector(".final-price").textContent = `${
+    totalPrice * (1 - discount / 100)
+  } VNĐ`;
 
   document.querySelector(".selected-table").textContent =
     document.querySelector(".form-select-table").value;

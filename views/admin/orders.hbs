@@ -1,4 +1,4 @@
-<h3>Đơn hàng</h3>
+<h3 class="no-print">Đơn hàng</h3>
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-md-12">
@@ -362,5 +362,247 @@
             </div>
 
         </div>
+        <!-- Button trigger modal -->
+        <div>
+          <button type="button" class="btn modal-button" data-bs-toggle="modal" data-bs-target="#addOrderModal">
+            Tạo đơn hàng
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="addOrderModalLabel">Đơn hàng
+                    mới</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="items-container">
+                    <div class="dropdown">
+                      <p>Chọn mặt hàng:</p>
+                      <input type="text" id="searchtxt" class="list" placeholder="Tìm kiếm..">
+                      <div id="droptxt" class="item-list"></div>
+                      <div id="content" class="content">
+                        {{#each data.items}}
+                        <div class="list list-items">
+                          <input type="checkbox" id="{{this.id_item}}" class="list" value="{{this.name}}" />
+                          <label for="{{this.id_item}}" class="list name">{{this.name}}</label>
+                          <input type="text" class="price list" readonly value="{{this.price}}">
+                          <input type="hidden" class="list quantity" min="1" value="1" max="{{this.quantity}}" />
+                          <input type="hidden" class="list discount" value="{{this.discount}}" />
+                        </div>
+                        {{/each}}
+                      </div>
+                    </div>
+                  </div>
+                  <table>
+                    <tr>
+                      <th width="100%" scope="row" class="text-end">Tổng
+                        mua:</th>
+                      <td class="text-end" id="moneybuy">0</td>
+                    </tr>
+                    <!-- end tr -->
+                    <tr>
+                      <th scope="row" class="border-0 text-end">
+                        Giảm
+                        giá:</th>
+                      <td class="border-0 text-end" id="discountmoney">0</td>
+                    </tr>
+                    <!-- end tr -->
+                    <tr>
+                      <th scope="row" class="border-0 text-end">Thành
+                        tiền:</th>
+                      <td class="border-0 text-end">
+                        <h5 class="m-0 fw-semibold" id="totalpay">0</h5>
+                      </td>
+                    </tr>
+                  </table>
+                  <p></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                  <button type="button" class="btn btn-primary" onclick="addOrder()">Thêm</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="container table-responsive order-table mt-4 pt-2 px-2">
+        <div class="row pt-2 mx-2">
+          <table class="table table-responsive table-borderless align-middle">
+            <thead class="table-info no-print">
+              <tr class="bg-light">
+                <th scope="col" width="5%"><input class="form-check-input" type="checkbox"></th>
+                <th scope="col" width="5%">#</th>
+                <th scope="col" width="10%">Khách hàng</th>
+                <th scope="col" class="text-center" width="20%">Ngày mua</th>
+                <th scope="col" class="text-center" width="10%">Tổng tiền</th>
+                <th scope="col" class="text-center" width="10%">Trạng thái</th>
+                <th scope="col" class="text-center" width="10%">Chi tiết</th>
+              </tr>
+            </thead>
+            <tbody id="orders-list">
+              {{#each data.orders}}
+              <tr class="no-print">
+                <th scope="row"><input class="form-check-input" type="checkbox"></th>
+                <td>#{{this.id_order}}</td>
+                <td>{{this.user.name}}</td>
+                <td class="text-center">{{this.order_date}}</td>
+                <td class="text-center"><span class="fw-bolder">{{this.total_price}}&#8363</span></td>
+                <td class="text-center"><span class="fw-bolder">{{#if this.payment}}Paid {{else}}Pending{{/if}}</span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-xs btn-light detail-btn">
+                    <i class="fa-solid fa-angles-down" style="color: #a5d737;"></i>
+
+                  </button>
+                </td>
+              </tr>
+              <tr class="detail-row when-print">
+                <td colspan="7" class="detail-col">
+                  <div class="container-fluid detail-table">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="card border-0">
+                          <div class="card-body">
+                            <div class="invoice-title">
+                              <h4 class="float-end font-size-15">Hóa
+                                đơn #{{this.id_order}}<span class="badge bg-success font-size-12 ms-2">{{#if
+                                  this.payment}}Paid {{else}}Pending{{/if}}</span></h4>
+                              <div class="mb-4">
+                                <h2 class="mb-1 text-muted">HCMUS
+                                  CANTEEN</h2>
+                              </div>
+                              <div class="text-muted">
+                                <p class="mb-1">227
+                                  Đ. Nguyễn
+                                  Văn Cừ,
+                                  Phường 4,
+                                  Quận 5,
+                                  Thành phố Hồ
+                                  Chí Minh</p>
+                                <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i>
+                                  canteen@hcmus.edu.vn</p>
+                                <p><i class="uil uil-phone me-1"></i>
+                                  0123-456-789</p>
+                              </div>
+                            </div>
+
+                            <hr class="my-4">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <div class="text-muted">
+                                  <h5 class="font-size-16 mb-3">Khách
+                                    hàng</h5>
+                                  <h5 class="font-size-15 mb-2">{{this.user.name}}</h5>
+                                  <p class="mb-1">{{this.user.username}}</p>
+                                </div>
+                              </div>
+                              <!-- end col -->
+                              <div class="col-sm-6">
+                                <div class="text-muted text-sm-end">
+                                  <div class="mt-4">
+                                    <h5 class="font-size-15 mb-1">Ngày
+                                      mua</h5>
+                                    <p>{{this.order_date}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- end col -->
+                            </div>
+                            <!-- end row -->
+
+                            <div class="py-2">
+                              <h5 class="font-size-15">Đơn
+                                mua</h5>
+
+                              <div class="table-responsive">
+                                <table class="table align-middle table-nowrap table-centered mb-0">
+                                  <thead>
+                                    <tr>
+                                      <th style="width: 70px;">No.</th>
+                                      <th>Mặt
+                                        hàng</th>
+                                      <th class="text-center">Giá</th>
+                                      <th class="text-center">Số
+                                        lượng</th>
+                                      <th class="text-end" style="width: 120px;">Giá
+                                        tiền</th>
+                                    </tr>
+                                  </thead><!-- end thead -->
+                                  <tbody>
+                                    {{#each this.items}}
+                                    <tr>
+                                      <th scope="row">{{this.index}}</th>
+                                      <td>
+                                        <div>
+                                          <h5 class="text-truncate font-size-14 mb-1">{{this.name}}</h5>
+                                        </div>
+                                      </td>
+                                      <td class="text-center">{{this.price}}&#8363</td>
+                                      <td class="text-center">{{this.quantity}}</td>
+                                      <td class="text-end">{{this.money}}&#8363</td>
+                                    </tr>
+                                    {{/each}}
+                                    <tr>
+                                      <th scope="row" colspan="4" class="text-end">Tổng
+                                        mua</th>
+                                      <td class="text-end">{{this.originPrice}}&#8363</td>
+                                    </tr>
+                                    <!-- end tr -->
+                                    <tr>
+                                      <th scope="row" colspan="4" class="border-0 text-end">
+                                        Giảm
+                                        giá:</th>
+                                      <td class="border-0 text-end">-{{this.discount}}&#8363</td>
+                                    </tr>
+                                    <!-- end tr -->
+                                    <tr>
+                                      <th scope="row" colspan="4" class="border-0 text-end">Thành
+                                        tiền</th>
+                                      <td class="border-0 text-end">
+                                        <h4 class="m-0 fw-semibold">{{this.total_price}}&#8363</h4>
+                                      </td>
+                                    </tr>
+                                    <!-- end tr -->
+                                  </tbody><!-- end tbody -->
+                                </table><!-- end table -->
+                              </div><!-- end table responsive -->
+                              <div class="d-print-none mt-4">
+                                <div class="float-end">
+                                  <button class="btn btn-success me-1" onclick="printButtonClick()"><i
+                                      class="fa fa-print"></i></button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div class="row mx-2 justify-content-end d-flex no-print">
+          <nav style="width:auto">
+            <ul class="pagination" id="pages-list">
+              {{#times data.pages}}
+              <li class="page-item"><a
+                  class="page-link paging-btn{{#ifEquals this @root.data.page}} active{{/ifEquals}}"
+                  href="#">{{this}}</a></li>
+              {{/times}}
+            </ul>
+          </nav>
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
