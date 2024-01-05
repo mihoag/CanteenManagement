@@ -87,13 +87,13 @@ module.exports = {
       return rs;
     } catch (error) {
       throw error;
-    } 
+    }
   },
-  updateCart: async (quantity,idUser) => {
+  updateCart: async (quantity, idUser, idItem) => {
     try {
       const rs = await db.any(`UPDATE "cart"
       SET quantity = ${quantity}
-      WHERE id_user = ${idUser}`);
+      WHERE id_user = ${idUser} and id_item=${idItem}`);
       return rs;
     } catch (error) {
       throw error;
@@ -227,7 +227,9 @@ module.exports = {
     try {
       dbcn = await db.connect();
       const offset = (pageNumber - 1) * pageSize;
-      data = await dbcn.any(`SELECT * FROM "${tbName}" LIMIT ${pageSize} OFFSET ${offset}`);
+      data = await dbcn.any(
+        `SELECT * FROM "${tbName}" LIMIT ${pageSize} OFFSET ${offset}`
+      );
       return data;
     } catch (error) {
       throw error;
@@ -237,7 +239,9 @@ module.exports = {
   },
   addFood: async (idFood, IdUser) => {
     try {
-      const data = await db.one(`INSERT INTO "cart"(id_user,id_item,quantity) VALUES(${IdUser},${idFood},1) returning *`);
+      const data = await db.one(
+        `INSERT INTO "cart"(id_user,id_item,quantity) VALUES(${IdUser},${idFood},1) returning *`
+      );
       return data;
     } catch (error) {
       throw error;

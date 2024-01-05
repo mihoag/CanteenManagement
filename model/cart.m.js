@@ -10,7 +10,7 @@ module.exports = {
       for (const item of food) {
         if (item.id_item == FoodId) {
           //update quantity
-          const flag = db.updateCart(item.quantity + 1, IdUser);
+          const flag = db.updateCart(item.quantity + 1, IdUser, item.id_item);
           if (flag) {
             return true;
           }
