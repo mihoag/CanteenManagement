@@ -31,12 +31,17 @@ class orderController {
   async addOrder(req, res, next) {
     try {
       //   console.log(req.body);
+      const { item_ids, quantities, total_price } = req.body;
+      // Check if total_price < account balance
+
       const username = req.session.username;
       const order = await orderUser.addOrder({ ...req.body, username });
       //   console.log(order);
 
       const { id_order } = order[0];
-      const { item_ids, quantities } = req.body;
+
+      // Check if quantity satifies item stock
+
       const orderDetails = await Promise.all(
         item_ids.map(async (item_id, index) => {
           return await orderUser.addOrderDetail({

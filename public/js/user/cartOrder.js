@@ -210,6 +210,6 @@ window.addEventListener("load", async function () {
         body: JSON.stringify({ total_price, item_ids, quantities }),
       });
       alert("Thanh toán thành công");
-      // window.location.href = "http://127.0.0.1:3000/user/menu/";
+      window.location.href = "http://127.0.0.1:3000/user/menu/";
     });
 });
