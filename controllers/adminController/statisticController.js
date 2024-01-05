@@ -48,7 +48,8 @@ class statictisController {
   }
   async getDataRevenue(req, res, next) {
     try {
-      const rs = await statisticsM.getRevenue();
+      const { month, year } = req.params;
+      const rs = await statisticsM.getRevenue(month, year);
       res.json(rs);
     } catch (error) {
       next(error);

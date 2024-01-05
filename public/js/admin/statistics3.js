@@ -1,4 +1,7 @@
 //export excel file
+var filterMonth;
+var filterYear;
+let chart;
 function convertToVND(number) {
   // Using toLocaleString to format the number as currency in VND
   number = parseInt(number);
@@ -12,19 +15,21 @@ function convertToVND(number) {
 
 var dataSetExport;
 function exportExcel() {
-  if (dataSetExport.labels.length <= 0) {
-    alert("Không có dữ liệu");
-    return;
-  }
+
   month = dataSetExport.month;
   year = dataSetExport.year;
   let data = [];
   for (let i = 0; i < dataSetExport.labels.length; i++)
-    data.push({
-      "Ngày": `${dataSetExport.labels[i]}/${year}`,
-      "Doanh thu": convertToVND(dataSetExport.revenueSet[i]),
-      "Lợi nhuận": convertToVND(dataSetExport.profitSet[i]),
-    })
+    if (dataSetExport.revenueSet[i] > 0)
+      data.push({
+        "Ngày": `${dataSetExport.labels[i]}/${year}`,
+        "Doanh thu": convertToVND(dataSetExport.revenueSet[i]),
+        "Lợi nhuận": convertToVND(dataSetExport.profitSet[i]),
+      })
+  if (data.length <= 0) {
+    alert(`Tháng ${month} năm ${year} hiện Không có dữ liệu`);
+    return;
+  }
   const worksheet = XLSX.utils.json_to_sheet(data);
   const workbook = XLSX.utils.book_new();
   var wscols = [
@@ -101,7 +106,7 @@ function exportExcel() {
   }
   XLSX.utils.book_append_sheet(workbook, worksheet, "Thống kê doanh thu");
 
-  XLSX.writeFile(workbook, `Thống kê doanh thụ tháng ${month}/${year}.xlsx`, { cellStyles: true });
+  XLSX.writeFile(workbook, `Thống kê doanh thụ tháng ${month} năm ${year}.xlsx`, { cellStyles: true });
 }
 // -----------------------------
 
@@ -187,7 +192,8 @@ function viewChart(options) {
   //---- 
 
   const ctx = document.getElementById('myChart');
-  new Chart(ctx, {
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
     data: {
       labels: labels,
       datasets: [{
@@ -204,7 +210,7 @@ function viewChart(options) {
     }, options: {
       plugins: {
         title: {
-          display: true, text: 'Doanh thu trong tháng', color: '#161A30', font: { size: 40 }
+          display: true, text: `Doanh thu trong tháng ${options.month} năm ${options.year}`, color: '#161A30', font: { size: 40 }
         }
       }, scales: {
         y:
@@ -227,22 +233,63 @@ function viewChart(options) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
-  const res = await fetch("/admin/statistics/revenue", {
+function prevMonthClick() {
+  if (filterMonth == 1 && filterYear == 2019) {
+    var today = new Date();
+    filterMonth = today.getMonth() + 1;
+    filterYear = today.getFullYear();
+  } else {
+    filterMonth -= 1;
+    if (filterMonth === 0) {
+      filterMonth = 12;
+      filterYear -= 1;
+    }
+  }
+  var lastDayOfMonth = new Date(filterYear, filterMonth, 0);
+  lastDayOfMonth = lastDayOfMonth.getDate();
+  showViewChart(filterMonth, filterYear, lastDayOfMonth);
+}
+function nextMonthClick() {
+  var today = new Date();
+  if (today.getFullYear() === filterYear && today.getMonth() + 1 === filterMonth) {
+    filterMonth = 1;
+    filterYear = 2019;
+  } else {
+    filterMonth += 1;
+    if (filterMonth > 12) {
+      filterYear += 1;
+      filterMonth = 1;
+    }
+  }
+  var lastDayOfMonth = new Date(filterYear, filterMonth, 0);
+  lastDayOfMonth = lastDayOfMonth.getDate();
+  showViewChart(filterMonth, filterYear, lastDayOfMonth);
+}
+
+async function showViewChart(month, year, lastDayOfMonth) {
+  filterMonth = month;
+  filterYear = year;
+  const res = await fetch(`/admin/statistics/revenue/${month}/${year}`, {
     method: "GET",
   });
-
+  document.getElementById('MonthYear').innerText = `${month}/${year}`;
   const response = await res.json();
   //get last day in this month
-  var today = new Date();
-  var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-  lastDayOfMonth = today.getDate();
   viewChart({
     lastDayOfMonth,
     data: response,
-    month: today.getMonth() + 1,
-    year: today.getFullYear()
+    month,
+    year
   });
+
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+  var today = new Date();
+  var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  lastDayOfMonth = today.getDate();
+
+  showViewChart(today.getMonth() + 1, today.getFullYear(), lastDayOfMonth)
 
   // get week
   const firstday = new Date(
@@ -253,8 +300,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const lastday = new Date(
     today.setDate(today.getDate() - today.getDay() + 6),
   );
-  const from = `${firstday.getFullYear()}-${firstday.getMonth() + 1}-${firstday.getDate()}`
-  const to = `${lastday.getFullYear()}-${lastday.getMonth() + 1}-${lastday.getDate()}`
+  const from = `${firstday.getFullYear()}-${firstday.getMonth() + 1}-${firstday.getDate()} `
+  const to = `${lastday.getFullYear()}-${lastday.getMonth() + 1}-${lastday.getDate()} `
 
   const res1 = await fetch(`/admin/statistics/revenueW/${from}/${to}`, {
     method: "GET",
