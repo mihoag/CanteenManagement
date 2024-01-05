@@ -347,7 +347,7 @@ function calc() {
           class="list name">${list[i].value}</label>
       <input type="number"
           class="list quantity"
-          readonly value="${quantity[i].value}"/>
+          readonly min="1" value="${quantity[i].value}"/>
   </div>`);
       moneybuy += parseFloat(price[i].value) * quantity[i].value;
       discountmoney +=
@@ -412,7 +412,6 @@ async function addOrder() {
     });
       const rs = await response.json();
       alert(rs);
-      console.log(response.status);
       if(response.status === 200) {
         window.location.reload();
       }

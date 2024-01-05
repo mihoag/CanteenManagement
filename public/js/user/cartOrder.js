@@ -67,7 +67,7 @@ const generateFoodItemMarkup = (food) => {
 
 const loadAllCartItem = async () => {
   try {
-    const res = await fetch("http://127.0.0.1:3000/api/user/my-cart-items");
+    const res = await fetch("/api/user/my-cart-items");
     // console.log(res);
     const data = await res.json();
     const foodCartContainer = document.querySelector(".food-cart-container");
