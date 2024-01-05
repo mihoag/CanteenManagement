@@ -34,7 +34,7 @@ module.exports = {
       const user = await db.selectByOneField("user", "username", username);
       const id_user = user[0].id_user;
       const data = await db.query(
-        `SELECT i.*,c."quantity" FROM "cart" c,"item" i where c."id_user" = '${id_user}' and c."id_item" = i."id_item"`
+        `SELECT i."image", i."name", i."type", i."saleprice", i."id_item", c."id_cart", c."quantity" FROM "cart" c,"item" i where c."id_user" = '${id_user}' and c."id_item" = i."id_item"`
       );
       // console.log(data);
       return data;
