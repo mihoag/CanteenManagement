@@ -50,3 +50,14 @@
   border-radius: 15px;
   border: none;
 }
+
+.direct {
+  margin-left: 0; /* Set an initial value for margin-left */
+  transition: margin-left 0.3s ease-in-out;
+}
+.direct:hover {
+  margin-left: 20px; /* Adjust this value to your preference */
+}
+.btn{
+  background-color:  #88D49A;
+}

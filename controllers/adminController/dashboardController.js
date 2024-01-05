@@ -4,7 +4,7 @@ class dashBoardController {
         res.render("admin/dashboard", {
           layout: "adminLayout",
           title: "DashBoard",
-          css: "marketing",
+          css: "dashboard",
           js: "marketing",
         });
       } catch (error) {
