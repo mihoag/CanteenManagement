@@ -50,15 +50,63 @@
 
                         <div class="d-flex justify-content-end">
                             {{!-- <h2><b>Giá bán : {{food.price}} đ</b></h2> --}}
-                            <a style="width: 180px;" href="/user/cart/{{food.id_item}}"
-                                class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
+                            <a id="addCart" style="width: 180px;" class="btn btn-warning rounded-pill"><i
+                                    class="fa-solid fa-cart-shopping"></i>
                                 <br><b>Thêm vào giỏ</b></a>
                         </div>
                     </div>
-
+                    <input type="hidden" id="lPost" name="custId" value="/user/cart/{{food.id_item}}">
 
                 </div>
             </div>
         </div>
     </div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 10001">
+        <div id="toast" class="toast hide text-white" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-autohide="false">
+            <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-body">
+            </div>
+        </div>
+    </div>
 </section>
+<script>
+    // add order to cart alert
+    
+    var elements = document.getElementById("addCart")
+    elements.onclick = async function () {
+        var link = document.getElementById(`lPost`).value;
+
+        // fetch to data
+        const res = await fetch(link, {
+            method: "GET",
+
+        });
+
+        const response = await res.json();
+        if (!response.success) {
+            showToast(response.message || 'Có lỗi xảy ra, hãy thử lại sau', 'bg-danger');
+        } else {
+            showToast(response.message, 'bg-success');
+        }
+    }
+    
+
+    function showToast(message, type = "bg-danger", time = 2000) {
+        var toast = document.getElementById("toast");
+        toast.classList.remove("bg-danger");
+        toast.classList.remove("bg-success");
+        toast.classList.remove("bg-warning");
+        toast.classList.add(type);
+        toast.querySelector("#toast-body").innerText = message;
+
+        var bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        setTimeout(function () {
+            bsToast.hide();
+        }, time);
+    }
+</script>

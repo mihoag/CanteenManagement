@@ -52,18 +52,20 @@
     <div class="container">
         <div class="row">
             {{#each food}}
+        
             <div class="col-3 mb-2">
                 <div class="card text-bg-secondary" style="width: 20rem; height: 31rem;">
                     <a href="/user/menu/{{this.id_item}}"><img src="{{this.image}}" class="card-img-top" alt="food"></a>
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">{{this.name}}</h5>
                         <p class="card-text" style="text-align: center;">Giá bán: {{this.saleprice}} VNĐ</p>
-                        <a style="margin-left: 145px;" href="/user/cart/{{this.id_item}}"
-                            class="btn btn-warning rounded-pill"><i class="fa-solid fa-cart-shopping"></i>
+                        {{!-- Add to cart --}}
+                        <a style="margin-left: 145px;" class="btn btn-warning rounded-pill addCart"><i class="fa-solid fa-cart-shopping"></i>
                             <br><b>Thêm vào giỏ</b></a>
                     </div>
                 </div>
             </div>
+            <input type="hidden" id="lPost{{this.id_item}}" name="custId" value="/user/cart/{{this.id_item}}">
             {{/each}}
         </div>
 
@@ -103,7 +105,17 @@
             {{/if}}
         </nav>
     </div>
-
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 10001">
+    <div id="toast" class="toast hide text-white" role="alert" aria-live="assertive" aria-atomic="true"
+      data-bs-autohide="false">
+      <div class="toast-header">
+        <strong class="me-auto">Notification</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toast-body">
+      </div>
+    </div>
+  </div>
 
 </section>
 <script>
@@ -137,4 +149,42 @@
     if (currentPage === {{ totalPage }}) {
         document.querySelector('.page-next').classList.add('disabled');
     }
+    // add order to cart alert
+    var elements = document.getElementsByClassName("addCart"); 
+    for(var i=0; i<elements.length; i++){
+         elements[i].onclick = async function(){ 
+          // get link
+          var link = document.getElementById(`lPost${i}`).value;
+          
+          // fetch to data
+          const res = await fetch(link, {
+            method: "GET",
+
+    });
+
+    const response = await res.json();
+    if (!response.success) {
+      showToast(response.message || 'Có lỗi xảy ra, hãy thử lại sau', 'bg-danger');
+    } else {
+      showToast(response.message, 'bg-success');
+    }
+ 
+ } 
+}
+    
+ function showToast(message, type = "bg-danger", time = 2000) {
+  var toast = document.getElementById("toast");
+  toast.classList.remove("bg-danger");
+  toast.classList.remove("bg-success");
+  toast.classList.remove("bg-warning");
+  toast.classList.add(type);
+  toast.querySelector("#toast-body").innerText = message;
+
+  var bsToast = new bootstrap.Toast(toast);
+  bsToast.show();
+  setTimeout(function () {
+    bsToast.hide();
+  }, time);
+}
+
 </script>

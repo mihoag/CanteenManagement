@@ -227,7 +227,8 @@ module.exports = {
   },
   addFood: async (idFood, IdUser) => {
     try {
-      await db.one(`INSERT INTO "cart"(id_user,id_item,quantity) VALUES(${IdUser},${idFood},1) returning *`);
+      const data = await db.one(`INSERT INTO "cart"(id_user,id_item,quantity) VALUES(${IdUser},${idFood},1) returning *`);
+      return data;
     } catch (error) {
       throw error;
     }

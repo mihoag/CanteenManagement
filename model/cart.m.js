@@ -5,9 +5,14 @@ module.exports = {
     try {
       let user = await db.selectByOneField("user", "username", Username);
       let IdUser = user[0].id_user;
-      await db.addFood(FoodId, IdUser);
+       const data = await db.addFood(FoodId, IdUser);
       //insert success alert
-      return {};
+      if(data)
+      {
+        return true;
+      }
+      return false;
+      
     } catch (error) {
       throw error;
     }
