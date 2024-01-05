@@ -257,7 +257,7 @@ function renderOrders(data) {
 
   const pageList = document.getElementById("pages-list");
   pageList.innerHTML = ``;
-  for (let i = 1; i < data.pages; i++) {
+  for (let i = 1; i <= data.pages; i++) {
     pageList.innerHTML += `
     <li class="page-item"><a class="page-link paging-btn ${data.page == i ? "active" : ""
       }"

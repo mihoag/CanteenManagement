@@ -20,22 +20,22 @@ class Item {
       let items;
       if (!search) {
         totalItems = await db.query(
-          `SELECT * FROM "item" ORDER BY "id_item" ASC`
+          `SELECT * FROM "item" ORDER BY "id_item" DESC`
         );
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         items = await db.query(
-          `SELECT * FROM "item" ORDER BY "id_item" ASC LIMIT ${pageSize} OFFSET ${offset}`
+          `SELECT * FROM "item" ORDER BY "id_item" DESC LIMIT ${pageSize} OFFSET ${offset}`
         );
       } else {
         totalItems = await db.query(
-          `SELECT * FROM "item" WHERE LOWER("item"."name") LIKE LOWER('%${search}%') ORDER BY "id_item" ASC`
+          `SELECT * FROM "item" WHERE LOWER("item"."name") LIKE LOWER('%${search}%') ORDER BY "id_item" DESC`
         );
         console.log(totalItems);
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         items = await db.query(
-          `SELECT * FROM "item" WHERE LOWER("item"."name") LIKE LOWER('%${search}%') ORDER BY "id_item" ASC LIMIT ${pageSize} OFFSET ${offset}`
+          `SELECT * FROM "item" WHERE LOWER("item"."name") LIKE LOWER('%${search}%') ORDER BY "id_item" DESC LIMIT ${pageSize} OFFSET ${offset}`
         );
       }
       let data = {
