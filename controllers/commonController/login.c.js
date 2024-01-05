@@ -45,7 +45,7 @@ class signinController {
 
             sess.name = data.name;
             sess.role = data.role;
-            if (data.role === "admin") return res.redirect("/admin/marketing");
+            if (data.role === "admin") return res.redirect("/admin");
             res.redirect("/user");
           }
         });
