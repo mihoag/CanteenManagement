@@ -2,13 +2,15 @@ const orderUser = require("../../model/orderUser.m");
 const userModel = require("../../model/user.m");
 const itemModel = require("../../model/item.m");
 const { pgp, db } = require("../../configs/DBconnection");
+
 class orderController {
   async showOrder(req, res, next) {
     try {
-      let listOrder = await orderUser.getAll();
+      let user = await userModel.selectByUsername(req.session.username);
+      let listOrder = await orderUser.getOrderByUsername(req.session.username);
       res.render("user/order", {
         layout: "userLayout",
-        username: req.session.username,
+        username: req.session.username, name: user.name,
         listOrder: listOrder,
       });
     } catch (error) {

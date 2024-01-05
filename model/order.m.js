@@ -119,6 +119,13 @@ class Order {
       if (data.items.length == 0) {
         return [false, "Chọn ít nhất 1 mặt hàng"];
       }
+
+      for (const item of data.items) {
+        if(item.quantity <=0){
+          return [false, "Số lượng mặt hàng phải lớn hơn 0"];
+        }
+      }
+
       for (const item of data.items) {
         if (item.quantity <= 0) {
           return [false, "Số lượng mặt hàng phải lớn hơn 0"];

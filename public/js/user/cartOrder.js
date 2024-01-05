@@ -67,7 +67,7 @@ const generateFoodItemMarkup = (food) => {
 
 const loadAllCartItem = async () => {
   try {
-    const res = await fetch("http://127.0.0.1:3000/api/user/my-cart-items");
+    const res = await fetch("/api/user/my-cart-items");
     // console.log(res);
     const data = await res.json();
     const foodCartContainer = document.querySelector(".food-cart-container");
@@ -100,9 +100,8 @@ const updateOrderDetail = function () {
   const discount = Number.parseFloat(
     document.querySelector(".discount").textContent
   );
-  document.querySelector(".final-price").textContent = `${
-    totalPrice * (1 - discount / 100)
-  } VNĐ`;
+  document.querySelector(".final-price").textContent = `${totalPrice * (1 - discount / 100)
+    } VNĐ`;
 
   document.querySelector(".selected-table").textContent =
     document.querySelector(".form-select-table").value;
@@ -139,7 +138,7 @@ const modifyItemAmount = function () {
         cartId: el.dataset.cartId,
         itemId: el.dataset.itemId,
       };
-      await fetch("http://127.0.0.1:3000/api/user/item", {
+      await fetch("/api/user/item", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -182,7 +181,7 @@ window.addEventListener("load", async function () {
     .addEventListener("click", async function () {
       if (!hasItemToPay()) {
         alert("Quý khách xin vui lòng chọn món trước khi thanh toán");
-        window.location.href = "http://127.0.0.1:3000/user/menu/";
+        window.location.href = "/user/menu/";
         return;
       }
       if (!tableSelected()) {
@@ -202,7 +201,7 @@ window.addEventListener("load", async function () {
 
       quantities.shift();
 
-      const res = await fetch("http://127.0.0.1:3000/api/user/payment", {
+      const res = await fetch("/api/user/payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

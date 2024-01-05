@@ -1,3 +1,7 @@
+function printButtonClick() {
+  window.print();
+}
+
 function showDetail() {
   var buttons = document.querySelectorAll(".detail-btn");
 
@@ -55,17 +59,15 @@ function renderOrders(data) {
 
   data.orders.forEach((order) => {
     const tr = `
-      <tr>
+      <tr class="no-print">
         <th scope="row"><input class="form-check-input" type="checkbox"></th>
         <td>#${order.id_order}</td>
         <td>${order.user.name}</td>
         <td class="text-center">${order.order_date}</td>
-        <td class="text-center"><span class="fw-bolder">${
-          order.total_price
-        }&#8363</span></td>
-        <td class="text-center"><span class="fw-bolder">${
-          order.payment ? "Paid" : "Pending"
-        }</span></td>
+        <td class="text-center"><span class="fw-bolder">${order.total_price
+      }&#8363</span></td>
+        <td class="text-center"><span class="fw-bolder">${order.payment ? "Paid" : "Pending"
+      }</span></td>
         <td class="text-center">
           <button class="btn btn-xs btn-light detail-btn">
             <i class="fa-solid fa-angles-down" style="color: #a5d737;"></i>
@@ -76,7 +78,7 @@ function renderOrders(data) {
     let items = ``;
     order.items.forEach((item) => {
       items += `
-      <tr>
+      <tr class="no-print">
       <th
           scope="row">${item.index}</th>
       <td>
@@ -93,7 +95,7 @@ function renderOrders(data) {
       `;
     });
     const detail = `
-    <tr class="detail-row">
+    <tr class="detail-row when-print">
     <td colspan="7" class="detail-col">
         <div class="container-fluid detail-table">
             <div class="row">
@@ -105,9 +107,8 @@ function renderOrders(data) {
                                 <h4
                                     class="float-end font-size-15">Hóa
                                     đơn #${order.id_order}<span
-                                        class="badge bg-success font-size-12 ms-2">${
-                                          order.payment ? "Paid" : "Pending"
-                                        }</span></h4>
+                                        class="badge bg-success font-size-12 ms-2">${order.payment ? "Paid" : "Pending"
+      }</span></h4>
                                 <div class="mb-4">
                                     <h2
                                         class="mb-1 text-muted">HCMUS
@@ -143,13 +144,11 @@ function renderOrders(data) {
                                             class="font-size-16 mb-3">Khách
                                             hàng</h5>
                                         <h5
-                                            class="font-size-15 mb-2">${
-                                              order.user.name
-                                            }</h5>
+                                            class="font-size-15 mb-2">${order.user.name
+      }</h5>
                                         <p
-                                            class="mb-1">${
-                                              order.user.username
-                                            }</p>
+                                            class="mb-1">${order.user.username
+      }</p>
                                     </div>
                                 </div>
                                 <!-- end col -->
@@ -203,9 +202,8 @@ function renderOrders(data) {
                                                     class="text-end">Tổng
                                                     mua</th>
                                                 <td
-                                                    class="text-end">${
-                                                      order.originPrice
-                                                    }&#8363</td>
+                                                    class="text-end">${order.originPrice
+      }&#8363</td>
                                             </tr>
                                             <!-- end tr -->
                                             <tr>
@@ -216,9 +214,8 @@ function renderOrders(data) {
                                                     Giảm
                                                     giá:</th>
                                                 <td
-                                                    class="border-0 text-end">-${
-                                                      order.discount
-                                                    }&#8363</td>
+                                                    class="border-0 text-end">-${order.discount
+      }&#8363</td>
                                             </tr>
                                             <!-- end tr -->
                                             <tr>
@@ -229,9 +226,8 @@ function renderOrders(data) {
                                                     tiền</th>
                                                 <td
                                                     class="border-0 text-end"><h4
-                                                        class="m-0 fw-semibold">${
-                                                          order.total_price
-                                                        }&#8363</h4></td>
+                                                        class="m-0 fw-semibold">${order.total_price
+      }&#8363</h4></td>
                                             </tr>
                                             <!-- end tr -->
                                         </tbody><!-- end tbody -->
@@ -261,11 +257,10 @@ function renderOrders(data) {
 
   const pageList = document.getElementById("pages-list");
   pageList.innerHTML = ``;
-  for (let i = 1; i < data.pages; i++) {
+  for (let i = 1; i <= data.pages; i++) {
     pageList.innerHTML += `
-    <li class="page-item"><a class="page-link paging-btn ${
-      data.page == i ? "active" : ""
-    }"
+    <li class="page-item"><a class="page-link paging-btn ${data.page == i ? "active" : ""
+      }"
             href="#">${i}</a></li>
     `;
   }
@@ -315,19 +310,19 @@ window.onclick = function (e) {
 
 function addEventItemsList() {
 
-  
+
 
   list.forEach(function (item, index) {
     item.removeEventListener("click", function clickList() {
       quantity[index].type = item.checked ? "number" : "hidden";
       calc();
-    }) 
+    })
     item.addEventListener("click", function clickList() {
       quantity[index].type = item.checked ? "number" : "hidden";
       calc();
     });
   });
-  
+
   quantity.forEach(function (item) {
     item.addEventListener("input", calc);
   });
@@ -347,7 +342,7 @@ function calc() {
           class="list name">${list[i].value}</label>
       <input type="number"
           class="list quantity"
-          readonly value="${quantity[i].value}"/>
+          readonly min="1" value="${quantity[i].value}"/>
   </div>`);
       moneybuy += parseFloat(price[i].value) * quantity[i].value;
       discountmoney +=
@@ -386,7 +381,7 @@ function unPick(e) {
 async function addOrder() {
   calc();
   const listItems = document.querySelectorAll("#droptxt div");
-  if(listItems.length == 0) {
+  if (listItems.length == 0) {
     alert('Hãy chọn ít nhất một mặt hàng');
     return;
   }
@@ -410,22 +405,21 @@ async function addOrder() {
       method: "POST",
       body: JSON.stringify(data)
     });
-      const rs = await response.json();
-      alert(rs);
-      console.log(response.status);
-      if(response.status === 200) {
-        window.location.reload();
-      }
+    const rs = await response.json();
+    alert(rs);
+    if (response.status === 200) {
+      window.location.reload();
+    }
   } catch (error) {
     console.log(error);
   }
 }
 
 const searchList = document.getElementById('searchtxt');
-searchList.addEventListener('input', async function(e) {
+searchList.addEventListener('input', async function (e) {
   content.classList.add('show');
   const div = document.querySelectorAll('div.list-items');
-  
+
   for (var i = 0, arr = []; i < list.length; i++) {
     div[i].classList.remove('hidden');
     if (!list[i].value.toLowerCase().includes(searchList.value.toLowerCase())) {

@@ -32,7 +32,7 @@
 														<img id="frame" src class="img-fluid" style="max-width: 400px;" />
 													</div>
 													<div class="row mt-5">
-														<input name="image" class="form-control-file border" accept="image/*" type="file" id="formFile"
+														<input name="image" class="form-control-file border" accept="image/*" required type="file" id="formFile"
 															onchange="preview()">
 													</div>
 												</div>
@@ -40,7 +40,7 @@
 													<div class="form-group mt-2">
 														<label for="name">Tên mặt
 															hàng</label>
-														<input type="text" class="form-control" name="name" placeholder="Nhập tên mặt hàng">
+														<input type="text" class="form-control" name="name" placeholder="Nhập tên mặt hàng" required>
 													</div>
 													<div class="form-group mt-2">
 														<label for="cost">Giá gốc</label>
@@ -72,13 +72,12 @@
 													</div>
 												</div>
 											</div>
-
 										</form>
 									</div>
 
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal-close">Hủy</button>
 									<button type="button" class="btn btn-primary" onclick="addProduct()">Thêm</button>
 								</div>
 							</div>
@@ -119,12 +118,9 @@
 							</tr>
 							<tr class="detail-row">
 								<td colspan="8" class="detail-col">
-									<div class="container-fluid detail-table">
-										<div class="row gap-5 p-3 mb-5 w-100 m-0">
+									<div class="container-fluid detail-table" id="{{this.id_item}}">
+										<div class="row gap-5 p-3 w-100 m-0">
 											<div class="col-5 d-flex justify-content-between flex-column p-2 rounded-3">
-												<div class="mb-5">
-													<img src="img/user/logo.png" alt="HCMUS Canteen" width="300" />
-												</div>
 												<div>
 													<img src="{{this.image}}" alt style="object-fit: cover;" width="400" />
 												</div>
@@ -138,24 +134,13 @@
 												</div>
 												<hr />
 												<div class="row gap-3 align-items-center">
-													{{! }}
-													{{!-- <div class="col-2 rounded-circle" style="background-color:#A7E8B7; width:50px; height:50px;">
-													</div> --}}
-													{{!-- <div class="col-10">Cơm gà
-														là món ăn ngon, phù hợp
-														với mọi người, tiện
-														lợi cho các bữa ăn trong
-														ngày.</div> --}}
-
-													{{! }}
+													
 													<div class="col-2 rounded-circle" style="background-color:#A7E8B7; width:50px; height:50px;">
 													</div>
 													<div class="col-10">{{#if this.describe}} {{this.describe}} {{else}}Sản phẩm
 														được chế biến từ nguyên
 														liệu tươi ngon,
 														nguồn gốc rõ ràng. {{/if}}</div>
-
-													{{! }}
 												</div>
 												<hr />
 												
@@ -178,15 +163,10 @@
 										<div class="row">
 											<div class="col-md text-end">
 												<div class="hidden-sm hidden-xs btn-group">
-													<button class="btn btn-xs btn-success">
-														<i class="ace-icon fa fa-check bigger-120"></i>
-													</button>
-
-													<button class="btn btn-xs btn-info">
+													<button class="btn btn-xs btn-info edit-btn">
 														<i class="ace-icon fa fa-pencil bigger-120"></i>
 													</button>
-
-													<button class="btn btn-xs btn-danger">
+													<button class="btn btn-xs btn-danger delete-btn">
 														<i class="ace-icon fa fa-trash bigger-120"></i>
 													</button>
 												</div>
