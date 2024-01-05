@@ -4,8 +4,7 @@ DECLARE
   first_names VARCHAR[] := ARRAY['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Huỳnh', 'Phan', 'Võ', 'Đặng', 'Bùi'];
   last_names VARCHAR[] := ARRAY['Hoài', 'Hoàng', 'Đức', 'Anh', 'Thảo', 'Hiếu', 'Hào', 'Nam', 'Cường', 'Lan'];
 BEGIN
-  FOR i IN 1..30 LOOP
-    -- Generate a unique and realistic username
+  FOR i IN 10..60 LOOP
     DECLARE
       username_suffix VARCHAR := i;
       full_name VARCHAR := first_names[i % 10 + 1] || ' ' || last_names[i % 10 + 1];
@@ -21,21 +20,21 @@ BEGIN
         '',
         'user',
         true,
-        100000
+        200000
       );
     END;
   END LOOP;
 END $$;
 
-select * from "user";
-DO $$ 
 
+--Do random nen co the bi trung id, chay khoi order vai lan neu khong thanh cong
+DO $$ 
 DECLARE
   user_id INTEGER;
   item_id INTEGER;
   order_id INTEGER;
 BEGIN
-  FOR user_id IN 1..30 LOOP
+  FOR user_id IN 2..52 LOOP
     FOR i IN 1..2 + FLOOR(RANDOM() * 4) LOOP
       -- Insert order
       INSERT INTO "order"("id_user", "order_date", "status", "payment", "id_cashier", "total_price")

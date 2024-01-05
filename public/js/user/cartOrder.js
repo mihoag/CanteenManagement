@@ -1,7 +1,8 @@
 const generateFoodItemMarkup = (food) => {
   return `
+    <div class="food-item">
         <div
-            class="row mb-4 d-flex justify-content-between align-items-center food-item"
+            class="row mb-4 d-flex justify-content-between align-items-center"
           >
             <div class="col-md-2" style="position: relative">
               <div class="heart-icon">
@@ -54,12 +55,13 @@ const generateFoodItemMarkup = (food) => {
               <h6 class="mb-0 item-price">${food.saleprice} VNĐ</h6>
             </div>
             <div class="col-md-1 text-end">
-              <a href="#!" class="text-muted"><i
+              <a href="#!" class="text-muted btn--delete-item" data-item-id="${food.id_item}" data-cart-id="${food.id_cart}"><i
                   class="fas fa-times"
                 ></i></a>
             </div>
           </div>
         <hr class="my-4" />
+      </div>
   `;
 };
 
@@ -79,37 +81,6 @@ const loadAllCartItem = async () => {
     console.error(err);
   }
 };
-
-const modifyItemAmount = function () {
-  document.querySelectorAll(".btn--down").forEach((el) =>
-    el.addEventListener("click", function (e) {
-      e.target.parentNode.parentNode
-        .querySelector("input[type=number]")
-        .stepDown();
-    })
-  );
-
-  document.querySelectorAll(".btn--up").forEach((el) =>
-    el.addEventListener("click", function (e) {
-      e.target.parentNode.parentNode
-        .querySelector("input[type=number]")
-        .stepUp();
-    })
-  );
-
-  document
-    .querySelectorAll(".btn--modify-amount")
-    .forEach((el) => el.addEventListener("click", updateOrderDetail));
-
-  document
-    .querySelectorAll("input[type=number]")
-    .forEach((el) => el.addEventListener("change", updateOrderDetail));
-};
-window.addEventListener("load", async function () {
-  await loadAllCartItem();
-  updateOrderDetail();
-  modifyItemAmount();
-});
 
 const updateOrderDetail = function () {
   const foodItemEls = document.querySelectorAll(".food-item");
@@ -137,9 +108,108 @@ const updateOrderDetail = function () {
     document.querySelector(".form-select-table").value;
 };
 
+const modifyItemAmount = function () {
+  document.querySelectorAll(".btn--down").forEach((el) =>
+    el.addEventListener("click", function (e) {
+      e.target.parentNode.parentNode
+        .querySelector("input[type=number]")
+        .stepDown();
+    })
+  );
+
+  document.querySelectorAll(".btn--up").forEach((el) =>
+    el.addEventListener("click", function (e) {
+      e.target.parentNode.parentNode
+        .querySelector("input[type=number]")
+        .stepUp();
+    })
+  );
+
+  document
+    .querySelectorAll(".btn--modify-amount")
+    .forEach((el) => el.addEventListener("click", updateOrderDetail));
+
+  document
+    .querySelectorAll("input[type=number]")
+    .forEach((el) => el.addEventListener("change", updateOrderDetail));
+
+  document.querySelectorAll(".btn--delete-item").forEach((el) =>
+    el.addEventListener("click", async function (e) {
+      const data = {
+        cartId: el.dataset.cartId,
+        itemId: el.dataset.itemId,
+      };
+      await fetch("http://127.0.0.1:3000/api/user/item", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      e.target.closest(".food-item").remove();
+      updateOrderDetail();
+    })
+  );
+};
+
 document
   .querySelector(".form-select-table")
   .addEventListener("change", function (e) {
     console.log("hello");
     document.querySelector(".selected-table").textContent = e.target.value;
   });
+
+const tableSelected = () => {
+  const result =
+    document.querySelector(".form-select-table").value !== "Chọn bàn";
+  return result;
+};
+
+const hasItemToPay = () => {
+  const result =
+    Number.parseInt(document.querySelector(".final-price").textContent) !== 0;
+  return result;
+};
+
+window.addEventListener("load", async function () {
+  await loadAllCartItem();
+  updateOrderDetail();
+  modifyItemAmount();
+
+  document
+    .querySelector(".btn--payment")
+    .addEventListener("click", async function () {
+      if (!hasItemToPay()) {
+        alert("Quý khách xin vui lòng chọn món trước khi thanh toán");
+        window.location.href = "http://127.0.0.1:3000/user/menu/";
+        return;
+      }
+      if (!tableSelected()) {
+        alert("Quý khách xin vui lòng chọn bàn");
+        return;
+      }
+
+      const total_price = Number.parseInt(
+        document.querySelector(".final-price").textContent
+      );
+      const item_ids = Array.from(
+        document.querySelectorAll(".btn--delete-item")
+      ).map((el) => el.dataset.itemId);
+      const quantities = Array.from(
+        document.querySelectorAll("input[type=number]")
+      ).map((el) => Number.parseInt(el.value));
+
+      quantities.shift();
+
+      await fetch("http://127.0.0.1:3000/api/user/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ total_price, item_ids, quantities }),
+      });
+      alert("Thanh toán thành công");
+      // window.location.href = "http://127.0.0.1:3000/user/menu/";
+    });
+});

@@ -85,6 +85,9 @@ CREATE TABLE IF NOT EXISTS "marketing" (
   FOREIGN KEY (ID_cashier) REFERENCES "user"(ID_user)
 );
 
+--ADMIN: username: admin, password: admin
+INSERT INTO "user"("username", "password", "name", "email", "password_changed_at", "public_id", "url_image", "role", "active", "money") VALUES ('admin', '$2a$10$dfI.LI5zxX6/I/.LbsrTGOLTFZKZ4QsXKBikOhE3oWPfZ23Dlzu1.', 'ADMIN', 'admin@gmail.com', null, null, null, 'admin', true, 1000000000);
+
 INSERT INTO "item"("name","price","discount","quantity","saleprice","cost","image","type") VALUES (N'Cơm Sườn Sốt Chua Ngọt',32000,0,270,32000,12000,'https://images.foody.vn/res/g17/160320/s570x570/f5516c35-2e52-4032-aa79-ecf4827634cc.jpg',N'Món ăn');
 INSERT INTO "item"("name","price","discount","quantity","saleprice","cost","image","type") VALUES (N'Cơm Cá Bông Lau Kho Tộ',34000,35,255,22000,10000,'https://images.foody.vn/res/g17/160320/s570x570/cab9a2f1-adda-44e1-b87a-1fdb1c26c273.jpg',N'Món ăn');
 INSERT INTO "item"("name","price","discount","quantity","saleprice","cost","image","type") VALUES (N'Cơm Gà Sốt BBQ',31000,33,125,21000,17000,'https://images.foody.vn/res/g17/160320/s570x570/c898966e-4b3a-4df2-a463-b6ead664b07b.jpg',N'Món ăn');

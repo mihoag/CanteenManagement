@@ -30,5 +30,20 @@ class ordersController {
             next(error);
         }
     }
+
+    async addOrder(req, res, next) {
+        try {
+            const result = await Order.addOrder(req.body);
+            if(result[0]) {
+                res.status(200).json(result[1]);
+            } else {
+                res.status(406).json(result[1]);
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    
 }
 module.exports = new ordersController();

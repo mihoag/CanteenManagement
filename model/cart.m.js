@@ -26,4 +26,16 @@ module.exports = {
       throw err;
     }
   },
+
+  deleteCartItem: async (username, cartId, itemID) => {
+    try {
+      const user = await db.selectByOneField("user", "username", username);
+      const id_user = user[0].id_user;
+      await db.query(
+        `DELETE FROM "cart" WHERE "id_cart" = '${cartId}' and "id_user" = '${id_user}' and "id_item" = '${itemID}'`
+      );
+    } catch (err) {
+      throw err;
+    }
+  },
 };
