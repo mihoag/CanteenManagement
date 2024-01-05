@@ -2,17 +2,24 @@ const db = require("../db/db");
 const pageSize = 10;
 const OrderDetail = require("./orderdetail.m");
 const Product = require("./product.m");
+
+function isNumeric(str) {
+  // Use a regular expression to test if the string contains only numbers
+  return /^[0-9]+$/.test(str);
+}
+
+
 class Order {
   constructor(order) {
-    this.id_user = 1;
+    this.id_order = order?.id_order;
+    this.id_user = order?.id_user||1;
     this.order_date = order?.order_date;
     this.status = "Completed";
-    this.payment = true;
+    this.payment = order?.payment ||true;
     this.id_cashier = 1;
     this.total_price = order?.total_price;
   }
 
-  
 
   static async getOrdersList(pageNum, search) {
     try {
@@ -22,6 +29,10 @@ class Order {
       let totalItems;
       let numberOfPages;
       let orders;
+      let querySearch = `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "id_order" DESC `
+      if(search && isNumeric(search)) {
+        querySearch = `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND CAST("order"."id_order" AS VARCHAR) LIKE CAST('${search}%' AS VARCHAR) ORDER BY "id_order" DESC `
+      }
       if (!search) {
         totalItems = await db.query(
           `SELECT * FROM "order" ORDER BY "id_order" DESC LIMIT 200`
@@ -32,13 +43,11 @@ class Order {
           `SELECT * FROM "order" ORDER BY "id_order" DESC LIMIT ${pageSize} OFFSET ${offset}`
         );
       } else {
-        totalItems = await db.query(
-          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "id_order" DESC LIMIT 100`
-        );
+        totalItems = await db.query(querySearch + 'LIMIT 200');
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         orders = await db.query(
-          `SELECT * FROM "order", "user" WHERE "order"."id_user" = "user"."id_user" AND LOWER("user"."name") LIKE LOWER('%${search}%') ORDER BY "id_order" DESC LIMIT ${pageSize} OFFSET ${offset}`
+          querySearch+`LIMIT ${pageSize} OFFSET ${offset}`
         );
       }
       const listOrders = await Promise.all(
@@ -154,6 +163,20 @@ class Order {
           })
         );
         return [true, "Thêm đơn hàng thành công"];
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updatePayment(id) {
+    try {
+      const data = await db.selectByID('order', 'id_order', id);
+      if(data) {
+        await db.update('order', new Order(data), 'id_order', id);
+        return [true, 'Cập nhập thành công, đơn hàng đã xác nhận thanh toán'];
+      } else {
+        return [false, 'Lỗi cập nhập']
       }
     } catch (error) {
       throw error;

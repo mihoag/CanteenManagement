@@ -49,7 +49,7 @@ function pagingBtn() {
 }
 document.addEventListener("DOMContentLoaded", pagingBtn);
 
-function renderOrders(data) {
+async function renderOrders(data) {
   const body = document.getElementById("orders-list");
   body.innerHTML = "";
 
@@ -93,7 +93,7 @@ function renderOrders(data) {
       `;
     });
     const detail = `
-    <tr class="detail-row">
+    <tr class="detail-row" id="${order.id_order}">
     <td colspan="7" class="detail-col">
         <div class="container-fluid detail-table">
             <div class="row">
@@ -241,10 +241,20 @@ function renderOrders(data) {
                                     class="d-print-none mt-4">
                                     <div
                                         class="float-end">
-                                        <a
-                                            href="javascript:window.print()"
-                                            class="btn btn-success me-1"><i
-                                                class="fa fa-print"></i></a>
+                                        ${order.status?
+                                        `<button
+                                            class="btn btn-success me-1"
+                                            onclick="printBill()">
+                                            <i
+                                                class="fa fa-print"></i>
+                                        </button>`:
+                                        `<button
+                                            type="button"
+                                            class="btn btn-xs btn-success save-btn"
+                                            onclick="updateStatus()">
+                                            <i
+                                                class="ace-icon fa fa-check bigger-120"></i>
+                                        </button>`}
                                     </div>
                                 </div>
                             </div>
@@ -314,20 +324,17 @@ window.onclick = function (e) {
 };
 
 function addEventItemsList() {
-
-  
-
   list.forEach(function (item, index) {
     item.removeEventListener("click", function clickList() {
       quantity[index].type = item.checked ? "number" : "hidden";
       calc();
-    }) 
+    });
     item.addEventListener("click", function clickList() {
       quantity[index].type = item.checked ? "number" : "hidden";
       calc();
     });
   });
-  
+
   quantity.forEach(function (item) {
     item.addEventListener("input", calc);
   });
@@ -386,49 +393,93 @@ function unPick(e) {
 async function addOrder() {
   calc();
   const listItems = document.querySelectorAll("#droptxt div");
-  if(listItems.length == 0) {
-    alert('Hãy chọn ít nhất một mặt hàng');
+  if (listItems.length == 0) {
+    alert("Hãy chọn ít nhất một mặt hàng");
     return;
   }
   let data = {
-    items: []
+    items: [],
   };
   listItems.forEach((element) => {
     data.items.push({
       id_item: element.querySelector(".picked").value,
       quantity: element.querySelector(".quantity").value,
-    })
-  })
+    });
+  });
   data.total_price = document.getElementById("totalpay").innerText;
 
   try {
-    const response = await fetch('/admin/orders/add', {
+    const response = await fetch("/admin/orders/add", {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
-      const rs = await response.json();
-      alert(rs);
-      if(response.status === 200) {
-        window.location.reload();
-      }
+    const rs = await response.json();
+    alert(rs);
+    if (response.status === 200) {
+      window.location.reload();
+    }
   } catch (error) {
     console.log(error);
   }
 }
 
-const searchList = document.getElementById('searchtxt');
-searchList.addEventListener('input', async function(e) {
-  content.classList.add('show');
-  const div = document.querySelectorAll('div.list-items');
-  
+const searchList = document.getElementById("searchtxt");
+searchList.addEventListener("input", async function (e) {
+  content.classList.add("show");
+  const div = document.querySelectorAll("div.list-items");
+
   for (var i = 0, arr = []; i < list.length; i++) {
-    div[i].classList.remove('hidden');
+    div[i].classList.remove("hidden");
     if (!list[i].value.toLowerCase().includes(searchList.value.toLowerCase())) {
-      div[i].classList.add('hidden');
+      div[i].classList.add("hidden");
     }
   }
-})
+});
+
+function printBill() {
+  var detailTable = event.target.closest(".detail-table");
+  detailTable.classList.add("printable-content");
+  event.target.classList.add("hidden");
+  window.print();
+  detailTable.classList.remove("printable-content");
+  event.target.classList.remove("hidden");
+}
+
+async function updateStatus() {
+  var detailRow = event.target.closest(".detail-row");
+  const id = detailRow.id;
+  try {
+    const response = await fetch("/admin/orders/update", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ id: id }),
+    });
+    const data = await response.json();
+    alert(data);
+    if (response.ok) {
+      const search = document.querySelector("#searchTxt");
+      const pageNum = document.querySelector(".paging-btn.active").innerText;
+      const response = await fetch(
+        `/admin/orders/paging?page=${pageNum}&search=${search.value}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      await renderOrders(data);
+      document.getElementById(id).classList.add("open");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

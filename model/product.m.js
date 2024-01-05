@@ -31,7 +31,6 @@ class Item {
         totalItems = await db.query(
           `SELECT * FROM "item" WHERE LOWER("item"."name") LIKE LOWER('%${search}%') ORDER BY "id_item" DESC`
         );
-        console.log(totalItems);
         numberOfPages = Math.ceil(totalItems.length / pageSize);
         const offset = (pageNum - 1) * pageSize;
         items = await db.query(
@@ -79,6 +78,13 @@ class Item {
   }
 
   static async updateProduct(data) {
+    const check = await db.selectByID('item', 'name', item.name);
+    if(check && check.name !== data.name) {
+      return [false, 'Tên mặt hàng đã tồn tại'];
+    }
+    if(data.cost < 0 || data.price < 0 || data.cost > data.price || data.discount < 0 || data.quantity < 0) {
+      return [false, 'Số liệu chưa hợp lệ'];
+    }
     data.saleprice = data.price - data.price*data.discount/100;
     const rs = await db.update('item', new Item(data), 'id_item', data.id_item);
     if(rs) {

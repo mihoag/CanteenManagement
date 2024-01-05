@@ -29,7 +29,7 @@
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Ngày đặt</th>
                         <th scope="col">Tình trạng</th>
                         <th scope="col">Đã thanh toán</th>
@@ -40,7 +40,7 @@
                 <tbody id="listable">
                     {{#each listOrder}}
                     <tr>
-                        <th scope="row">{{@index}}</th>
+                        <th scope="row">{{id_order}}</th>
                         <td>{{order_date}}</td>
                         <td>{{status}}</td>
                         <td>{{payment}}</td>

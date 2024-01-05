@@ -108,7 +108,7 @@
 }
 .dropdown {
   position: relative;
-  display: inline-block
+  display: inline-block;
 }
 .content {
   display: none;
@@ -116,7 +116,7 @@
   background-color: #f1f1f1;
   min-width: 300px;
   overflow: auto;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
   max-height: 400px;
   overflow-y: scroll;
@@ -136,28 +136,42 @@
   overflow-y: scroll;
 }
 
-
 .name {
   width: 150px;
 }
 
 .quantity {
-  width: 40px
+  width: 40px;
 }
 
 .price {
   cursor: pointer;
-    width: 80px;
+  width: 80px;
 }
 .content div {
-  padding: 10px 15px
+  padding: 10px 15px;
 }
 .content div:hover {
-  background-color: #ddd
+  background-color: #ddd;
 }
 .show {
-display: block
+  display: block;
 }
 .hidden {
   display: none;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable-content,
+  .printable-content * {
+    visibility: visible;
+  }
+  .printable-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 }

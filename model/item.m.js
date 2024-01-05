@@ -6,7 +6,6 @@ module.exports = {
       const data = await db.query(
         `SELECT * FROM "item" where "item"."id_item" = ${itemId}`
       );
-      console.log(data);
       return data[0];
     } catch (error) {
       throw error;
@@ -21,7 +20,6 @@ module.exports = {
         WHERE id_item = ${item_id}
         returning *`
       );
-      console.log(data);
       return data;
     } catch (error) {
       throw error;

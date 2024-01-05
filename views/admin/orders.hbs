@@ -7,7 +7,7 @@
                     <span class="position-absolute search"><i
                             class="fa fa-search"></i></span>
                     <input id="searchTxt" class="form-control w-100 order-table"
-                        placeholder="Search by name" >
+                        placeholder="Search by name or id">
                 </div>
                 <!-- Button trigger modal -->
                 <div>
@@ -42,9 +42,11 @@
                                                 {{#each data.items}}
                                                 <div class="list list-items">
                                                     <input type="checkbox"
-                                                        id="{{this.id_item}}" class="list"
+                                                        id="{{this.id_item}}"
+                                                        class="list"
                                                         value="{{this.name}}" />
-                                                    <label for="{{this.id_item}}"
+                                                    <label
+                                                        for="{{this.id_item}}"
                                                         class="list name">{{this.name}}</label>
                                                     <input type="text"
                                                         class="price list"
@@ -52,10 +54,11 @@
                                                         value="{{this.price}}">
                                                     <input type="hidden"
                                                         class="list quantity"
-                                                        min="1" value="1" max="{{this.quantity}}"/>
+                                                        min="1" value="1"
+                                                        max="{{this.quantity}}" />
                                                     <input type="hidden"
                                                         class="list discount"
-                                                        value="{{this.discount}}"/>
+                                                        value="{{this.discount}}" />
                                                 </div>
                                                 {{/each}}
                                             </div>
@@ -69,7 +72,8 @@
                                                 class="text-end">Tổng
                                                 mua:</th>
                                             <td
-                                                class="text-end" id="moneybuy">0</td>
+                                                class="text-end"
+                                                id="moneybuy">0</td>
                                         </tr>
                                         <!-- end tr -->
                                         <tr>
@@ -79,7 +83,8 @@
                                                 Giảm
                                                 giá:</th>
                                             <td
-                                                class="border-0 text-end" id="discountmoney">0</td>
+                                                class="border-0 text-end"
+                                                id="discountmoney">0</td>
                                         </tr>
                                         <!-- end tr -->
                                         <tr>
@@ -89,7 +94,8 @@
                                                 tiền:</th>
                                             <td
                                                 class="border-0 text-end"><h5
-                                                    class="m-0 fw-semibold" id="totalpay">0</h5></td>
+                                                    class="m-0 fw-semibold"
+                                                    id="totalpay">0</h5></td>
                                         </tr>
                                     </table>
                                     <p></p>
@@ -99,7 +105,8 @@
                                         class="btn btn-secondary"
                                         data-bs-dismiss="modal">Hủy</button>
                                     <button type="button"
-                                        class="btn btn-primary" onclick="addOrder()">Thêm</button>
+                                        class="btn btn-primary"
+                                        onclick="addOrder()">Thêm</button>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +146,9 @@
                                 <td class="text-center"><span
                                         class="fw-bolder">{{this.total_price}}&#8363</span></td>
                                 <td class="text-center"><span
-                                        class="fw-bolder">{{#if this.payment}}Paid {{else}}Pending{{/if}}</span></td>
+                                        class="fw-bolder">{{#if
+                                        this.payment}}Paid
+                                        {{else}}Pending{{/if}}</span></td>
                                 <td class="text-center">
                                     <button
                                         class="btn btn-xs btn-light detail-btn">
@@ -150,7 +159,7 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr class="detail-row">
+                            <tr class="detail-row" id="{{this.id_order}}">
                                 <td colspan="7" class="detail-col">
                                     <div class="container-fluid detail-table">
                                         <div class="row">
@@ -161,8 +170,11 @@
                                                             class="invoice-title">
                                                             <h4
                                                                 class="float-end font-size-15">Hóa
-                                                                đơn #{{this.id_order}}<span
-                                                                    class="badge bg-success font-size-12 ms-2">{{#if this.payment}}Paid {{else}}Pending{{/if}}</span></h4>
+                                                                đơn
+                                                                #{{this.id_order}}<span
+                                                                    class="badge bg-success font-size-12 ms-2">{{#if
+                                                                    this.payment}}Paid
+                                                                    {{else}}Pending{{/if}}</span></h4>
                                                             <div class="mb-4">
                                                                 <h2
                                                                     class="mb-1 text-muted">HCMUS
@@ -236,8 +248,10 @@
                                                                                 style="width: 70px;">No.</th>
                                                                             <th>Mặt
                                                                                 hàng</th>
-                                                                            <th class="text-center">Giá</th>
-                                                                            <th class="text-center">Số
+                                                                            <th
+                                                                                class="text-center">Giá</th>
+                                                                            <th
+                                                                                class="text-center">Số
                                                                                 lượng</th>
                                                                             <th
                                                                                 class="text-end"
@@ -246,7 +260,8 @@
                                                                         </tr>
                                                                     </thead><!-- end thead -->
                                                                     <tbody>
-                                                                        {{#each this.items}}
+                                                                        {{#each
+                                                                        this.items}}
                                                                         <tr>
                                                                             <th
                                                                                 scope="row">{{this.index}}</th>
@@ -256,12 +271,14 @@
                                                                                         class="text-truncate font-size-14 mb-1">{{this.name}}</h5>
                                                                                 </div>
                                                                             </td>
-                                                                            <td class="text-center">{{this.price}}&#8363</td>
-                                                                            <td class="text-center">{{this.quantity}}</td>
+                                                                            <td
+                                                                                class="text-center">{{this.price}}&#8363</td>
+                                                                            <td
+                                                                                class="text-center">{{this.quantity}}</td>
                                                                             <td
                                                                                 class="text-end">{{this.money}}&#8363</td>
                                                                         </tr>
-                                                                        {{/each}}                                                                        
+                                                                        {{/each}}
                                                                         <tr>
                                                                             <th
                                                                                 scope="row"
@@ -301,10 +318,22 @@
                                                                 class="d-print-none mt-4">
                                                                 <div
                                                                     class="float-end">
-                                                                    <a
-                                                                        href="javascript:window.print()"
-                                                                        class="btn btn-success me-1"><i
-                                                                            class="fa fa-print"></i></a>
+                                                                    {{#if this.status}}
+                                                                    <button
+                                                                        class="btn btn-success me-1"
+                                                                        onclick="printBill()">
+                                                                        <i
+                                                                            class="fa fa-print"></i>
+                                                                    </button>
+                                                                    {{else}}
+                                                                    <button
+                                                                        type="button"
+                                                                        class="btn btn-xs btn-success save-btn"
+                                                                        onclick="updateStatus()">
+                                                                        <i
+                                                                            class="ace-icon fa fa-check bigger-120"></i>
+                                                                    </button>
+                                                                    {{/if}}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -323,7 +352,8 @@
                     <nav style="width:auto">
                         <ul class="pagination" id="pages-list">
                             {{#times data.pages}}
-                            <li class="page-item"><a class="page-link paging-btn{{#ifEquals this @root.data.page}} active{{/ifEquals}}"
+                            <li class="page-item"><a
+                                    class="page-link paging-btn{{#ifEquals this @root.data.page}} active{{/ifEquals}}"
                                     href="#">{{this}}</a></li>
                             {{/times}}
                         </ul>

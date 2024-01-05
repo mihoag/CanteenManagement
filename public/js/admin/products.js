@@ -124,9 +124,6 @@ function renderProducts(data) {
                 <button class="btn btn-xs btn-info edit-btn">
                   <i class="ace-icon fa fa-pencil bigger-120"></i>
                 </button>
-                <button class="btn btn-xs btn-danger delete-btn">
-                  <i class="ace-icon fa fa-trash bigger-120"></i>
-                </button>
               </div>
             </div>
           </div>
@@ -425,9 +422,6 @@ async function turnOffEditMode(e) {
         <div class="hidden-sm hidden-xs btn-group">
           <button class="btn btn-xs btn-info edit-btn">
             <i class="ace-icon fa fa-pencil bigger-120"></i>
-          </button>
-          <button class="btn btn-xs btn-danger delete-btn">
-            <i class="ace-icon fa fa-trash bigger-120"></i>
           </button>
         </div>
       </div>
