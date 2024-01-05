@@ -87,6 +87,16 @@ module.exports = {
       return rs;
     } catch (error) {
       throw error;
+    } 
+  },
+  updateCart: async (quantity,idUser) => {
+    try {
+      const rs = await db.any(`UPDATE "cart"
+      SET quantity = ${quantity}
+      WHERE id_user = ${idUser}`);
+      return rs;
+    } catch (error) {
+      throw error;
     }
   },
   selectMax: async (tbName, fieldName) => {
@@ -227,7 +237,8 @@ module.exports = {
   },
   addFood: async (idFood, IdUser) => {
     try {
-      await db.one(`INSERT INTO "cart"(id_user,id_item,quantity) VALUES(${IdUser},${idFood},1) returning *`);
+      const data = await db.one(`INSERT INTO "cart"(id_user,id_item,quantity) VALUES(${IdUser},${idFood},1) returning *`);
+      return data;
     } catch (error) {
       throw error;
     }

@@ -161,3 +161,35 @@ display: block
 .hidden {
   display: none;
 }
+
+@media print {
+	#navbar {
+		display: none;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+	}
+  #headerD {
+		display: none;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+	}
+  .no-print
+    {
+        display: none !important;
+        height: 0;
+        width: 0;
+        padding: 0;
+    margin: 0;
+    }
+  .when-print{
+    font-size: 12px !important;
+    margin-top: 10px !important;
+  }
+  .when-print h5{
+    font-size: 12px !important;
+  }
+}

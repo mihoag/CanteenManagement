@@ -17,7 +17,8 @@ class menuController {
             const foods = data.splice((currentPage - 1) * perPage, perPage);
             res.render("user/menu", {
                 layout: "userLayout", index, food: foods, totalPage, currentPage,
-                helpers: hbsHelper, direct: "recent"
+                helpers: hbsHelper, direct: "recent",
+                script: "menu"
             });
         } catch (error) {
             next(error);
