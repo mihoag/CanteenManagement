@@ -39,9 +39,7 @@ module.exports = class Orderuser {
   static async addOrder(orderData) {
     try {
       //   console.log(orderData);
-      const { username, total_price } = orderData;
-      const user = await db.selectByOneField("user", "username", username);
-      const id_user = user[0].id_user;
+      const { id_user, total_price } = orderData;
       const data = await db.query(
         `INSERT INTO "order"("id_user","order_date","total_price") VALUES (${id_user},current_timestamp,${total_price}) returning *`
       );

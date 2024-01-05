@@ -1,4 +1,112 @@
+//export excel file
+function convertToVND(number) {
+  // Using toLocaleString to format the number as currency in VND
+  number = parseInt(number);
+  let vndFormatted = number.toLocaleString('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  });
+
+  return vndFormatted.replace("₫", "VNĐ");
+}
+function exportExcel() {
+  if (response.rs.length <= 0) {
+    alert("Không có dữ liệu");
+    return;
+  }
+  const rows = response.rs.map(row => ({
+    "Tên": row.name,
+    "Ảnh": row.image,
+    "Giá bán": convertToVND(row.saleprice),
+    "Số lượng bán ra": row.quantity,
+    "Loại": row.type
+  }))
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  var wscols = [
+    { wch: 30 },
+    { wch: 60 },
+    { wch: 15 },
+    { wch: 20 },
+    { wch: 10 }
+  ];
+  var wsrows = [
+    { hpx: 30 },
+  ];
+  worksheet['!cols'] = wscols;
+  worksheet['!rows'] = wsrows;
+
+  for (i in worksheet) {
+    if (typeof (worksheet[i]) != "object") continue;
+    let cell = XLSX.utils.decode_cell(i);
+    worksheet[i].s = {      // set the style for target cell
+      font: {
+        name: "Calibri",
+        sz: 14,
+      },
+      border: {
+        right: {
+          style: "thin",
+          color: "000000"
+        },
+        left: {
+          style: "thin",
+          color: "000000"
+        },
+        top: {
+          style: "thin",
+          color: "000000"
+        },
+        bottom: {
+          style: "thin",
+          color: "000000"
+        },
+      }
+    };
+
+    if (cell.r == 0) {
+      worksheet[i].s.alignment = {
+        horizontal: "center",
+        vertical: "center",
+      }
+      worksheet[i].s.font = {
+        name: "Calibri",
+        sz: 16,
+        color: { rgb: "FFFFFF" },
+        bold: true
+      }
+    }
+    else if (cell.c > 1) {
+      worksheet[i].s.alignment = {
+        horizontal: "center",
+      }
+    }
+    if (cell.r % 2 == 0) { // every other row
+      if (cell.r > 0) {
+        worksheet[i].s.fill = { // background color
+          patternType: "solid",
+          fgColor: { rgb: "B6C4B6" },
+          bgColor: { rgb: "B6C4B6" }
+        }
+      }
+      else {
+        worksheet[i].s.fill = { // background color
+          patternType: "solid",
+          fgColor: { rgb: "508D69" },
+          bgColor: { rgb: "508D69" }
+        };
+      }
+    }
+  }
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Thống kê tiêu thụ");
+
+  XLSX.writeFile(workbook, "Thống kê tiêu thụ.xlsx", { cellStyles: true });
+}
+// -----------------------------
+
 var currentPage = 1;
+var response;
 
 async function DoughnutChart(options) {
   let labels = [];
@@ -75,7 +183,7 @@ async function renderData(page = 1) {
     method: "GET",
   });
 
-  const response = await res.json();
+  response = await res.json();
 
   let context = '';
   for (let i = 0; i < response.data.length; i++) {

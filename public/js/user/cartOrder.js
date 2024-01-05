@@ -202,14 +202,20 @@ window.addEventListener("load", async function () {
 
       quantities.shift();
 
-      await fetch("http://127.0.0.1:3000/api/user/payment", {
+      const res = await fetch("http://127.0.0.1:3000/api/user/payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ total_price, item_ids, quantities }),
       });
-      alert("Thanh toán thành công");
+      if (!res.ok) {
+        const err = await res.json();
+        if (err.isOperational) alert(err.errMsg);
+      } else {
+        alert("Thanh toán thành công");
+      }
+
       // window.location.href = "http://127.0.0.1:3000/user/menu/";
     });
 });

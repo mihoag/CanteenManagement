@@ -35,6 +35,9 @@
       </a>
     </div>
   </nav>
+  <div class="d-flex justify-content-end mx-5">
+    <button type="button" class="btn btn-success" onclick="exportExcel()">Export Excel File</button>
+  </div>
   <div style="height: 80vh;" class="d-flex justify-content-center mb-4">
     <canvas id="myPieChart" class="mb-5"></canvas>
   </div>
@@ -61,7 +64,7 @@
     </div>
   </div>
 
-  <table class="table align-middle mb-0 bg-white fs-5 text-center table-bordered">
+  <table class="table align-middle mb-0 bg-white fs-5 text-center table-bordered" id="tblData">
     <thead class="table-light">
       <tr>
         <th>#</th>

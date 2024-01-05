@@ -1,3 +1,115 @@
+//export excel file
+var filterMonth;
+var filterYear;
+let chart;
+function convertToVND(number) {
+  // Using toLocaleString to format the number as currency in VND
+  number = parseInt(number);
+  let vndFormatted = number.toLocaleString('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  });
+
+  return vndFormatted.replace("₫", "VNĐ");
+}
+
+var dataSetExport;
+function exportExcel() {
+
+  month = dataSetExport.month;
+  year = dataSetExport.year;
+  let data = [];
+  for (let i = 0; i < dataSetExport.labels.length; i++)
+    if (dataSetExport.revenueSet[i] > 0)
+      data.push({
+        "Ngày": `${dataSetExport.labels[i]}/${month}/${year}`,
+        "Doanh thu": convertToVND(dataSetExport.revenueSet[i]),
+        "Lợi nhuận": convertToVND(dataSetExport.profitSet[i]),
+      })
+  if (data.length <= 0) {
+    alert(`Tháng ${month} năm ${year} hiện Không có dữ liệu`);
+    return;
+  }
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  var wscols = [
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+  ];
+  var wsrows = [
+    { hpx: 30 },
+  ];
+  worksheet['!cols'] = wscols;
+  worksheet['!rows'] = wsrows;
+
+  for (i in worksheet) {
+    if (typeof (worksheet[i]) != "object") continue;
+    let cell = XLSX.utils.decode_cell(i);
+    worksheet[i].s = {      // set the style for target cell
+      font: {
+        name: "Calibri",
+        sz: 14,
+      },
+      alignment: {
+        horizontal: "center",
+        vertical: "center",
+      },
+      border: {
+        right: {
+          style: "thin",
+          color: "000000"
+        },
+        left: {
+          style: "thin",
+          color: "000000"
+        },
+        top: {
+          style: "thin",
+          color: "000000"
+        },
+        bottom: {
+          style: "thin",
+          color: "000000"
+        },
+      }
+    };
+    if (cell.r == 0) {
+      worksheet[i].s.font = {
+        name: "Calibri",
+        sz: 16,
+        color: { rgb: "FFFFFF" },
+        bold: true
+      }
+    }
+    else if (cell.c > 1) {
+      worksheet[i].s.alignment = {
+        horizontal: "center",
+      }
+    }
+    if (cell.r % 2 == 0) { // every other row
+      if (cell.r > 0) {
+        worksheet[i].s.fill = { // background color
+          patternType: "solid",
+          fgColor: { rgb: "B6C4B6" },
+          bgColor: { rgb: "B6C4B6" }
+        }
+      }
+      else {
+        worksheet[i].s.fill = { // background color
+          patternType: "solid",
+          fgColor: { rgb: "508D69" },
+          bgColor: { rgb: "508D69" }
+        };
+      }
+    }
+  }
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Thống kê doanh thu");
+
+  XLSX.writeFile(workbook, `Thống kê doanh thụ tháng ${month} năm ${year}.xlsx`, { cellStyles: true });
+}
+// -----------------------------
+
 function LineChart(options) {
   let daySet = [];
   let revenueSet = [];
@@ -38,7 +150,7 @@ function LineChart(options) {
     options: {
       plugins: {
         title: {
-          display: true, text: 'Doanh thu trong tuần', color: '#161A30', font: { size: 40 }
+          display: true, text: 'Doanh thu trong tuần này', color: '#161A30', font: { size: 40 }
         }
       }, scales: {
         y:
@@ -69,8 +181,19 @@ function viewChart(options) {
     profitSet[parseInt(options.data[i].day) - 1] = options.data[i].profit;
   }
 
+  //for export excel file
+  dataSetExport = {
+    labels,
+    revenueSet,
+    profitSet,
+    month: options.month,
+    year: options.year
+  }
+  //---- 
+
   const ctx = document.getElementById('myChart');
-  new Chart(ctx, {
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
     data: {
       labels: labels,
       datasets: [{
@@ -87,7 +210,7 @@ function viewChart(options) {
     }, options: {
       plugins: {
         title: {
-          display: true, text: 'Doanh thu trong tháng', color: '#161A30', font: { size: 40 }
+          display: true, text: `Doanh thu trong tháng ${options.month} năm ${options.year}`, color: '#161A30', font: { size: 40 }
         }
       }, scales: {
         y:
@@ -100,8 +223,8 @@ function viewChart(options) {
           }
         }, x: {
           title: {
-            display: true, text: 'Days', color: '#161A30', font: {
-              size: 30
+            display: true, text: 'Ngày', color: '#161A30', font: {
+              size: 25
             }
           }
         }
@@ -110,20 +233,63 @@ function viewChart(options) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
-  const res = await fetch("/admin/statistics/revenue", {
+function prevMonthClick() {
+  if (filterMonth == 1 && filterYear == 2019) {
+    var today = new Date();
+    filterMonth = today.getMonth() + 1;
+    filterYear = today.getFullYear();
+  } else {
+    filterMonth -= 1;
+    if (filterMonth === 0) {
+      filterMonth = 12;
+      filterYear -= 1;
+    }
+  }
+  var lastDayOfMonth = new Date(filterYear, filterMonth, 0);
+  lastDayOfMonth = lastDayOfMonth.getDate();
+  showViewChart(filterMonth, filterYear, lastDayOfMonth);
+}
+function nextMonthClick() {
+  var today = new Date();
+  if (today.getFullYear() === filterYear && today.getMonth() + 1 === filterMonth) {
+    filterMonth = 1;
+    filterYear = 2019;
+  } else {
+    filterMonth += 1;
+    if (filterMonth > 12) {
+      filterYear += 1;
+      filterMonth = 1;
+    }
+  }
+  var lastDayOfMonth = new Date(filterYear, filterMonth, 0);
+  lastDayOfMonth = lastDayOfMonth.getDate();
+  showViewChart(filterMonth, filterYear, lastDayOfMonth);
+}
+
+async function showViewChart(month, year, lastDayOfMonth) {
+  filterMonth = month;
+  filterYear = year;
+  const res = await fetch(`/admin/statistics/revenue/${month}/${year}`, {
     method: "GET",
   });
-
+  document.getElementById('MonthYear').innerText = `${month}/${year}`;
   const response = await res.json();
   //get last day in this month
+  viewChart({
+    lastDayOfMonth,
+    data: response,
+    month,
+    year
+  });
+
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
   var today = new Date();
   var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
   lastDayOfMonth = today.getDate();
-  viewChart({
-    lastDayOfMonth,
-    data: response
-  });
+
+  showViewChart(today.getMonth() + 1, today.getFullYear(), lastDayOfMonth)
 
   // get week
   const firstday = new Date(
@@ -134,8 +300,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const lastday = new Date(
     today.setDate(today.getDate() - today.getDay() + 6),
   );
-  const from = `${firstday.getFullYear()}-${firstday.getMonth() + 1}-${firstday.getDate()}`
-  const to = `${lastday.getFullYear()}-${lastday.getMonth() + 1}-${lastday.getDate()}`
+  const from = `${firstday.getFullYear()}-${firstday.getMonth() + 1}-${firstday.getDate()} `
+  const to = `${lastday.getFullYear()}-${lastday.getMonth() + 1}-${lastday.getDate()} `
 
   const res1 = await fetch(`/admin/statistics/revenueW/${from}/${to}`, {
     method: "GET",
