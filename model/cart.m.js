@@ -5,14 +5,26 @@ module.exports = {
     try {
       let user = await db.selectByOneField("user", "username", Username);
       let IdUser = user[0].id_user;
-       const data = await db.addFood(FoodId, IdUser);
+      //check exist that food in cart just need update quantity
+      let food = await db.selectByOneField("cart", "id_user", IdUser);
+      for (const item of food) {
+        if (item.id_item == FoodId) {
+          //update quantity 
+          const flag = db.updateCart(item.quantity + 1, IdUser);
+          if (flag) {
+            return true;
+          }
+          return false;
+        }
+      }
+
+      const data = await db.addFood(FoodId, IdUser);
       //insert success alert
-      if(data)
-      {
+      if (data) {
         return true;
       }
       return false;
-      
+
     } catch (error) {
       throw error;
     }

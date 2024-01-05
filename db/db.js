@@ -87,6 +87,16 @@ module.exports = {
       return rs;
     } catch (error) {
       throw error;
+    } 
+  },
+  updateCart: async (quantity,idUser) => {
+    try {
+      const rs = await db.any(`UPDATE "cart"
+      SET quantity = ${quantity}
+      WHERE id_user = ${idUser}`);
+      return rs;
+    } catch (error) {
+      throw error;
     }
   },
   selectMax: async (tbName, fieldName) => {
