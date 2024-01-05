@@ -138,7 +138,7 @@ function renderProducts(data) {
   });
   const pageList = document.getElementById("pages-list");
   pageList.innerHTML = ``;
-  for (let i = 1; i < data.pages; i++) {
+  for (let i = 1; i <= data.pages; i++) {
     pageList.innerHTML += `
     <li class="page-item"><a class="page-link paging-btn ${
       data.page == i ? "active" : ""
@@ -206,7 +206,7 @@ async function addProduct() {
     const data = await response.json();
     alert(data);
     if(response.ok){
-      document.getElementById('modal-close').dispatchEvent(new Event('click'));
+      window.location.reload();
     }
   } catch (error) {
     console.error("Error:", error);
