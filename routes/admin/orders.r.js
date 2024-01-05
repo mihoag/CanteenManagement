@@ -4,4 +4,6 @@ const ordersController = require('../../controllers/adminController/ordersContro
 
 router.get('/paging', ordersController.page);
 router.get('/', ordersController.showOrders);
+router.post('/add', ordersController.addOrder);
+
 module.exports = router;

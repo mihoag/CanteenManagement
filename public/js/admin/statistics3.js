@@ -1,3 +1,110 @@
+//export excel file
+function convertToVND(number) {
+  // Using toLocaleString to format the number as currency in VND
+  number = parseInt(number);
+  let vndFormatted = number.toLocaleString('vi-VN', {
+    style: 'currency',
+    currency: 'VND'
+  });
+
+  return vndFormatted.replace("₫", "VNĐ");
+}
+
+var dataSetExport;
+function exportExcel() {
+  if (dataSetExport.labels.length <= 0) {
+    alert("Không có dữ liệu");
+    return;
+  }
+  month = dataSetExport.month;
+  year = dataSetExport.year;
+  let data = [];
+  for (let i = 0; i < dataSetExport.labels.length; i++)
+    data.push({
+      "Ngày": `${dataSetExport.labels[i]}/${year}`,
+      "Doanh thu": convertToVND(dataSetExport.revenueSet[i]),
+      "Lợi nhuận": convertToVND(dataSetExport.profitSet[i]),
+    })
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  var wscols = [
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+  ];
+  var wsrows = [
+    { hpx: 30 },
+  ];
+  worksheet['!cols'] = wscols;
+  worksheet['!rows'] = wsrows;
+
+  for (i in worksheet) {
+    if (typeof (worksheet[i]) != "object") continue;
+    let cell = XLSX.utils.decode_cell(i);
+    worksheet[i].s = {      // set the style for target cell
+      font: {
+        name: "Calibri",
+        sz: 14,
+      },
+      alignment: {
+        horizontal: "center",
+        vertical: "center",
+      },
+      border: {
+        right: {
+          style: "thin",
+          color: "000000"
+        },
+        left: {
+          style: "thin",
+          color: "000000"
+        },
+        top: {
+          style: "thin",
+          color: "000000"
+        },
+        bottom: {
+          style: "thin",
+          color: "000000"
+        },
+      }
+    };
+    if (cell.r == 0) {
+      worksheet[i].s.font = {
+        name: "Calibri",
+        sz: 16,
+        color: { rgb: "FFFFFF" },
+        bold: true
+      }
+    }
+    else if (cell.c > 1) {
+      worksheet[i].s.alignment = {
+        horizontal: "center",
+      }
+    }
+    if (cell.r % 2 == 0) { // every other row
+      if (cell.r > 0) {
+        worksheet[i].s.fill = { // background color
+          patternType: "solid",
+          fgColor: { rgb: "B6C4B6" },
+          bgColor: { rgb: "B6C4B6" }
+        }
+      }
+      else {
+        worksheet[i].s.fill = { // background color
+          patternType: "solid",
+          fgColor: { rgb: "508D69" },
+          bgColor: { rgb: "508D69" }
+        };
+      }
+    }
+  }
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Thống kê doanh thu");
+
+  XLSX.writeFile(workbook, `Thống kê doanh thụ tháng ${month}/${year}.xlsx`, { cellStyles: true });
+}
+// -----------------------------
+
 function LineChart(options) {
   let daySet = [];
   let revenueSet = [];
@@ -38,7 +145,7 @@ function LineChart(options) {
     options: {
       plugins: {
         title: {
-          display: true, text: 'Doanh thu trong tuần', color: '#161A30', font: { size: 40 }
+          display: true, text: 'Doanh thu trong tuần này', color: '#161A30', font: { size: 40 }
         }
       }, scales: {
         y:
@@ -68,6 +175,16 @@ function viewChart(options) {
     revenueSet[parseInt(options.data[i].day) - 1] = options.data[i].sum;
     profitSet[parseInt(options.data[i].day) - 1] = options.data[i].profit;
   }
+
+  //for export excel file
+  dataSetExport = {
+    labels,
+    revenueSet,
+    profitSet,
+    month: options.month,
+    year: options.year
+  }
+  //---- 
 
   const ctx = document.getElementById('myChart');
   new Chart(ctx, {
@@ -100,8 +217,8 @@ function viewChart(options) {
           }
         }, x: {
           title: {
-            display: true, text: 'Days', color: '#161A30', font: {
-              size: 30
+            display: true, text: 'Ngày', color: '#161A30', font: {
+              size: 25
             }
           }
         }
@@ -122,7 +239,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   lastDayOfMonth = today.getDate();
   viewChart({
     lastDayOfMonth,
-    data: response
+    data: response,
+    month: today.getMonth() + 1,
+    year: today.getFullYear()
   });
 
   // get week

@@ -40,11 +40,11 @@
                                                 class="item-list"></div>
                                             <div id="content" class="content">
                                                 {{#each data.items}}
-                                                <div class="list">
+                                                <div class="list list-items">
                                                     <input type="checkbox"
                                                         id="{{this.id_item}}" class="list"
                                                         value="{{this.name}}" />
-                                                    <label for="apple"
+                                                    <label for="{{this.id_item}}"
                                                         class="list name">{{this.name}}</label>
                                                     <input type="text"
                                                         class="price list"
@@ -99,7 +99,7 @@
                                         class="btn btn-secondary"
                                         data-bs-dismiss="modal">Hủy</button>
                                     <button type="button"
-                                        class="btn btn-primary">Thêm</button>
+                                        class="btn btn-primary" onclick="addOrder()">Thêm</button>
                                 </div>
                             </div>
                         </div>
