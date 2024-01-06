@@ -11,7 +11,6 @@ function isNumeric(str) {
 
 class Order {
   constructor(order) {
-    this.id_order = order?.id_order;
     this.id_user = order?.id_user||1;
     this.order_date = order?.order_date;
     this.status = "Completed";
