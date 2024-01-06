@@ -51,6 +51,7 @@
     {{!-- Data of food --}}
     <div class="container">
         <div class="row">
+            {{#if food}}
             {{#each food}}
         
             <div class="col-3 mb-2">
@@ -67,6 +68,11 @@
                
             </div>
             {{/each}}
+            {{else}}
+			    <div class="alert alert-primary" role="alert">
+				    Không có sản phẩm nào được tìm thấy!!!
+			    </div>
+			{{/if}}
         </div>
 
 
